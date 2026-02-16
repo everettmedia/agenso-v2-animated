@@ -7,7 +7,8 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=block" as="style">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=block" rel="stylesheet">
     <script>
         tailwind.config = {
             theme: {
@@ -278,7 +279,7 @@
     <!-- ========== HERO SECTION ========== -->
     <section class="pt-32 pb-16 md:pt-40 md:pb-24 px-6">
         <div class="text-center hero-dots-wrap">
-            <h1 class="text-[32px] md:text-[44px] lg:text-[52px] font-semibold leading-[1.1] tracking-tight-3 text-dark max-w-2xl mx-auto fade-up">
+            <h1 class="text-[32px] md:text-[44px] lg:text-[52px] font-semibold leading-[1.1] tracking-tight-3 text-dark max-w-3xl mx-auto fade-up">
                 Unlock Agentic Capabilities Without Agentic Complexities
             </h1>
             <p class="mt-5 text-[15px] md:text-[16px] text-gray-500 max-w-lg mx-auto leading-relaxed fade-up">
@@ -301,7 +302,7 @@
 
             <!-- Hero Image -->
             <div class="mt-14 md:mt-20 relative z-10 max-w-4xl mx-auto fade-up">
-                <img src="https://res.cloudinary.com/dxyxrrgj8/image/upload/v1771247433/Gemini_Generated_Image_fg2xjqfg2xjqfg2x_eh2ts8.png" alt="Agenso platform" class="w-full rounded-xl" style="box-shadow: 0 30px 90px -15px rgba(10,9,12,0.25), 0 10px 30px -10px rgba(10,9,12,0.15)">
+                <img src="https://res.cloudinary.com/dxyxrrgj8/image/upload/v1771247433/Gemini_Generated_Image_fg2xjqfg2xjqfg2x_eh2ts8.png" alt="Agenso platform" class="w-full rounded-xl" style="box-shadow: 8px 35px 80px -10px rgba(10,9,12,0.5), 4px 15px 30px -5px rgba(10,9,12,0.35), 0 0 0 1px rgba(10,9,12,0.05)">
             </div>
         </div>
     </section>
@@ -695,7 +696,9 @@
             rootMargin: '0px 0px -40px 0px'
         });
 
-        document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+        document.fonts.ready.then(() => {
+            document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+        });
 
         const nav = document.getElementById('nav');
         window.addEventListener('scroll', () => {
