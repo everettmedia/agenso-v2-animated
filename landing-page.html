@@ -120,18 +120,6 @@
             margin-left: calc(-50vw + 50%);
             position: relative;
         }
-        .section-dark::before {
-            content: '';
-            position: absolute;
-            top: 0; bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: min(1200px, 100%);
-            border-left: 1px solid #2e2d31;
-            border-right: 1px solid #2e2d31;
-            pointer-events: none;
-            z-index: 1;
-        }
 
         .hero-dots-wrap { position: relative; }
         .hero-dots-wrap::before {
@@ -620,9 +608,11 @@
         </div>
     </section>
 
+    </main>
 
     <!-- ========== HOW IT WORKS ========== -->
-    <section id="how-it-works" class="section-dark py-20 md:py-28 relative overflow-hidden noise">
+    <section id="how-it-works" class="bg-dark py-20 md:py-28 relative overflow-hidden noise">
+        <div class="absolute top-0 bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[1200px] border-l border-r border-[#2e2d31] pointer-events-none z-[1]"></div>
         <div class="max-w-[1200px] mx-auto px-6 relative z-10">
             <div class="max-w-3xl mx-auto text-center mb-14 md:mb-20">
                 <h2 class="font-heading text-[28px] md:text-[36px] font-medium tracking-tight-3 text-white fade-up">
@@ -656,6 +646,7 @@
         </div>
     </section>
 
+    <main class="site-channel">
 
     <!-- ========== TESTIMONIALS ========== -->
     <section class="py-20 md:py-28 px-6">
@@ -790,8 +781,11 @@
     </section>
 
 
+    </main>
+
     <!-- ========== FINAL CTA ========== -->
-    <section class="section-dark py-20 md:py-28 relative overflow-hidden">
+    <section class="bg-dark py-20 md:py-28 relative overflow-hidden">
+        <div class="absolute top-0 bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[1200px] border-l border-r border-[#2e2d31] pointer-events-none z-[1]"></div>
         <div class="max-w-[1200px] mx-auto px-6 text-center relative z-10 fade-up">
             <h2 class="font-heading text-[28px] md:text-[40px] lg:text-[48px] font-medium tracking-tight-3 text-white leading-[1.1] max-w-xl mx-auto">
                 Stop guessing.<br><span class="gradient-text">Start scaling.</span>
@@ -804,8 +798,6 @@
             </a>
         </div>
     </section>
-
-    </main>
 
     <!-- ========== FOOTER ========== -->
     <footer class="text-white border-t border-[#2e2d31]" style="background:#0a090c">
