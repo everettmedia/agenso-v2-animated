@@ -41,19 +41,20 @@
 
         /* Hero text cycling animation */
         .hero-cycle-wrap {
-            display: block;
+            display: inline-block;
             position: relative;
             overflow: hidden;
+            vertical-align: bottom;
             height: 1.1em;
+            transition: width 0.8s cubic-bezier(0.16, 1, 0.3, 1);
         }
         .hero-cycle > span {
             position: absolute;
             left: 0;
-            right: 0;
             height: 1.1em;
             display: flex;
             align-items: center;
-            justify-content: center;
+            white-space: nowrap;
             transform: translateY(-110%);
             opacity: 0;
             transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1),
@@ -309,7 +310,7 @@
     <section class="pt-32 pb-16 md:pt-40 md:pb-24 px-6">
         <div class="text-center hero-dots-wrap">
             <h1 class="text-[32px] md:text-[44px] lg:text-[52px] font-semibold leading-[1.1] tracking-tight-3 text-dark max-w-3xl mx-auto fade-up">
-                Unlock Expert Marketing Agents<br><span class="hero-cycle-wrap"><span class="hero-cycle" id="heroCycle"><span class="cycle-active">to Power Growth</span><span>to Build Strategy</span><span>to Reduce CAC</span><span>to Scale Faster</span><span>to Map Funnels</span><span>to Write Emails</span><span>to Multiply Output</span><span>to Plan Campaigns</span><span>to Write Copy</span></span></span>
+                Unlock Expert Marketing Agents<br>to <span class="hero-cycle-wrap" id="heroCycleWrap"><span class="hero-cycle" id="heroCycle"><span class="cycle-active">Power Growth</span><span>Build Strategy</span><span>Reduce CAC</span><span>Scale Faster</span><span>Map Funnels</span><span>Write Emails</span><span>Multiply Output</span><span>Plan Campaigns</span><span>Write Copy</span></span></span>
             </h1>
             <p class="mt-5 text-[15px] md:text-[16px] text-gray-500 max-w-lg mx-auto leading-relaxed fade-up">
                 Access AI agents trained by marketers, for marketers – without the complexity of configuring your own. Zero hallucinations, zero context lost. Perfect outputs every time.
@@ -729,14 +730,31 @@
 
         // Hero text cycling
         const heroCycle = document.getElementById('heroCycle');
+        const heroCycleWrap = document.getElementById('heroCycleWrap');
         const phrases = heroCycle.children;
         let currentPhrase = 0;
+
+        // Pre-measure all phrase widths
+        const phraseWidths = [];
+        const measurer = document.createElement('span');
+        measurer.style.cssText = 'position:absolute;visibility:hidden;white-space:nowrap;font:inherit';
+        heroCycleWrap.parentElement.appendChild(measurer);
+        for (let i = 0; i < phrases.length; i++) {
+            measurer.textContent = phrases[i].textContent;
+            phraseWidths.push(measurer.offsetWidth + 2);
+        }
+        measurer.remove();
+
+        // Set initial width
+        heroCycleWrap.style.width = phraseWidths[0] + 'px';
+
         setInterval(() => {
             const prev = currentPhrase;
             currentPhrase = (currentPhrase + 1) % phrases.length;
             phrases[prev].classList.remove('cycle-active');
             phrases[prev].classList.add('cycle-exit');
             phrases[currentPhrase].classList.add('cycle-active');
+            heroCycleWrap.style.width = phraseWidths[currentPhrase] + 'px';
             setTimeout(() => phrases[prev].classList.remove('cycle-exit'), 800);
         }, 6000);
 
