@@ -1,0 +1,119 @@
+---
+name: design-director-master-skill
+description: "Adaptive design system advisor for frontend development. Provides aesthetic guidance based on business type, drawing from 4 core profiles (Editorial/Luxe, Premium Minimalist, Service Professional, Luxury Showcase) and intelligently blending them for unlisted business types. Use when making design decisions about typography, color, spacing, motion, layout, or component styling."
+---
+
+# Design Director Master Skill
+
+Adaptive design system advisor that provides contextual aesthetic guidance based on business type.
+
+## Step 1: Identify the Business Type
+
+When invoked, first determine which aesthetic profile applies. Ask if not clear from context:
+
+> What type of business is this website for?
+
+### Core Profiles
+
+| Profile | Business Types | Core Aesthetic |
+|---------|---------------|----------------|
+| **A: Editorial/Luxe** | Fashion, galleries, hospitality, high-end brands | Serif-forward, cinematic whitespace, gold accents, slow motion |
+| **B: Premium Minimalist** | B2B SaaS, fintech, dev tools, tech products | System fonts, obsidian darks, 4px grid, snappy 200ms motion |
+| **C: Service Professional** | Agencies, consultancies, law firms, B2B services | Trust blues, editorial layouts, human photography, clear hierarchy |
+| **D: Luxury Showcase** | Real estate, yachts, exotic cars, collectibles | Immersive imagery, minimal UI, concierge CTAs, 16:9 cinematic |
+
+### Blending for Unlisted Types
+
+If the business doesn't fit cleanly into one profile, blend intelligently:
+
+**Examples:**
+- **Luxury SaaS** (wealth management) → Minimalist structure + Luxe typography + Showcase imagery
+- **Creative Agency** → Service Professional trust signals + Editorial/Luxe visual drama
+- **Premium Local Service** (luxury landscaping) → Service Professional patterns + Showcase photography
+- **Tech-forward Real Estate** → Showcase immersion + Minimalist UI density
+
+**Blending Rules:**
+1. **Typography:** Choose ONE primary voice (serif OR sans)—don't mix heading styles
+2. **Color:** Pick a temperature (warm OR cool neutrals) and stay consistent
+3. **Motion:** Match audience expectation (snappy for tools, slow for luxury)
+4. **Imagery:** Match the product (lifestyle for services, product-hero for items)
+
+---
+
+## Step 2: Load the Profile
+
+Based on the identified profile, read the corresponding file for complete implementation guidance:
+
+| Profile | File to Read |
+|---------|--------------|
+| Editorial/Luxe | [.claude/commands/profiles/editorial-luxe.md](.claude/commands/profiles/editorial-luxe.md) |
+| Premium Minimalist | [.claude/commands/profiles/premium-minimalist.md](.claude/commands/profiles/premium-minimalist.md) |
+| Service Professional | [.claude/commands/profiles/service-professional.md](.claude/commands/profiles/service-professional.md) |
+| Luxury Showcase | [.claude/commands/profiles/luxury-showcase.md](.claude/commands/profiles/luxury-showcase.md) |
+
+Each profile contains:
+- Typography system with Tailwind implementation
+- Color palette with tailwind.config.mjs code
+- Spacing and layout patterns
+- Motion and animation configurations
+- Mobile experience guidelines
+- Validation checklists
+- Anti-patterns to avoid
+
+---
+
+## Step 3: Apply the Guidelines
+
+After loading the appropriate profile:
+
+1. **Configure tailwind.config.mjs** with the profile's design tokens
+2. **Apply typography** following the profile's scale and tracking rules
+3. **Implement color** using the semantic token structure
+4. **Build layouts** using the profile's grid and spacing patterns
+5. **Add motion** matching the profile's timing and easing curves
+6. **Validate** using the profile's checklists
+
+---
+
+## Quick Reference: Profile Signatures
+
+### A: Editorial/Luxe
+- Serif headings with negative tracking
+- Off-white "paper" backgrounds
+- Slow, revealing animations (600-1200ms)
+- Asymmetrical editorial grids
+- Gold/metallic accents
+
+### B: Premium Minimalist
+- Neo-grotesque system fonts
+- Obsidian dark mode (#0A0A0A)
+- Snappy spring physics (200-350ms)
+- Bento grid layouts
+- Glassmorphism + noise texture
+
+### C: Service Professional
+- Geometric sans (professional weight)
+- Trust blue primary colors
+- Moderate motion (300-500ms)
+- 2-column magazine layouts
+- Human photography emphasis
+
+### D: Luxury Showcase
+- Display serif for headlines
+- Immersive full-bleed imagery
+- Cinematic reveals (800-1500ms)
+- Minimal text, maximum visual
+- Concierge-style CTAs
+
+---
+
+## Validation Quick Checks
+
+Before marking design work complete, verify:
+
+- [ ] Typography follows profile's tracking/leading rules
+- [ ] Colors use semantic tokens, not hardcoded hex
+- [ ] Spacing adheres to profile's grid (4px or 8px baseline)
+- [ ] Motion timing matches profile expectations
+- [ ] Mobile experience follows profile guidelines
+- [ ] No anti-patterns from the profile's "avoid" lists

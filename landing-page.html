@@ -1,0 +1,857 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agenso — Marketing AI that actually gets it right</title>
+    <meta name="description" content="Pre-trained AI marketing agents for freelancers and teams. Zero hallucinations, persistent client context, expert-level outputs across Meta Ads, Google Ads, Email, SEO, CRO, and Strategy.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <style>
+        /* Local font faces */
+        @font-face {
+            font-family: 'Clash Grotesk';
+            src: url('fonts/ClashGrotesk-Regular.otf') format('opentype');
+            font-weight: 400;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: 'Clash Grotesk';
+            src: url('fonts/ClashGrotesk-Medium.otf') format('opentype');
+            font-weight: 500;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: 'Clash Grotesk';
+            src: url('fonts/ClashGrotesk-Semibold.otf') format('opentype');
+            font-weight: 600;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: 'Inter Display';
+            src: url('fonts/InterDisplay-Light.ttf') format('truetype');
+            font-weight: 300;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: 'Inter Display';
+            src: url('fonts/InterDisplay-Bold.ttf') format('truetype');
+            font-weight: 700;
+            font-display: swap;
+        }
+    </style>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter Display', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+                        heading: ['Clash Grotesk', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            DEFAULT: '#5762d5',
+                            dark: '#4a54b8',
+                            light: '#8b93e3',
+                            subtle: '#eef0fb',
+                        },
+                        teal: '#07393c',
+                        sky: '#90ddf0',
+                        dark: '#0a090c',
+                        surface: '#f7f8f9',
+                        'surface-card': '#edeef0',
+                    },
+                    letterSpacing: {
+                        'tight-2': '-0.02em',
+                        'tight-3': '-0.03em',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        * { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+
+        .fade-up {
+            opacity: 0;
+            transform: translateY(24px);
+            transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+                        transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+        .stagger > .fade-up:nth-child(1) { transition-delay: 0ms; }
+        .stagger > .fade-up:nth-child(2) { transition-delay: 80ms; }
+        .stagger > .fade-up:nth-child(3) { transition-delay: 160ms; }
+        .stagger > .fade-up:nth-child(4) { transition-delay: 240ms; }
+
+        .btn-press:active { transform: scale(0.97); }
+
+        .nav-scrolled {
+            background: rgba(247,248,249,0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(0,0,0,0.06);
+        }
+
+        .site-channel {
+            max-width: 1200px;
+            margin: 0 auto;
+            border-left: 1px solid #e5e5e5;
+            border-right: 1px solid #e5e5e5;
+        }
+        .site-channel > section { position: relative; }
+        .site-channel > section::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100vw;
+            border-bottom: 1px solid #e5e5e5;
+        }
+        .site-channel > section:last-child::after { display: none; }
+
+        .section-dark {
+            background: #0a090c;
+            color: white;
+            width: 100vw;
+            margin-left: calc(-50vw + 50%);
+            position: relative;
+        }
+        .section-dark::before {
+            content: '';
+            position: absolute;
+            top: 0; bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: min(1200px, 100%);
+            border-left: 1px solid #2e2d31;
+            border-right: 1px solid #2e2d31;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .hero-dots-wrap { position: relative; }
+        .hero-dots-wrap::before {
+            content: '';
+            position: absolute;
+            left: -24px; right: -24px;
+            bottom: -4rem;
+            height: 340px;
+            background-image: radial-gradient(circle, #c8c8c8 1px, transparent 1px);
+            background-size: 14px 14px;
+            background-position: 7px 7px;
+            -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 100%);
+            mask-image: linear-gradient(to bottom, transparent 0%, black 100%);
+            z-index: 0;
+        }
+        @media (min-width: 768px) {
+            .hero-dots-wrap::before { bottom: -6rem; height: 360px; }
+        }
+
+        .noise::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+            background-repeat: repeat;
+            background-size: 256px 256px;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* Marquee */
+        .marquee-track {
+            display: flex;
+            width: max-content;
+            animation: marquee 30s linear infinite;
+        }
+        .marquee-track:hover { animation-play-state: paused; }
+        @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        /* Vertical tabs */
+        .vtab { cursor: pointer; transition: color 0.15s, background 0.15s; }
+        .vtab.active { background: #5762d5; color: white; }
+
+        /* Agent panel */
+        .agent-vpanel { display: none; }
+        .agent-vpanel.active { display: block; }
+
+        /* FAQ */
+        .faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
+        .faq-answer.open { max-height: 200px; }
+        .faq-chevron { transition: transform 0.2s ease; }
+        .faq-chevron.open { transform: rotate(180deg); }
+
+        /* Pricing highlight */
+        .pricing-popular {
+            border-color: #5762d5;
+            box-shadow: 0 0 0 1px #5762d5;
+        }
+
+        /* Brand gradient */
+        .gradient-text {
+            background: linear-gradient(135deg, #90ddf0 0%, #5762d5 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .gradient-bg {
+            background: linear-gradient(135deg, #90ddf0 0%, #5762d5 100%);
+        }
+        .gradient-border {
+            border-image: linear-gradient(135deg, #90ddf0, #5762d5) 1;
+        }
+
+        /* Heading font utility */
+        .font-heading { font-family: 'Clash Grotesk', -apple-system, BlinkMacSystemFont, sans-serif; }
+    </style>
+</head>
+<body class="bg-surface text-dark font-sans overflow-x-hidden">
+
+    <!-- ========== NAVIGATION ========== -->
+    <nav id="nav" class="fixed top-0 left-0 right-0 z-50 transition-all duration-200 border-b border-[#e5e5e5]">
+        <div class="max-w-[1200px] mx-auto px-6 h-16 flex items-center justify-between">
+            <div class="flex items-center">
+                <img src="https://res.cloudinary.com/dxyxrrgj8/image/upload/v1771242506/Agenso_6_dr0eg8.png" alt="Agenso" class="h-7 md:h-8">
+            </div>
+            <div class="hidden md:flex items-center gap-7">
+                <a href="#agents" class="text-[13px] font-heading font-medium text-gray-600 hover:text-dark transition-colors duration-150">Agents</a>
+                <a href="#how-it-works" class="text-[13px] font-heading font-medium text-gray-600 hover:text-dark transition-colors duration-150">How It Works</a>
+                <a href="#pricing" class="text-[13px] font-heading font-medium text-gray-600 hover:text-dark transition-colors duration-150">Pricing</a>
+                <a href="#" class="text-[13px] font-heading font-medium text-gray-600 hover:text-dark transition-colors duration-150">Login</a>
+            </div>
+            <div class="flex items-center gap-4">
+                <a href="#" class="hidden md:inline-flex items-center px-4 py-2 bg-dark text-white text-[13px] font-heading font-medium rounded-full hover:bg-dark/90 transition-colors duration-150 btn-press">
+                    Start free
+                </a>
+                <button id="menuToggle" class="md:hidden p-2 -mr-2">
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 6h14M3 10h14M3 14h14" stroke-linecap="round"/></svg>
+                </button>
+            </div>
+        </div>
+        <div id="mobileMenu" class="hidden md:hidden bg-surface border-t border-gray-100 px-6 py-4">
+            <div class="flex flex-col gap-3">
+                <a href="#agents" class="text-[14px] font-heading text-gray-600 py-2">Agents</a>
+                <a href="#how-it-works" class="text-[14px] font-heading text-gray-600 py-2">How It Works</a>
+                <a href="#pricing" class="text-[14px] font-heading text-gray-600 py-2">Pricing</a>
+                <a href="#" class="text-[14px] font-heading text-gray-600 py-2">Login</a>
+                <a href="#" class="mt-2 inline-flex items-center justify-center px-4 py-2.5 bg-dark text-white text-[14px] font-heading font-medium rounded-full">Start Free</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="site-channel">
+
+    <!-- ========== HERO ========== -->
+    <section class="pt-32 pb-16 md:pt-40 md:pb-24 px-6">
+        <div class="text-center hero-dots-wrap">
+            <h1 class="font-heading text-[32px] md:text-[44px] lg:text-[52px] font-medium leading-[1.1] tracking-tight-3 text-dark max-w-3xl mx-auto fade-up">
+                Marketing AI that actually<br>gets it <span class="text-brand">right</span>
+            </h1>
+            <p class="mt-5 text-[15px] md:text-[16px] text-gray-500 max-w-lg mx-auto leading-relaxed fade-up">
+                Pre-trained marketing agents that know best practices, remember your clients, and never hallucinate. Expert-level strategy, copy, and campaigns — every time.
+            </p>
+            <div class="mt-8 flex items-center justify-center gap-3 flex-wrap fade-up">
+                <a href="#" class="inline-flex items-center px-6 py-3 bg-brand text-white text-[14px] font-heading font-medium rounded-full hover:bg-brand-dark transition-colors duration-150 btn-press">
+                    Start Free
+                </a>
+                <a href="#agents" class="inline-flex items-center gap-2 px-6 py-3 border border-gray-200 text-gray-700 text-[14px] font-heading font-medium rounded-full hover:border-gray-300 hover:bg-surface-card transition-all duration-150 btn-press">
+                    See Agents
+                    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 1v12M2 8l5 5 5-5"/></svg>
+                </a>
+            </div>
+            <div class="mt-8 flex items-center justify-center gap-2 fade-up">
+                <div class="flex -space-x-2">
+                    <div class="w-7 h-7 rounded-full bg-gray-300 border-2 border-surface"></div>
+                    <div class="w-7 h-7 rounded-full bg-gray-400 border-2 border-surface"></div>
+                    <div class="w-7 h-7 rounded-full bg-gray-300 border-2 border-surface"></div>
+                    <div class="w-7 h-7 rounded-full bg-gray-400 border-2 border-surface"></div>
+                </div>
+                <p class="text-[13px] text-gray-400">Trusted by 200+ marketers in beta</p>
+            </div>
+            <div class="mt-14 md:mt-20 border-t border-[#e5e5e5]" style="width:100vw;margin-left:calc(-50vw + 50%)"></div>
+            <div class="mt-14 md:mt-20 relative z-10 max-w-5xl mx-auto fade-up">
+                <img src="https://res.cloudinary.com/dxyxrrgj8/image/upload/v1771247433/Gemini_Generated_Image_fg2xjqfg2xjqfg2x_eh2ts8.png" alt="Agenso platform dashboard" class="w-full rounded-xl" style="box-shadow: 8px 35px 80px -10px rgba(10,9,12,0.5), 4px 15px 30px -5px rgba(10,9,12,0.35), 0 0 0 1px rgba(10,9,12,0.05)">
+            </div>
+        </div>
+    </section>
+
+
+    <!-- ========== INTEGRATION MARQUEE ========== -->
+    <section class="py-8 md:py-10 overflow-hidden">
+        <p class="text-center text-[12px] font-heading text-gray-400 uppercase tracking-wider mb-6 px-6 fade-up">Integrations with the tools you already use</p>
+        <div class="overflow-hidden relative">
+            <div class="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-surface to-transparent z-10"></div>
+            <div class="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-surface to-transparent z-10"></div>
+            <div class="marquee-track">
+                <div class="flex items-center gap-12 px-6">
+                    <span class="text-[14px] font-heading font-medium text-gray-400 whitespace-nowrap">Meta Ads</span>
+                    <span class="text-brand-light/40">|</span>
+                    <span class="text-[14px] font-heading font-medium text-gray-400 whitespace-nowrap">Google Ads</span>
+                    <span class="text-brand-light/40">|</span>
+                    <span class="text-[14px] font-heading font-medium text-gray-400 whitespace-nowrap">Klaviyo</span>
+                    <span class="text-brand-light/40">|</span>
+                    <span class="text-[14px] font-heading font-medium text-gray-400 whitespace-nowrap">Shopify</span>
+                    <span class="text-brand-light/40">|</span>
+                    <span class="text-[14px] font-heading font-medium text-gray-400 whitespace-nowrap">Active Campaign</span>
+                    <span class="text-brand-light/40">|</span>
+                    <span class="text-[14px] font-heading font-medium text-gray-400 whitespace-nowrap">Mailchimp</span>
+                    <span class="text-brand-light/40">|</span>
+                    <span class="text-[14px] font-heading font-medium text-gray-400 whitespace-nowrap">Google Search Console</span>
+                    <span class="text-brand-light/40">|</span>
+                    <span class="text-[14px] font-heading font-medium text-gray-400 whitespace-nowrap">Google Analytics</span>
+                    <span class="text-brand-light/40 mx-6">|</span>
+                </div>
+                <div class="flex items-center gap-12 px-6">
+                    <span class="text-[14px] font-heading font-medium text-gray-400 whitespace-nowrap">Meta Ads</span>
+                    <span class="text-brand-light/40">|</span>
+                    <span class="text-[14px] font-heading font-medium text-gray-400 whitespace-nowrap">Google Ads</span>
+                    <span class="text-brand-light/40">|</span>
+                    <span class="text-[14px] font-heading font-medium text-gray-400 whitespace-nowrap">Klaviyo</span>
+                    <span class="text-brand-light/40">|</span>
+                    <span class="text-[14px] font-heading font-medium text-gray-400 whitespace-nowrap">Shopify</span>
+                    <span class="text-brand-light/40">|</span>
+                    <span class="text-[14px] font-heading font-medium text-gray-400 whitespace-nowrap">Active Campaign</span>
+                    <span class="text-brand-light/40">|</span>
+                    <span class="text-[14px] font-heading font-medium text-gray-400 whitespace-nowrap">Mailchimp</span>
+                    <span class="text-brand-light/40">|</span>
+                    <span class="text-[14px] font-heading font-medium text-gray-400 whitespace-nowrap">Google Search Console</span>
+                    <span class="text-brand-light/40">|</span>
+                    <span class="text-[14px] font-heading font-medium text-gray-400 whitespace-nowrap">Google Analytics</span>
+                    <span class="text-brand-light/40 mx-6">|</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- ========== THE PROBLEM ========== -->
+    <section class="py-20 md:py-28 px-6">
+        <div class="max-w-3xl mx-auto text-center mb-16 md:mb-24">
+            <h2 class="font-heading text-[28px] md:text-[36px] font-medium tracking-tight-3 fade-up">
+                The AI tools you use for marketing<br>weren't built for marketers
+            </h2>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-0 border-t border-[#e5e5e5] stagger">
+            <div class="fade-up border-b md:border-b-0 md:border-r border-[#e5e5e5] py-8 md:py-10 md:pr-8">
+                <p class="text-[11px] font-heading font-medium text-brand uppercase tracking-wider mb-3">01</p>
+                <h3 class="text-[15px] font-heading font-semibold text-dark mb-2">Inconsistent quality</h3>
+                <p class="text-[13px] text-gray-500 leading-relaxed">
+                    Some outputs are great. Others are unusable. You can't send unpredictable work to clients.
+                </p>
+            </div>
+            <div class="fade-up border-b md:border-b-0 md:border-r border-[#e5e5e5] py-8 md:py-10 md:px-8">
+                <p class="text-[11px] font-heading font-medium text-brand uppercase tracking-wider mb-3">02</p>
+                <h3 class="text-[15px] font-heading font-semibold text-dark mb-2">Context amnesia</h3>
+                <p class="text-[13px] text-gray-500 leading-relaxed">
+                    Every session starts from zero. You re-explain your client's business, tone, and goals — every time.
+                </p>
+            </div>
+            <div class="fade-up py-8 md:py-10 md:pl-8">
+                <p class="text-[11px] font-heading font-medium text-brand uppercase tracking-wider mb-3">03</p>
+                <h3 class="text-[15px] font-heading font-semibold text-dark mb-2">Prompt fatigue</h3>
+                <p class="text-[13px] text-gray-500 leading-relaxed">
+                    You're a marketer, not a prompt engineer. You shouldn't need perfect prompts for useful output.
+                </p>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- ========== DIFFERENTIATORS ========== -->
+    <section class="py-20 md:py-28 px-6">
+        <div class="max-w-3xl mx-auto text-center mb-16 md:mb-24">
+            <h2 class="font-heading text-[28px] md:text-[36px] font-medium tracking-tight-3 fade-up">
+                Agenso is built differently
+            </h2>
+            <p class="mt-4 text-[15px] text-gray-500 max-w-md mx-auto leading-relaxed fade-up">
+                Not another ChatGPT wrapper. Purpose-built marketing agents with guardrails, expertise, and memory.
+            </p>
+        </div>
+
+        <!-- Feature 1: Image left, text right -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-0 border-t border-[#e5e5e5] fade-up">
+            <div class="bg-surface-card aspect-[4/3] md:aspect-auto md:min-h-[320px] flex items-center justify-center border-b md:border-b-0 md:border-r border-[#e5e5e5]">
+                <img src="https://res.cloudinary.com/dxyxrrgj8/image/upload/v1771247433/Gemini_Generated_Image_fg2xjqfg2xjqfg2x_eh2ts8.png" alt="Zero hallucination outputs" class="w-full h-full object-cover">
+            </div>
+            <div class="py-10 md:py-16 px-0 md:pl-10 flex flex-col justify-center">
+                <p class="text-[11px] font-heading font-medium text-brand uppercase tracking-wider mb-3">Zero hallucinations</p>
+                <h3 class="font-heading text-[22px] md:text-[26px] font-medium tracking-tight-2 leading-[1.2]">
+                    Outputs you can trust<br>to send to clients
+                </h3>
+                <p class="mt-4 text-[14px] text-gray-500 leading-relaxed max-w-sm">
+                    Every agent follows structured directives and proven marketing frameworks. No creative license, no making things up.
+                </p>
+                <a href="#" class="mt-6 inline-flex items-center gap-1.5 text-[13px] font-heading font-medium text-brand hover:text-brand-dark transition-colors">
+                    Learn more
+                    <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M2 6h8M7 3l3 3-3 3"/></svg>
+                </a>
+            </div>
+        </div>
+
+        <!-- Feature 2: Text left, image right -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-0 border-t border-[#e5e5e5] fade-up">
+            <div class="py-10 md:py-16 px-0 md:pr-10 flex flex-col justify-center order-2 md:order-1">
+                <p class="text-[11px] font-heading font-medium text-brand uppercase tracking-wider mb-3">Pre-trained expertise</p>
+                <h3 class="font-heading text-[22px] md:text-[26px] font-medium tracking-tight-2 leading-[1.2]">
+                    Agents that already know<br>marketing
+                </h3>
+                <p class="mt-4 text-[14px] text-gray-500 leading-relaxed max-w-sm">
+                    Each agent knows contemporary best practices across its discipline. No prompt engineering — just describe what you need in plain language.
+                </p>
+                <a href="#" class="mt-6 inline-flex items-center gap-1.5 text-[13px] font-heading font-medium text-brand hover:text-brand-dark transition-colors">
+                    Learn more
+                    <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M2 6h8M7 3l3 3-3 3"/></svg>
+                </a>
+            </div>
+            <div class="bg-surface-card aspect-[4/3] md:aspect-auto md:min-h-[320px] flex items-center justify-center border-b md:border-b-0 md:border-l border-[#e5e5e5] order-1 md:order-2">
+                <img src="https://res.cloudinary.com/dxyxrrgj8/image/upload/v1771247433/Gemini_Generated_Image_fg2xjqfg2xjqfg2x_eh2ts8.png" alt="Pre-trained marketing agents" class="w-full h-full object-cover">
+            </div>
+        </div>
+
+        <!-- Feature 3: Image left, text right -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-0 border-t border-b border-[#e5e5e5] fade-up">
+            <div class="bg-surface-card aspect-[4/3] md:aspect-auto md:min-h-[320px] flex items-center justify-center border-b md:border-b-0 md:border-r border-[#e5e5e5]">
+                <img src="https://res.cloudinary.com/dxyxrrgj8/image/upload/v1771247433/Gemini_Generated_Image_fg2xjqfg2xjqfg2x_eh2ts8.png" alt="Persistent client context" class="w-full h-full object-cover">
+            </div>
+            <div class="py-10 md:py-16 px-0 md:pl-10 flex flex-col justify-center">
+                <p class="text-[11px] font-heading font-medium text-brand uppercase tracking-wider mb-3">Persistent context</p>
+                <h3 class="font-heading text-[22px] md:text-[26px] font-medium tracking-tight-2 leading-[1.2]">
+                    Set up once, agents<br>remember forever
+                </h3>
+                <p class="mt-4 text-[14px] text-gray-500 leading-relaxed max-w-sm">
+                    Create a project for each client with their industry, audience, tone, and goals. Every agent remembers it across every conversation.
+                </p>
+                <a href="#" class="mt-6 inline-flex items-center gap-1.5 text-[13px] font-heading font-medium text-brand hover:text-brand-dark transition-colors">
+                    Learn more
+                    <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M2 6h8M7 3l3 3-3 3"/></svg>
+                </a>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- ========== AGENT SHOWCASE ========== -->
+    <section id="agents" class="py-20 md:py-28 px-6">
+        <div class="max-w-3xl mx-auto text-center mb-14 md:mb-20">
+            <h2 class="font-heading text-[28px] md:text-[36px] font-medium tracking-tight-3 fade-up">
+                Six expert agents.<br>Every discipline covered.
+            </h2>
+        </div>
+
+        <div class="fade-up">
+            <div class="grid grid-cols-1 md:grid-cols-[240px_1fr] gap-0 border border-[#e5e5e5] rounded-xl overflow-hidden">
+                <!-- Vertical tab list -->
+                <div class="border-b md:border-b-0 md:border-r border-[#e5e5e5] bg-white">
+                    <button class="vtab active w-full text-left px-5 py-4 text-[13px] font-heading font-medium border-b border-[#e5e5e5]" data-vtab="meta">Meta Ads</button>
+                    <button class="vtab w-full text-left px-5 py-4 text-[13px] font-heading font-medium text-gray-500 border-b border-[#e5e5e5]" data-vtab="google">Google Ads</button>
+                    <button class="vtab w-full text-left px-5 py-4 text-[13px] font-heading font-medium text-gray-500 border-b border-[#e5e5e5]" data-vtab="email">Email Marketing</button>
+                    <button class="vtab w-full text-left px-5 py-4 text-[13px] font-heading font-medium text-gray-500 border-b border-[#e5e5e5]" data-vtab="seo">SEO</button>
+                    <button class="vtab w-full text-left px-5 py-4 text-[13px] font-heading font-medium text-gray-500 border-b border-[#e5e5e5]" data-vtab="cro">Website & CRO</button>
+                    <button class="vtab w-full text-left px-5 py-4 text-[13px] font-heading font-medium text-gray-500" data-vtab="strategy">Strategy & Funnels</button>
+                </div>
+
+                <!-- Panel content -->
+                <div class="bg-white">
+                    <div class="agent-vpanel active" data-vpanel="meta">
+                        <div class="p-6 md:p-8 border-b border-[#e5e5e5]">
+                            <h3 class="text-[16px] font-heading font-semibold mb-2">Meta Ads Agent</h3>
+                            <p class="text-[13px] text-gray-500 leading-relaxed max-w-md">
+                                Expert in Facebook and Instagram advertising — campaign architecture, audience targeting, ad copy, creative briefs, performance analysis, and budget scaling.
+                            </p>
+                        </div>
+                        <div class="aspect-[16/9] bg-surface-card">
+                            <img src="https://res.cloudinary.com/dxyxrrgj8/image/upload/v1771247433/Gemini_Generated_Image_fg2xjqfg2xjqfg2x_eh2ts8.png" alt="Meta Ads Agent interface" class="w-full h-full object-cover">
+                        </div>
+                    </div>
+                    <div class="agent-vpanel" data-vpanel="google">
+                        <div class="p-6 md:p-8 border-b border-[#e5e5e5]">
+                            <h3 class="text-[16px] font-heading font-semibold mb-2">Google Ads Agent</h3>
+                            <p class="text-[13px] text-gray-500 leading-relaxed max-w-md">
+                                Specialist in Search, Display, Shopping, and Performance Max — keyword research, match types, RSA generation, bid strategy, negative keyword lists, and search term analysis.
+                            </p>
+                        </div>
+                        <div class="aspect-[16/9] bg-surface-card">
+                            <img src="https://res.cloudinary.com/dxyxrrgj8/image/upload/v1771247433/Gemini_Generated_Image_fg2xjqfg2xjqfg2x_eh2ts8.png" alt="Google Ads Agent interface" class="w-full h-full object-cover">
+                        </div>
+                    </div>
+                    <div class="agent-vpanel" data-vpanel="email">
+                        <div class="p-6 md:p-8 border-b border-[#e5e5e5]">
+                            <h3 class="text-[16px] font-heading font-semibold mb-2">Email Marketing Agent</h3>
+                            <p class="text-[13px] text-gray-500 leading-relaxed max-w-md">
+                                Expert in flow architecture, campaign copy, subject lines, A/B testing, segmentation strategy, and sequence planning with visual flow diagrams.
+                            </p>
+                        </div>
+                        <div class="aspect-[16/9] bg-surface-card">
+                            <img src="https://res.cloudinary.com/dxyxrrgj8/image/upload/v1771247433/Gemini_Generated_Image_fg2xjqfg2xjqfg2x_eh2ts8.png" alt="Email Marketing Agent interface" class="w-full h-full object-cover">
+                        </div>
+                    </div>
+                    <div class="agent-vpanel" data-vpanel="seo">
+                        <div class="p-6 md:p-8 border-b border-[#e5e5e5]">
+                            <h3 class="text-[16px] font-heading font-semibold mb-2">SEO Agent</h3>
+                            <p class="text-[13px] text-gray-500 leading-relaxed max-w-md">
+                                Comprehensive strategist covering all twelve pillars of SEO — keyword strategy, search intent mapping, on-page optimization, technical audits, content calendars, and competitor analysis.
+                            </p>
+                        </div>
+                        <div class="aspect-[16/9] bg-surface-card">
+                            <img src="https://res.cloudinary.com/dxyxrrgj8/image/upload/v1771247433/Gemini_Generated_Image_fg2xjqfg2xjqfg2x_eh2ts8.png" alt="SEO Agent interface" class="w-full h-full object-cover">
+                        </div>
+                    </div>
+                    <div class="agent-vpanel" data-vpanel="cro">
+                        <div class="p-6 md:p-8 border-b border-[#e5e5e5]">
+                            <h3 class="text-[16px] font-heading font-semibold mb-2">Website & CRO Agent</h3>
+                            <p class="text-[13px] text-gray-500 leading-relaxed max-w-md">
+                                Conversion specialist for landing page optimization, CTA strategy, A/B testing hypotheses, user flow analysis, copy audits, and messaging hierarchy.
+                            </p>
+                        </div>
+                        <div class="aspect-[16/9] bg-surface-card">
+                            <img src="https://res.cloudinary.com/dxyxrrgj8/image/upload/v1771247433/Gemini_Generated_Image_fg2xjqfg2xjqfg2x_eh2ts8.png" alt="Website & CRO Agent interface" class="w-full h-full object-cover">
+                        </div>
+                    </div>
+                    <div class="agent-vpanel" data-vpanel="strategy">
+                        <div class="p-6 md:p-8 border-b border-[#e5e5e5]">
+                            <h3 class="text-[16px] font-heading font-semibold mb-2">Strategy & Funnels Agent</h3>
+                            <p class="text-[13px] text-gray-500 leading-relaxed max-w-md">
+                                Big-picture strategist for funnel architecture, go-to-market planning, cross-channel coordination, customer journey mapping, and competitive positioning.
+                            </p>
+                        </div>
+                        <div class="aspect-[16/9] bg-surface-card">
+                            <img src="https://res.cloudinary.com/dxyxrrgj8/image/upload/v1771247433/Gemini_Generated_Image_fg2xjqfg2xjqfg2x_eh2ts8.png" alt="Strategy & Funnels Agent interface" class="w-full h-full object-cover">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- ========== CAPABILITIES ========== -->
+    <section class="py-20 md:py-28 px-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-0 border-t border-[#e5e5e5] stagger">
+            <div class="fade-up border-b md:border-r border-[#e5e5e5] py-10 md:pr-10">
+                <div class="w-8 h-8 rounded-lg bg-brand-subtle flex items-center justify-center mb-4">
+                    <svg class="w-4 h-4 text-brand" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M3 10l5 5L17 5"/></svg>
+                </div>
+                <h3 class="text-[15px] font-heading font-semibold text-dark mb-2">Drive results with fewer revisions</h3>
+                <p class="text-[13px] text-gray-500 leading-relaxed">Structured outputs follow proven frameworks. Less back-and-forth, more client-ready work.</p>
+                <a href="#" class="mt-4 inline-flex items-center gap-1.5 text-[13px] font-heading font-medium text-brand hover:text-brand-dark transition-colors">
+                    Learn more <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M2 6h8M7 3l3 3-3 3"/></svg>
+                </a>
+            </div>
+            <div class="fade-up border-b border-[#e5e5e5] py-10 md:pl-10">
+                <div class="w-8 h-8 rounded-lg bg-brand-subtle flex items-center justify-center mb-4">
+                    <svg class="w-4 h-4 text-brand" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="3" y="3" width="14" height="14" rx="2"/><path d="M3 8h14"/><path d="M8 8v9"/></svg>
+                </div>
+                <h3 class="text-[15px] font-heading font-semibold text-dark mb-2">Manage every client from one workspace</h3>
+                <p class="text-[13px] text-gray-500 leading-relaxed">Separate projects, shared agents. Switch between clients without losing a beat.</p>
+                <a href="#" class="mt-4 inline-flex items-center gap-1.5 text-[13px] font-heading font-medium text-brand hover:text-brand-dark transition-colors">
+                    Learn more <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M2 6h8M7 3l3 3-3 3"/></svg>
+                </a>
+            </div>
+            <div class="fade-up border-b md:border-b-0 md:border-r border-[#e5e5e5] py-10 md:pr-10">
+                <div class="w-8 h-8 rounded-lg bg-brand-subtle flex items-center justify-center mb-4">
+                    <svg class="w-4 h-4 text-brand" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="10" cy="10" r="7"/><path d="M10 6v4l2.5 2.5"/></svg>
+                </div>
+                <h3 class="text-[15px] font-heading font-semibold text-dark mb-2">No prompt engineering required</h3>
+                <p class="text-[13px] text-gray-500 leading-relaxed">Just tell the agent what you need in plain language. The expertise is built in.</p>
+                <a href="#" class="mt-4 inline-flex items-center gap-1.5 text-[13px] font-heading font-medium text-brand hover:text-brand-dark transition-colors">
+                    Learn more <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M2 6h8M7 3l3 3-3 3"/></svg>
+                </a>
+            </div>
+            <div class="fade-up py-10 md:pl-10">
+                <div class="w-8 h-8 rounded-lg bg-brand-subtle flex items-center justify-center mb-4">
+                    <svg class="w-4 h-4 text-brand" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M4 15l4-6 4 3 4-7"/><path d="M14 5h4v4"/></svg>
+                </div>
+                <h3 class="text-[15px] font-heading font-semibold text-dark mb-2">Scale from 1 client to 15 without the overhead</h3>
+                <p class="text-[13px] text-gray-500 leading-relaxed">Multiply output without hiring. The agents handle strategy, copy, and analysis at scale.</p>
+                <a href="#" class="mt-4 inline-flex items-center gap-1.5 text-[13px] font-heading font-medium text-brand hover:text-brand-dark transition-colors">
+                    Learn more <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M2 6h8M7 3l3 3-3 3"/></svg>
+                </a>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- ========== HOW IT WORKS ========== -->
+    <section id="how-it-works" class="section-dark py-20 md:py-28 relative overflow-hidden noise">
+        <div class="max-w-[1200px] mx-auto px-6 relative z-10">
+            <div class="max-w-3xl mx-auto text-center mb-14 md:mb-20">
+                <h2 class="font-heading text-[28px] md:text-[36px] font-medium tracking-tight-3 text-white fade-up">
+                    Expert output in <span class="gradient-text">three steps</span>
+                </h2>
+                <p class="mt-4 text-[15px] text-gray-400 max-w-md mx-auto leading-relaxed fade-up">
+                    From setup to client-ready work in under a minute.
+                </p>
+            </div>
+
+            <!-- Step pills -->
+            <div class="flex flex-wrap items-center justify-center gap-3 mb-12 fade-up">
+                <span class="px-4 py-2 gradient-bg text-white text-[12px] font-heading font-medium rounded-full">Create Project</span>
+                <span class="px-4 py-2 bg-white/10 text-white text-[12px] font-heading font-medium rounded-full border border-white/10">Add Context</span>
+                <span class="px-4 py-2 bg-white/10 text-white text-[12px] font-heading font-medium rounded-full border border-white/10">Choose Agent</span>
+                <span class="px-4 py-2 bg-white/10 text-white text-[12px] font-heading font-medium rounded-full border border-white/10">Get Output</span>
+            </div>
+
+            <!-- Additional step pills row -->
+            <div class="flex flex-wrap items-center justify-center gap-3 mb-14 fade-up">
+                <span class="px-4 py-2 bg-white/10 text-white text-[12px] font-heading font-medium rounded-full border border-white/10">Analyze</span>
+                <span class="px-4 py-2 bg-white/10 text-white text-[12px] font-heading font-medium rounded-full border border-white/10">Iterate</span>
+                <span class="px-4 py-2 bg-white/10 text-white text-[12px] font-heading font-medium rounded-full border border-white/10">Scale</span>
+                <span class="px-4 py-2 bg-white/10 text-white text-[12px] font-heading font-medium rounded-full border border-white/10">Send to Client</span>
+            </div>
+
+            <!-- Product image -->
+            <div class="fade-up rounded-xl overflow-hidden" style="box-shadow: 0 25px 80px -12px rgba(0,0,0,0.5);">
+                <img src="https://res.cloudinary.com/dxyxrrgj8/image/upload/v1771247433/Gemini_Generated_Image_fg2xjqfg2xjqfg2x_eh2ts8.png" alt="Agenso dashboard" class="w-full">
+            </div>
+        </div>
+    </section>
+
+
+    <!-- ========== TESTIMONIALS ========== -->
+    <section class="py-20 md:py-28 px-6">
+        <div class="max-w-3xl mx-auto text-center mb-14 md:mb-20">
+            <h2 class="font-heading text-[28px] md:text-[36px] font-medium tracking-tight-3 fade-up">
+                People love building with Agenso
+            </h2>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-3xl mx-auto stagger">
+            <div class="fade-up border border-[#e5e5e5] rounded-xl p-6 bg-white">
+                <p class="text-[14px] text-dark leading-relaxed">
+                    "I manage 8 clients and was spending hours re-prompting ChatGPT for each one. Agenso remembers everything about each client — the output quality is night and day."
+                </p>
+                <div class="mt-6 flex items-center gap-3">
+                    <div class="w-9 h-9 rounded-full bg-surface-card"></div>
+                    <div>
+                        <p class="text-[13px] font-heading font-medium text-dark">Beta User</p>
+                        <p class="text-[12px] text-gray-400">Freelance Marketer</p>
+                    </div>
+                </div>
+            </div>
+            <div class="fade-up border border-[#e5e5e5] rounded-xl p-6 bg-white">
+                <p class="text-[14px] text-dark leading-relaxed">
+                    "Finally, AI marketing output I can actually trust. I used to triple-check everything from ChatGPT. With Agenso, the strategy and copy just... work."
+                </p>
+                <div class="mt-6 flex items-center gap-3">
+                    <div class="w-9 h-9 rounded-full bg-surface-card"></div>
+                    <div>
+                        <p class="text-[13px] font-heading font-medium text-dark">Beta User</p>
+                        <p class="text-[12px] text-gray-400">Growth Consultant</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- ========== PRICING ========== -->
+    <section id="pricing" class="py-20 md:py-28 px-6">
+        <div class="max-w-3xl mx-auto text-center mb-14 md:mb-20">
+            <h2 class="font-heading text-[28px] md:text-[36px] font-medium tracking-tight-3 fade-up">
+                Simple pricing
+            </h2>
+            <p class="mt-4 text-[15px] text-gray-500 max-w-sm mx-auto leading-relaxed fade-up">
+                No hidden fees. Pick the plan that matches your workload.
+            </p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto stagger">
+            <div class="fade-up bg-white border border-gray-200 rounded-xl p-6 md:p-8">
+                <h3 class="text-[13px] font-heading font-medium text-gray-400 uppercase tracking-wider">Free</h3>
+                <div class="mt-4 flex items-baseline gap-1">
+                    <span class="text-[36px] font-heading font-semibold tracking-tight-3">$0</span>
+                    <span class="text-[13px] text-gray-400">/month</span>
+                </div>
+                <p class="mt-2 text-[13px] text-gray-500">Explore the platform with limited access.</p>
+                <a href="#" class="mt-6 flex items-center justify-center px-5 py-2.5 border border-gray-200 text-dark text-[13px] font-heading font-medium rounded-full hover:border-brand hover:text-brand transition-all duration-150 btn-press">Start Free</a>
+                <ul class="mt-6 space-y-2.5 text-[13px] text-gray-600">
+                    <li>1 project</li>
+                    <li>All 6 agents</li>
+                    <li>50 messages/month</li>
+                </ul>
+            </div>
+            <div class="fade-up bg-white border-2 rounded-xl p-6 md:p-8 pricing-popular relative">
+                <div class="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-0.5 bg-brand text-white text-[11px] font-heading font-medium rounded-full uppercase tracking-wider">Popular</div>
+                <h3 class="text-[13px] font-heading font-medium text-brand uppercase tracking-wider">Pro</h3>
+                <div class="mt-4 flex items-baseline gap-1">
+                    <span class="text-[36px] font-heading font-semibold tracking-tight-3">$49</span>
+                    <span class="text-[13px] text-gray-400">/month</span>
+                </div>
+                <p class="mt-2 text-[13px] text-gray-500">Everything to manage multiple clients.</p>
+                <a href="#" class="mt-6 flex items-center justify-center px-5 py-2.5 gradient-bg text-white text-[13px] font-heading font-medium rounded-full hover:opacity-90 transition-opacity duration-150 btn-press">Start Free Trial</a>
+                <ul class="mt-6 space-y-2.5 text-[13px] text-gray-600">
+                    <li>Unlimited projects</li>
+                    <li>All 6 agents</li>
+                    <li>1,000 messages/month</li>
+                    <li>Full history & priority support</li>
+                </ul>
+            </div>
+            <div class="fade-up bg-white border border-gray-200 rounded-xl p-6 md:p-8">
+                <h3 class="text-[13px] font-heading font-medium text-gray-400 uppercase tracking-wider">Team</h3>
+                <div class="mt-4 flex items-baseline gap-1">
+                    <span class="text-[36px] font-heading font-semibold tracking-tight-3">$99</span>
+                    <span class="text-[13px] text-gray-400">/month</span>
+                </div>
+                <p class="mt-2 text-[13px] text-gray-500">For agencies with shared workspaces.</p>
+                <a href="#" class="mt-6 flex items-center justify-center px-5 py-2.5 border border-gray-200 text-dark text-[13px] font-heading font-medium rounded-full hover:border-brand hover:text-brand transition-all duration-150 btn-press">Start Free Trial</a>
+                <ul class="mt-6 space-y-2.5 text-[13px] text-gray-600">
+                    <li>Everything in Pro</li>
+                    <li>Up to 5 team members</li>
+                    <li>5,000 messages/month</li>
+                    <li>API access & integrations</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- FAQ -->
+        <div class="max-w-2xl mx-auto mt-16">
+            <div class="border-t border-[#e5e5e5]">
+                <div class="faq-item border-b border-[#e5e5e5]">
+                    <button class="w-full flex items-center justify-between py-4 text-left" onclick="toggleFaq(this)">
+                        <span class="text-[14px] font-heading font-medium text-dark">How is this different from ChatGPT?</span>
+                        <svg class="faq-chevron w-4 h-4 text-gray-400 flex-shrink-0" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M4 6l4 4 4-4"/></svg>
+                    </button>
+                    <div class="faq-answer"><p class="pb-4 text-[13px] text-gray-500 leading-relaxed">ChatGPT is general-purpose. Agenso's agents are pre-trained on marketing with structured directives that prevent hallucinations, and they remember your client's context across every session.</p></div>
+                </div>
+                <div class="faq-item border-b border-[#e5e5e5]">
+                    <button class="w-full flex items-center justify-between py-4 text-left" onclick="toggleFaq(this)">
+                        <span class="text-[14px] font-heading font-medium text-dark">Will it work for my specific industry?</span>
+                        <svg class="faq-chevron w-4 h-4 text-gray-400 flex-shrink-0" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M4 6l4 4 4-4"/></svg>
+                    </button>
+                    <div class="faq-answer"><p class="pb-4 text-[13px] text-gray-500 leading-relaxed">Yes. You provide your client's industry, audience, tone, and goals when setting up a project. Every agent adapts its outputs to that specific context.</p></div>
+                </div>
+                <div class="faq-item border-b border-[#e5e5e5]">
+                    <button class="w-full flex items-center justify-between py-4 text-left" onclick="toggleFaq(this)">
+                        <span class="text-[14px] font-heading font-medium text-dark">Can I trust AI outputs for client work?</span>
+                        <svg class="faq-chevron w-4 h-4 text-gray-400 flex-shrink-0" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M4 6l4 4 4-4"/></svg>
+                    </button>
+                    <div class="faq-answer"><p class="pb-4 text-[13px] text-gray-500 leading-relaxed">That's exactly what Agenso solves. Agents follow structured directives and proven frameworks. The outputs are consistent, accurate, and ready to use.</p></div>
+                </div>
+                <div class="faq-item border-b border-[#e5e5e5]">
+                    <button class="w-full flex items-center justify-between py-4 text-left" onclick="toggleFaq(this)">
+                        <span class="text-[14px] font-heading font-medium text-dark">What's included in the free plan?</span>
+                        <svg class="faq-chevron w-4 h-4 text-gray-400 flex-shrink-0" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M4 6l4 4 4-4"/></svg>
+                    </button>
+                    <div class="faq-answer"><p class="pb-4 text-[13px] text-gray-500 leading-relaxed">1 project, all 6 agents, 50 messages per month. Enough to experience the quality difference before committing.</p></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- ========== FINAL CTA ========== -->
+    <section class="section-dark py-20 md:py-28 relative overflow-hidden">
+        <div class="max-w-[1200px] mx-auto px-6 text-center relative z-10 fade-up">
+            <h2 class="font-heading text-[28px] md:text-[40px] lg:text-[48px] font-medium tracking-tight-3 text-white leading-[1.1] max-w-xl mx-auto">
+                Stop guessing.<br><span class="gradient-text">Start scaling.</span>
+            </h2>
+            <p class="mt-4 text-[14px] md:text-[15px] text-gray-400 max-w-md mx-auto leading-relaxed">
+                Join 200+ marketers using Agenso to deliver better work, faster. Free to start, no credit card required.
+            </p>
+            <a href="#" class="inline-flex items-center mt-8 px-6 py-3 bg-white text-dark text-[14px] font-heading font-medium rounded-full hover:bg-surface-card transition-colors duration-150 btn-press">
+                Get Started Now
+            </a>
+        </div>
+    </section>
+
+    </main>
+
+    <!-- ========== FOOTER ========== -->
+    <footer class="text-white border-t border-[#2e2d31]" style="background:#0a090c">
+        <div class="max-w-[1200px] mx-auto px-6 py-16 md:py-20">
+            <div class="grid grid-cols-2 md:grid-cols-5 gap-10 md:gap-8">
+                <div class="col-span-2">
+                    <div class="flex items-center mb-4">
+                        <img src="https://res.cloudinary.com/dxyxrrgj8/image/upload/v1771242739/Agenso_7_jeg2ol.png" alt="Agenso" class="h-7">
+                    </div>
+                    <p class="text-[13px] text-gray-400 leading-relaxed max-w-[260px]">
+                        Pre-trained AI marketing agents for freelancers, teams, and agencies.
+                    </p>
+                </div>
+                <div>
+                    <p class="text-[12px] font-heading font-medium text-gray-400 uppercase tracking-wider mb-4">Product</p>
+                    <ul class="space-y-2.5">
+                        <li><a href="#agents" class="text-[13px] text-gray-300 hover:text-white transition-colors duration-150">Agents</a></li>
+                        <li><a href="#pricing" class="text-[13px] text-gray-300 hover:text-white transition-colors duration-150">Pricing</a></li>
+                        <li><a href="#how-it-works" class="text-[13px] text-gray-300 hover:text-white transition-colors duration-150">How It Works</a></li>
+                        <li><a href="#" class="text-[13px] text-gray-300 hover:text-white transition-colors duration-150">Changelog</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <p class="text-[12px] font-heading font-medium text-gray-400 uppercase tracking-wider mb-4">Company</p>
+                    <ul class="space-y-2.5">
+                        <li><a href="#" class="text-[13px] text-gray-300 hover:text-white transition-colors duration-150">About</a></li>
+                        <li><a href="#" class="text-[13px] text-gray-300 hover:text-white transition-colors duration-150">Blog</a></li>
+                        <li><a href="#" class="text-[13px] text-gray-300 hover:text-white transition-colors duration-150">Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <p class="text-[12px] font-heading font-medium text-gray-400 uppercase tracking-wider mb-4">Legal</p>
+                    <ul class="space-y-2.5">
+                        <li><a href="#" class="text-[13px] text-gray-300 hover:text-white transition-colors duration-150">Privacy</a></li>
+                        <li><a href="#" class="text-[13px] text-gray-300 hover:text-white transition-colors duration-150">Terms</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="mt-16 pt-8 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4">
+                <p class="text-[12px] text-gray-500">&copy; 2026 Agenso. All rights reserved.</p>
+                <div class="flex items-center gap-4">
+                    <a href="#" class="text-gray-400 hover:text-white transition-colors duration-150" aria-label="LinkedIn">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M4.5 6.5v6h-2v-6h2zm-1-3.5a1.15 1.15 0 110 2.3 1.15 1.15 0 010-2.3zm3.5 3.5h1.9v.8h.03c.26-.5.91-1.03 1.87-1.03 2 0 2.37 1.32 2.37 3.03v3.2h-2v-2.84c0-.68-.01-1.55-.95-1.55-.95 0-1.1.74-1.1 1.5v2.89h-2v-6z"/></svg>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-white transition-colors duration-150" aria-label="X/Twitter">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M12.6 2h2.07L9.93 7.34 15.42 14h-4.33l-3.1-4.06L4.37 14H2.3l5.07-5.79L1.76 2h4.44l2.81 3.71L12.6 2zm-.73 10.8h1.15L5.28 3.18H4.05l7.82 9.62z"/></svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ========== SCRIPTS ========== -->
+    <script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
+        }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+        document.fonts.ready.then(() => {
+            document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+        });
+
+        const nav = document.getElementById('nav');
+        window.addEventListener('scroll', () => {
+            nav.classList.toggle('nav-scrolled', window.scrollY > 20);
+        }, { passive: true });
+
+        document.getElementById('menuToggle').addEventListener('click', () => {
+            document.getElementById('mobileMenu').classList.toggle('hidden');
+        });
+
+        // Vertical agent tabs
+        document.querySelectorAll('.vtab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                const target = tab.dataset.vtab;
+                document.querySelectorAll('.vtab').forEach(t => { t.classList.remove('active'); t.classList.add('text-gray-500'); });
+                tab.classList.add('active');
+                tab.classList.remove('text-gray-500');
+                document.querySelectorAll('.agent-vpanel').forEach(p => p.classList.remove('active'));
+                document.querySelector(`[data-vpanel="${target}"]`).classList.add('active');
+            });
+        });
+
+        function toggleFaq(button) {
+            const item = button.parentElement;
+            item.querySelector('.faq-answer').classList.toggle('open');
+            item.querySelector('.faq-chevron').classList.toggle('open');
+        }
+
+        document.querySelectorAll('#mobileMenu a[href^="#"]').forEach(link => {
+            link.addEventListener('click', () => document.getElementById('mobileMenu').classList.add('hidden'));
+        });
+    </script>
+</body>
+</html>
