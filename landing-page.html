@@ -760,44 +760,142 @@
 
     <!-- ========== HOW IT WORKS ========== -->
     <section id="how-it-works" class="py-20 md:py-28 px-6">
-        <div class="max-w-3xl mx-auto text-center mb-16 md:mb-20">
-            <h2 class="font-heading text-[36px] md:text-[52px] lg:text-[64px] font-medium tracking-tight-3 text-dark fade-up">
-                How it works
+        <div class="mb-16 md:mb-20">
+            <p class="text-[12px] font-heading font-medium text-brand uppercase tracking-wider mb-5 fade-up">How it works</p>
+            <h2 class="font-heading text-[36px] md:text-[52px] lg:text-[64px] font-medium tracking-tight-3 text-dark leading-[1.08] fade-up">
+                Three steps to<br>client-ready output
             </h2>
-            <p class="mt-4 text-[16px] text-gray-500 max-w-md mx-auto leading-relaxed fade-up">
-                From setup to client-ready work in under a minute.
-            </p>
         </div>
 
-        <!-- 3 Steps Grid -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-0 border-t border-[#e5e5e5] -mx-6 px-6 fade-up">
-            <div class="py-10 md:pr-8 md:border-r border-[#e5e5e5] border-b md:border-b-0 border-[#e5e5e5]">
+        <!-- Step 1 -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-0 border-t border-[#e5e5e5] -mx-6 px-6 fade-up">
+            <div class="py-10 md:py-16 md:pr-10 flex flex-col justify-center border-b md:border-b-0 md:border-r border-[#e5e5e5]">
                 <p class="text-[48px] md:text-[64px] font-heading font-semibold text-brand leading-none mb-5">01</p>
-                <h3 class="text-[18px] md:text-[20px] font-heading font-medium text-dark mb-3">Create a project</h3>
-                <p class="text-[14px] text-gray-500 leading-relaxed">Add your client's industry, audience, tone, and goals and connect the needed integrations. One time. Every agent picks it up from there.</p>
+                <h3 class="text-[20px] md:text-[24px] font-heading font-medium text-dark mb-3">Create a project</h3>
+                <p class="text-[15px] text-gray-500 leading-relaxed max-w-sm">Add your client's industry, audience, tone, and goals and connect the needed integrations. One time. Every agent picks it up from there.</p>
             </div>
-            <div class="py-10 md:px-8 md:border-r border-[#e5e5e5] border-b md:border-b-0 border-[#e5e5e5]">
-                <p class="text-[48px] md:text-[64px] font-heading font-semibold text-brand leading-none mb-5">02</p>
-                <h3 class="text-[18px] md:text-[20px] font-heading font-medium text-dark mb-3">Talk to any agent</h3>
-                <p class="text-[14px] text-gray-500 leading-relaxed">Describe what you need in plain English. The agent already knows best practices and your client's context.</p>
-            </div>
-            <div class="py-10 md:pl-8">
-                <p class="text-[48px] md:text-[64px] font-heading font-semibold text-brand leading-none mb-5">03</p>
-                <h3 class="text-[18px] md:text-[20px] font-heading font-medium text-dark mb-3">Get client-ready output</h3>
-                <p class="text-[14px] text-gray-500 leading-relaxed">Receive structured strategy, copy, and recommendations you can send directly to your client.</p>
+            <div class="py-8 md:py-12 md:pl-10 flex items-center">
+                <!-- Mock: Project setup form -->
+                <div class="w-full rounded-xl border border-[#e5e5e5] overflow-hidden bg-white" style="box-shadow: 4px 6px 24px -4px rgba(0,0,0,0.08);">
+                    <div class="flex items-center gap-2 px-4 py-3 border-b border-[#e5e5e5] bg-[#fafafa]">
+                        <div class="flex gap-1.5">
+                            <div class="w-2.5 h-2.5 rounded-full bg-[#ff5f57]"></div>
+                            <div class="w-2.5 h-2.5 rounded-full bg-[#febc2e]"></div>
+                            <div class="w-2.5 h-2.5 rounded-full bg-[#28c840]"></div>
+                        </div>
+                        <p class="text-[11px] text-gray-400 ml-2 font-heading">New Project</p>
+                    </div>
+                    <div class="p-5 space-y-4 text-[13px]">
+                        <div>
+                            <p class="text-[11px] font-heading font-medium text-gray-400 uppercase tracking-wider mb-1.5">Client name</p>
+                            <div class="border border-[#e5e5e5] rounded-lg px-3 py-2 text-dark">Bloom & Co.</div>
+                        </div>
+                        <div class="grid grid-cols-2 gap-3">
+                            <div>
+                                <p class="text-[11px] font-heading font-medium text-gray-400 uppercase tracking-wider mb-1.5">Industry</p>
+                                <div class="border border-[#e5e5e5] rounded-lg px-3 py-2 text-dark">DTC Skincare</div>
+                            </div>
+                            <div>
+                                <p class="text-[11px] font-heading font-medium text-gray-400 uppercase tracking-wider mb-1.5">Audience</p>
+                                <div class="border border-[#e5e5e5] rounded-lg px-3 py-2 text-dark">Women 25-40</div>
+                            </div>
+                        </div>
+                        <div>
+                            <p class="text-[11px] font-heading font-medium text-gray-400 uppercase tracking-wider mb-1.5">Brand tone</p>
+                            <div class="flex gap-2">
+                                <span class="px-2.5 py-1 rounded-full bg-brand/10 text-brand text-[11px] font-heading font-medium">Warm</span>
+                                <span class="px-2.5 py-1 rounded-full bg-brand/10 text-brand text-[11px] font-heading font-medium">Clean</span>
+                                <span class="px-2.5 py-1 rounded-full bg-brand/10 text-brand text-[11px] font-heading font-medium">Premium</span>
+                            </div>
+                        </div>
+                        <div>
+                            <p class="text-[11px] font-heading font-medium text-gray-400 uppercase tracking-wider mb-1.5">Integrations</p>
+                            <div class="flex gap-2">
+                                <span class="px-2.5 py-1 rounded-full bg-[#f0f0f0] text-dark text-[11px] font-heading font-medium">Meta Ads</span>
+                                <span class="px-2.5 py-1 rounded-full bg-[#f0f0f0] text-dark text-[11px] font-heading font-medium">Google Ads</span>
+                                <span class="px-2.5 py-1 rounded-full bg-[#f0f0f0] text-dark text-[11px] font-heading font-medium">Search Console</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <!-- 3 Step Images -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-14 md:mt-20 fade-up">
-            <div class="rounded-xl overflow-hidden border border-[#e5e5e5]" style="box-shadow: 0 12px 40px -8px rgba(0,0,0,0.1);">
-                <img src="https://res.cloudinary.com/dxyxrrgj8/image/upload/v1771247433/Gemini_Generated_Image_fg2xjqfg2xjqfg2x_eh2ts8.png" alt="Create a project in Agenso" class="w-full aspect-[4/3] object-cover">
+        <!-- Step 2 -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-0 border-t border-[#e5e5e5] -mx-6 px-6 fade-up">
+            <div class="py-8 md:py-12 md:pr-10 flex items-center order-2 md:order-1">
+                <!-- Mock: Agent chat -->
+                <div class="w-full rounded-xl border border-[#e5e5e5] overflow-hidden bg-white" style="box-shadow: 4px 6px 24px -4px rgba(0,0,0,0.08);">
+                    <div class="flex items-center justify-between px-4 py-3 border-b border-[#e5e5e5] bg-[#fafafa]">
+                        <div class="flex items-center gap-2">
+                            <div class="flex gap-1.5">
+                                <div class="w-2.5 h-2.5 rounded-full bg-[#ff5f57]"></div>
+                                <div class="w-2.5 h-2.5 rounded-full bg-[#febc2e]"></div>
+                                <div class="w-2.5 h-2.5 rounded-full bg-[#28c840]"></div>
+                            </div>
+                            <p class="text-[11px] text-gray-400 ml-2 font-heading">Meta Ads Agent</p>
+                        </div>
+                        <div class="flex items-center gap-1">
+                            <div class="w-1.5 h-1.5 rounded-full bg-[#28c840]"></div>
+                            <p class="text-[10px] text-gray-400 font-heading">Bloom & Co.</p>
+                        </div>
+                    </div>
+                    <div class="p-4 space-y-3 text-[13px]">
+                        <div class="flex justify-end">
+                            <div class="bg-[#f0f0f0] rounded-2xl rounded-br-sm px-3.5 py-2 max-w-[85%] text-dark">Build me a full Meta campaign for our summer moisturizer launch</div>
+                        </div>
+                        <div class="flex justify-start">
+                            <div class="bg-white border border-[#e5e5e5] rounded-2xl rounded-bl-sm px-3.5 py-2.5 max-w-[90%] text-gray-600 text-[12px] leading-relaxed">Based on Bloom & Co.'s DTC skincare positioning and your Women 25-40 audience, I'll structure a 3-tier campaign: prospecting, retargeting, and retention. Using your warm, premium tone throughout.<br><br><span class="text-brand font-medium">Generating campaign structure...</span></div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="rounded-xl overflow-hidden border border-[#e5e5e5]" style="box-shadow: 0 12px 40px -8px rgba(0,0,0,0.1);">
-                <img src="https://res.cloudinary.com/dxyxrrgj8/image/upload/v1771247433/Gemini_Generated_Image_fg2xjqfg2xjqfg2x_eh2ts8.png" alt="Talk to any agent" class="w-full aspect-[4/3] object-cover">
+            <div class="py-10 md:py-16 md:pl-10 flex flex-col justify-center order-1 md:order-2 border-b md:border-b-0 md:border-l border-[#e5e5e5]">
+                <p class="text-[48px] md:text-[64px] font-heading font-semibold text-brand leading-none mb-5">02</p>
+                <h3 class="text-[20px] md:text-[24px] font-heading font-medium text-dark mb-3">Talk to any agent</h3>
+                <p class="text-[15px] text-gray-500 leading-relaxed max-w-sm">Describe what you need in plain English. The agent already knows best practices and your client's context.</p>
             </div>
-            <div class="rounded-xl overflow-hidden border border-[#e5e5e5]" style="box-shadow: 0 12px 40px -8px rgba(0,0,0,0.1);">
-                <img src="https://res.cloudinary.com/dxyxrrgj8/image/upload/v1771247433/Gemini_Generated_Image_fg2xjqfg2xjqfg2x_eh2ts8.png" alt="Get client-ready output" class="w-full aspect-[4/3] object-cover">
+        </div>
+
+        <!-- Step 3 -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-0 border-t border-b border-[#e5e5e5] -mx-6 px-6 fade-up">
+            <div class="py-10 md:py-16 md:pr-10 flex flex-col justify-center border-b md:border-b-0 md:border-r border-[#e5e5e5]">
+                <p class="text-[48px] md:text-[64px] font-heading font-semibold text-brand leading-none mb-5">03</p>
+                <h3 class="text-[20px] md:text-[24px] font-heading font-medium text-dark mb-3">Get client-ready output</h3>
+                <p class="text-[15px] text-gray-500 leading-relaxed max-w-sm">Receive structured strategy, copy, and recommendations you can send directly to your client.</p>
+            </div>
+            <div class="py-8 md:py-12 md:pl-10 flex items-center">
+                <!-- Mock: Structured output document -->
+                <div class="w-full rounded-xl border border-[#e5e5e5] overflow-hidden bg-white" style="box-shadow: 4px 6px 24px -4px rgba(0,0,0,0.08);">
+                    <div class="h-1.5 bg-brand"></div>
+                    <div class="p-5 text-[13px]">
+                        <div class="flex items-center justify-between mb-4">
+                            <div>
+                                <p class="text-[11px] font-heading font-medium text-brand uppercase tracking-wider">Meta Ads Campaign</p>
+                                <p class="text-[16px] font-heading font-semibold text-dark mt-1">Bloom & Co. — Summer Launch</p>
+                            </div>
+                            <span class="px-2.5 py-1 rounded-full bg-[#dcfce7] text-[#16a34a] text-[10px] font-heading font-medium">Ready to send</span>
+                        </div>
+                        <div class="space-y-3 border-t border-[#e5e5e5] pt-4">
+                            <div class="flex items-start gap-3">
+                                <span class="w-5 h-5 rounded bg-brand/10 flex items-center justify-center flex-shrink-0 mt-0.5"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#5762d5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                                <div><p class="font-heading font-medium text-dark text-[12px]">Campaign architecture</p><p class="text-[11px] text-gray-400">3-tier structure with budget allocation</p></div>
+                            </div>
+                            <div class="flex items-start gap-3">
+                                <span class="w-5 h-5 rounded bg-brand/10 flex items-center justify-center flex-shrink-0 mt-0.5"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#5762d5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                                <div><p class="font-heading font-medium text-dark text-[12px]">Ad copy — 6 variants</p><p class="text-[11px] text-gray-400">Primary text, headlines, descriptions</p></div>
+                            </div>
+                            <div class="flex items-start gap-3">
+                                <span class="w-5 h-5 rounded bg-brand/10 flex items-center justify-center flex-shrink-0 mt-0.5"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#5762d5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                                <div><p class="font-heading font-medium text-dark text-[12px]">Audience targeting</p><p class="text-[11px] text-gray-400">Interest stacks, lookalikes, exclusions</p></div>
+                            </div>
+                            <div class="flex items-start gap-3">
+                                <span class="w-5 h-5 rounded bg-brand/10 flex items-center justify-center flex-shrink-0 mt-0.5"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#5762d5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                                <div><p class="font-heading font-medium text-dark text-[12px]">Budget & bid strategy</p><p class="text-[11px] text-gray-400">Daily spend recs with scaling plan</p></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
