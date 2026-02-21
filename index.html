@@ -95,13 +95,46 @@
             border-bottom: 1px solid rgba(0,0,0,0.06);
         }
 
+        /* Motion background — Spline embed */
+        .motion-bg {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            overflow: hidden;
+            will-change: transform;
+            contain: strict;
+        }
+        .motion-bg spline-viewer {
+            width: 100%;
+            height: 100%;
+            display: block;
+            pointer-events: none;
+        }
+
         .site-channel {
             max-width: 1200px;
             margin: 0 auto;
-            border-left: 1px solid #e5e5e5;
-            border-right: 1px solid #e5e5e5;
+            border-left: 1px solid rgba(200, 200, 200, 0.5);
+            border-right: 1px solid rgba(200, 200, 200, 0.5);
+            position: relative;
+            z-index: 1;
+            background: rgba(247, 248, 249, 0.70);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            will-change: transform;
+            transform: translateZ(0);
+            contain: layout style paint;
         }
-        .site-channel > section { position: relative; }
+        @media (max-width: 1200px) {
+            .site-channel {
+                background: rgba(247, 248, 249, 0.95);
+            }
+        }
+        .site-channel > section {
+            position: relative;
+            content-visibility: auto;
+            contain-intrinsic-size: auto 800px;
+        }
         .site-channel > section::after {
             content: '';
             position: absolute;
@@ -120,6 +153,7 @@
             width: 100vw;
             margin-left: calc(-50vw + 50%);
             position: relative;
+            z-index: 2;
         }
 
         .hero-dots-wrap { position: relative; }
@@ -239,8 +273,14 @@
         /* Heading font utility */
         .font-heading { font-family: 'Clash Grotesk', -apple-system, BlinkMacSystemFont, sans-serif; }
     </style>
+    <script type="module" src="https://unpkg.com/@splinetool/viewer@1.12.58/build/spline-viewer.js"></script>
 </head>
-<body class="bg-surface text-dark font-sans overflow-x-hidden">
+<body class="text-dark font-sans overflow-x-hidden" style="background: #edeef0;">
+
+    <!-- ========== MOTION BACKGROUND (Spline) ========== -->
+    <div class="motion-bg hidden lg:block" aria-hidden="true">
+        <spline-viewer url="https://prod.spline.design/ev3mWah4dznGqZ4C/scene.splinecode" background="transparent"></spline-viewer>
+    </div>
 
     <!-- ========== NAVIGATION ========== -->
     <nav id="nav" class="fixed top-0 left-0 right-0 z-50 transition-all duration-200 border-b border-[#e5e5e5]">
@@ -696,7 +736,7 @@
     </main>
 
     <!-- ========== IMPACT SECTION (DARK) ========== -->
-    <section class="bg-dark pt-16 md:pt-24 pb-0 relative overflow-hidden noise">
+    <section class="bg-dark pt-16 md:pt-24 pb-0 relative overflow-hidden noise" style="z-index:2;">
         <div class="absolute top-0 bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[1200px] border-l border-r border-[#2e2d31] pointer-events-none z-[1]"></div>
         <div class="max-w-[1200px] mx-auto px-6 relative z-10">
             <!-- Left-aligned bold heading -->
@@ -1110,7 +1150,7 @@
     </main>
 
     <!-- ========== FINAL CTA ========== -->
-    <section class="bg-dark py-20 md:py-28 relative overflow-hidden">
+    <section class="bg-dark py-20 md:py-28 relative overflow-hidden" style="z-index:2;">
         <div class="absolute top-0 bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[1200px] border-l border-r border-[#2e2d31] pointer-events-none z-[1]"></div>
         <div class="max-w-[1200px] mx-auto px-6 text-center relative z-10 fade-up">
             <h2 class="font-heading text-[28px] md:text-[40px] lg:text-[48px] font-medium tracking-tight-3 text-white leading-[1.1] max-w-xl mx-auto">
@@ -1126,7 +1166,7 @@
     </section>
 
     <!-- ========== FOOTER ========== -->
-    <footer class="text-white border-t border-[#2e2d31]" style="background:#0a090c">
+    <footer class="text-white border-t border-[#2e2d31]" style="background:#0a090c; position:relative; z-index:2;">
         <div class="max-w-[1200px] mx-auto px-6 py-16 md:py-20">
             <div class="grid grid-cols-2 md:grid-cols-5 gap-10 md:gap-8">
                 <div class="col-span-2">
