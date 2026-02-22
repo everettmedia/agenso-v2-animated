@@ -91,11 +91,8 @@
             overflow: hidden;
             transition: transform 0.15s ease-out, box-shadow 0.2s ease-out;
         }
-        .btn-press:hover {
-            transform: translateY(-1px);
-        }
         .btn-press:active {
-            transform: scale(0.97) translateY(0) !important;
+            transform: scale(0.97) !important;
         }
 
         /* Button text scroll-up on hover */
@@ -448,7 +445,6 @@
             .step-num { opacity: 1 !important; transform: none !important; transition: none !important; }
             .agent-vpanel.active { animation: none !important; }
             .btn-press::before { animation: none !important; }
-            .btn-press:hover { transform: none !important; }
             .btn-press:hover .btn-scroll span { transform: none !important; }
         }
 
