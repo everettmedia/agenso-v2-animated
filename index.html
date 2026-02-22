@@ -258,7 +258,7 @@
 
         /* Agent panel */
         .agent-vpanel { display: none; }
-        .agent-vpanel.active { display: block; }
+        .agent-vpanel.active { display: block; animation: panelFadeIn 0.2s ease forwards; }
 
         /* FAQ */
         .faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
@@ -286,6 +286,105 @@
             border-image: linear-gradient(135deg, #90ddf0, #5762d5) 1;
         }
 
+        /* ===== ANIMATION ENHANCEMENTS ===== */
+
+        /* Pencil underline draw-on */
+        .pencil-draw path {
+            stroke-dasharray: 500;
+            stroke-dashoffset: 500;
+            transition: stroke-dashoffset 0.8s ease-out 0.2s;
+        }
+        .pencil-draw.draw-visible path {
+            stroke-dashoffset: 0;
+        }
+
+        /* Agent panel crossfade */
+        @keyframes panelFadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Chat sequential entrance */
+        .chat-msg {
+            opacity: 0;
+            transform: translateY(8px);
+            transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+                        transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .chat-msg.msg-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Step number scale entrance */
+        .step-num {
+            display: inline-block;
+            opacity: 0;
+            transform: scale(0.85);
+            transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+                        transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .step-num.visible {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        /* Card hover lift */
+        .card-lift {
+            transition: transform 0.2s ease-out, box-shadow 0.2s ease-out;
+        }
+        .card-lift:hover {
+            transform: translateY(-4px);
+            box-shadow: 8px 16px 40px -8px rgba(0,0,0,0.15) !important;
+        }
+
+        /* Learn more arrow slide */
+        .learn-more-link svg {
+            transition: transform 0.15s ease-out;
+        }
+        .learn-more-link:hover svg {
+            transform: translateX(4px);
+        }
+
+        /* CTA button hover glow */
+        a.bg-brand {
+            transition: background-color 0.15s, box-shadow 0.2s ease-out;
+        }
+        a.bg-brand:hover {
+            box-shadow: 0 0 20px rgba(87, 98, 213, 0.2);
+        }
+
+        /* Nav link hover underline (desktop) */
+        .nav-underline {
+            position: relative;
+        }
+        .nav-underline::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            right: 0;
+            height: 1.5px;
+            background: #5762d5;
+            transform: scaleX(0);
+            transform-origin: center;
+            transition: transform 0.15s ease-out;
+        }
+        .nav-underline:hover::after {
+            transform: scaleX(1);
+        }
+
+        /* Reduced motion */
+        @media (prefers-reduced-motion: reduce) {
+            .fade-up { transition-duration: 0.01s !important; transform: none !important; }
+            .fade-up.visible { transform: none !important; }
+            .pencil-draw path { stroke-dasharray: none !important; stroke-dashoffset: 0 !important; transition: none !important; }
+            .card-lift:hover { transform: none !important; }
+            .chat-msg { opacity: 1 !important; transform: none !important; transition: none !important; }
+            .step-num { opacity: 1 !important; transform: none !important; transition: none !important; }
+            .agent-vpanel.active { animation: none !important; }
+        }
+
         /* Heading font utility */
         .font-heading { font-family: 'Clash Grotesk', -apple-system, BlinkMacSystemFont, sans-serif; }
     </style>
@@ -305,10 +404,10 @@
                 <img src="https://res.cloudinary.com/dxyxrrgj8/image/upload/v1771242506/Agenso_6_dr0eg8.png" alt="Agenso" class="h-7 md:h-8">
             </div>
             <div class="hidden md:flex items-center gap-7">
-                <a href="#agents" class="text-[13px] font-heading font-medium text-gray-600 hover:text-dark transition-colors duration-150">Agents</a>
-                <a href="#how-it-works" class="text-[13px] font-heading font-medium text-gray-600 hover:text-dark transition-colors duration-150">How It Works</a>
-                <a href="#pricing" class="text-[13px] font-heading font-medium text-gray-600 hover:text-dark transition-colors duration-150">Pricing</a>
-                <a href="#" class="text-[13px] font-heading font-medium text-gray-600 hover:text-dark transition-colors duration-150">Login</a>
+                <a href="#agents" class="nav-underline text-[13px] font-heading font-medium text-gray-600 hover:text-dark transition-colors duration-150">Agents</a>
+                <a href="#how-it-works" class="nav-underline text-[13px] font-heading font-medium text-gray-600 hover:text-dark transition-colors duration-150">How It Works</a>
+                <a href="#pricing" class="nav-underline text-[13px] font-heading font-medium text-gray-600 hover:text-dark transition-colors duration-150">Pricing</a>
+                <a href="#" class="nav-underline text-[13px] font-heading font-medium text-gray-600 hover:text-dark transition-colors duration-150">Login</a>
             </div>
             <div class="flex items-center gap-4">
                 <a href="#" class="hidden md:inline-flex items-center px-4 py-2 bg-brand text-white text-[13px] font-heading font-medium rounded-full hover:bg-brand-dark transition-colors duration-150 btn-press">
@@ -429,7 +528,7 @@
                 </p>
             </div>
             <!-- Mock ChatGPT conversation -->
-            <div class="fade-up rounded-xl border border-[#e5e5e5] overflow-hidden bg-white" style="box-shadow: 6px 8px 30px -6px rgba(0,0,0,0.15);">
+            <div class="card-lift fade-up rounded-xl border border-[#e5e5e5] overflow-hidden bg-white" style="box-shadow: 6px 8px 30px -6px rgba(0,0,0,0.15);">
                 <!-- Window bar -->
                 <div class="flex items-center gap-2 px-4 py-3 border-b border-[#e5e5e5] bg-[#fafafa]">
                     <div class="flex gap-1.5">
@@ -440,29 +539,29 @@
                     <p class="text-[11px] text-gray-400 ml-2 font-heading">Generic AI Chat</p>
                 </div>
                 <!-- Messages -->
-                <div class="p-4 space-y-3 text-[13px]">
+                <div id="chat-container" class="p-4 space-y-3 text-[13px]">
                     <!-- User msg 1 -->
-                    <div class="flex justify-end">
+                    <div class="chat-msg flex justify-end">
                         <div class="bg-[#f0f0f0] rounded-2xl rounded-br-sm px-3.5 py-2 max-w-[85%] text-dark">Write Meta ad copy for my client's summer campaign</div>
                     </div>
                     <!-- AI response (truncated) -->
-                    <div class="flex justify-start">
+                    <div class="chat-msg flex justify-start">
                         <div class="bg-white border border-[#e5e5e5] rounded-2xl rounded-bl-sm px-3.5 py-2 max-w-[85%] text-gray-400 italic">Here's some ad copy for a summer campaign...</div>
                     </div>
                     <!-- User msg 2 -->
-                    <div class="flex justify-end">
+                    <div class="chat-msg flex justify-end">
                         <div class="bg-[#f0f0f0] rounded-2xl rounded-br-sm px-3.5 py-2 max-w-[85%] text-dark">No, follow the brand guidelines I gave you before</div>
                     </div>
                     <!-- AI response with warning -->
-                    <div class="flex justify-start">
+                    <div class="chat-msg flex justify-start">
                         <div class="bg-[#fef2f2] border border-[#fecaca] rounded-2xl rounded-bl-sm px-3.5 py-2 max-w-[85%] text-[#e5484d] text-[12px]">I don't have access to previous conversations. Could you share the brand guidelines again?</div>
                     </div>
                     <!-- User msg 3 - frustrated -->
-                    <div class="flex justify-end">
+                    <div class="chat-msg flex justify-end">
                         <div class="bg-[#f0f0f0] rounded-2xl rounded-br-sm px-3.5 py-2 max-w-[85%] text-dark">The tone is casual, audience is 25-34, budget is $2k/mo. We talked about this yesterday.</div>
                     </div>
                     <!-- User msg 4 - giving up -->
-                    <div class="flex justify-end">
+                    <div class="chat-msg flex justify-end">
                         <div class="bg-[#f0f0f0] rounded-2xl rounded-br-sm px-3.5 py-2 max-w-[85%] text-gray-300">And make sure you use the metrics from last month's report...</div>
                     </div>
                 </div>
@@ -499,7 +598,7 @@
         <div class="mb-16 md:mb-24">
             <p class="text-[12px] font-heading font-medium text-brand uppercase tracking-wider mb-5 fade-up">What makes us different</p>
             <h2 class="font-heading text-[40px] md:text-[56px] lg:text-[72px] font-medium tracking-tight-3 leading-[1.08] fade-up">
-                Agenso is built<br><span class="relative inline-block">with purpose<svg class="absolute -bottom-4 left-0 w-full" height="20" viewBox="0 0 220 10" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><defs><filter id="pencil2" x="-5%" y="-80%" width="110%" height="260%" color-interpolation-filters="sRGB"><feTurbulence type="fractalNoise" baseFrequency="0.65 0.45" numOctaves="5" seed="2" result="edgeNoise"/><feDisplacementMap in="SourceGraphic" in2="edgeNoise" scale="5" xChannelSelector="R" yChannelSelector="G" result="rough"/><feTurbulence type="fractalNoise" baseFrequency="3" numOctaves="4" seed="7" result="grain"/><feColorMatrix in="grain" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  2.5 0 0 0 -0.4" result="grainAlpha"/><feComposite in="rough" in2="grainAlpha" operator="in"/></filter><linearGradient id="pencil-fade2" x1="3" y1="0" x2="220" y2="0" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#5762d5" stop-opacity="0.85"/><stop offset="0.65" stop-color="#5762d5" stop-opacity="0.75"/><stop offset="1" stop-color="#5762d5" stop-opacity="0.1"/></linearGradient></defs><path d="M6 5.5Q3 5.5 3 6C25 5.2 55 4.5 90 5.2C125 5.9 160 4.8 195 5.5C205 5.3 212 5 215 4.9Q217 4.8 217 5.2" stroke="url(#pencil-fade2)" stroke-width="3.5" stroke-linecap="round" filter="url(#pencil2)"/><path d="M7 6Q5 6.2 5 6.5C30 5.8 60 5 95 5.6C130 6.2 165 5.1 200 5.8C210 5.5 214 5.2 216 5.1Q217 5 217 5.3" stroke="url(#pencil-fade2)" stroke-width="1.5" stroke-linecap="round" filter="url(#pencil2)" opacity="0.4"/></svg></span>
+                Agenso is built<br><span class="relative inline-block" id="pencil-target">with purpose<svg class="pencil-draw absolute -bottom-4 left-0 w-full" height="20" viewBox="0 0 220 10" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><defs><filter id="pencil2" x="-5%" y="-80%" width="110%" height="260%" color-interpolation-filters="sRGB"><feTurbulence type="fractalNoise" baseFrequency="0.65 0.45" numOctaves="5" seed="2" result="edgeNoise"/><feDisplacementMap in="SourceGraphic" in2="edgeNoise" scale="5" xChannelSelector="R" yChannelSelector="G" result="rough"/><feTurbulence type="fractalNoise" baseFrequency="3" numOctaves="4" seed="7" result="grain"/><feColorMatrix in="grain" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  2.5 0 0 0 -0.4" result="grainAlpha"/><feComposite in="rough" in2="grainAlpha" operator="in"/></filter><linearGradient id="pencil-fade2" x1="3" y1="0" x2="220" y2="0" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#5762d5" stop-opacity="0.85"/><stop offset="0.65" stop-color="#5762d5" stop-opacity="0.75"/><stop offset="1" stop-color="#5762d5" stop-opacity="0.1"/></linearGradient></defs><path d="M6 5.5Q3 5.5 3 6C25 5.2 55 4.5 90 5.2C125 5.9 160 4.8 195 5.5C205 5.3 212 5 215 4.9Q217 4.8 217 5.2" stroke="url(#pencil-fade2)" stroke-width="3.5" stroke-linecap="round" filter="url(#pencil2)"/><path d="M7 6Q5 6.2 5 6.5C30 5.8 60 5 95 5.6C130 6.2 165 5.1 200 5.8C210 5.5 214 5.2 216 5.1Q217 5 217 5.3" stroke="url(#pencil-fade2)" stroke-width="1.5" stroke-linecap="round" filter="url(#pencil2)" opacity="0.4"/></svg></span>
             </h2>
             <p class="mt-5 text-[16px] text-gray-500 max-w-lg leading-relaxed fade-up">
                 Not another ChatGPT wrapper. Purpose-built marketing agents with guardrails, expertise, and memory.
@@ -519,7 +618,7 @@
                 <p class="mt-4 text-[15px] text-gray-500 leading-relaxed max-w-sm">
                     Every output follows your project's rules — your client's tone of voice, audience, goals, and constraints are applied automatically, every time. Not sometimes. Every time.
                 </p>
-                <a href="#" class="mt-6 inline-flex items-center gap-1.5 text-[13px] font-heading font-medium text-brand hover:text-brand-dark transition-colors">
+                <a href="#" class="learn-more-link mt-6 inline-flex items-center gap-1.5 text-[13px] font-heading font-medium text-brand hover:text-brand-dark transition-colors">
                     Learn more
                     <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M2 6h8M7 3l3 3-3 3"/></svg>
                 </a>
@@ -536,7 +635,7 @@
                 <p class="mt-4 text-[15px] text-gray-500 leading-relaxed max-w-sm">
                     Each agent is already trained on current best practices for its discipline. You don't need to teach it anything or craft the perfect prompt — just say what you need.
                 </p>
-                <a href="#" class="mt-6 inline-flex items-center gap-1.5 text-[13px] font-heading font-medium text-brand hover:text-brand-dark transition-colors">
+                <a href="#" class="learn-more-link mt-6 inline-flex items-center gap-1.5 text-[13px] font-heading font-medium text-brand hover:text-brand-dark transition-colors">
                     Learn more
                     <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M2 6h8M7 3l3 3-3 3"/></svg>
                 </a>
@@ -559,7 +658,7 @@
                 <p class="mt-4 text-[15px] text-gray-500 leading-relaxed max-w-sm">
                     Set up a project with your client's industry, audience, tone, and goals. Every agent applies that context to every output — and there's no context window limit. Your 50th message is as precise as your first.
                 </p>
-                <a href="#" class="mt-6 inline-flex items-center gap-1.5 text-[13px] font-heading font-medium text-brand hover:text-brand-dark transition-colors">
+                <a href="#" class="learn-more-link mt-6 inline-flex items-center gap-1.5 text-[13px] font-heading font-medium text-brand hover:text-brand-dark transition-colors">
                     Learn more
                     <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M2 6h8M7 3l3 3-3 3"/></svg>
                 </a>
@@ -966,13 +1065,13 @@
         <!-- Step 1 -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-0 border-t border-[#e5e5e5] -mx-6 px-6 fade-up">
             <div class="py-10 md:py-16 md:pr-10 flex flex-col justify-center border-b md:border-b-0 md:border-r border-[#e5e5e5]">
-                <p class="text-[48px] md:text-[64px] font-heading font-semibold text-brand leading-none mb-5">01</p>
+                <p class="step-num text-[48px] md:text-[64px] font-heading font-semibold text-brand leading-none mb-5">01</p>
                 <h3 class="text-[20px] md:text-[24px] font-heading font-medium text-dark mb-3">Create a project</h3>
                 <p class="text-[15px] text-gray-500 leading-relaxed max-w-sm">Add your client's industry, audience, tone, and goals and connect the needed integrations. One time. Every agent picks it up from there.</p>
             </div>
             <div class="py-8 md:py-12 md:pl-10 flex items-center">
                 <!-- Mock: Project setup form -->
-                <div class="w-full rounded-xl border border-[#e5e5e5] overflow-hidden bg-white" style="box-shadow: 4px 6px 24px -4px rgba(0,0,0,0.08);">
+                <div class="card-lift w-full rounded-xl border border-[#e5e5e5] overflow-hidden bg-white" style="box-shadow: 4px 6px 24px -4px rgba(0,0,0,0.08);">
                     <div class="flex items-center gap-2 px-4 py-3 border-b border-[#e5e5e5] bg-[#fafafa]">
                         <div class="flex gap-1.5">
                             <div class="w-2.5 h-2.5 rounded-full bg-[#ff5f57]"></div>
@@ -1021,7 +1120,7 @@
         <div class="grid grid-cols-1 md:grid-cols-2 gap-0 border-t border-[#e5e5e5] -mx-6 px-6 fade-up">
             <div class="py-8 md:py-12 md:pr-10 flex items-center order-2 md:order-1">
                 <!-- Mock: Agent chat -->
-                <div class="w-full rounded-xl border border-[#e5e5e5] overflow-hidden bg-white" style="box-shadow: 4px 6px 24px -4px rgba(0,0,0,0.08);">
+                <div class="card-lift w-full rounded-xl border border-[#e5e5e5] overflow-hidden bg-white" style="box-shadow: 4px 6px 24px -4px rgba(0,0,0,0.08);">
                     <div class="flex items-center justify-between px-4 py-3 border-b border-[#e5e5e5] bg-[#fafafa]">
                         <div class="flex items-center gap-2">
                             <div class="flex gap-1.5">
@@ -1047,7 +1146,7 @@
                 </div>
             </div>
             <div class="py-10 md:py-16 md:pl-10 flex flex-col justify-center order-1 md:order-2 border-b md:border-b-0 md:border-l border-[#e5e5e5]">
-                <p class="text-[48px] md:text-[64px] font-heading font-semibold text-brand leading-none mb-5">02</p>
+                <p class="step-num text-[48px] md:text-[64px] font-heading font-semibold text-brand leading-none mb-5">02</p>
                 <h3 class="text-[20px] md:text-[24px] font-heading font-medium text-dark mb-3">Talk to any agent</h3>
                 <p class="text-[15px] text-gray-500 leading-relaxed max-w-sm">Describe what you need in plain English. The agent already knows best practices and your client's context.</p>
             </div>
@@ -1056,13 +1155,13 @@
         <!-- Step 3 -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-0 border-t border-b border-[#e5e5e5] -mx-6 px-6 fade-up">
             <div class="py-10 md:py-16 md:pr-10 flex flex-col justify-center border-b md:border-b-0 md:border-r border-[#e5e5e5]">
-                <p class="text-[48px] md:text-[64px] font-heading font-semibold text-brand leading-none mb-5">03</p>
+                <p class="step-num text-[48px] md:text-[64px] font-heading font-semibold text-brand leading-none mb-5">03</p>
                 <h3 class="text-[20px] md:text-[24px] font-heading font-medium text-dark mb-3">Get client-ready output</h3>
                 <p class="text-[15px] text-gray-500 leading-relaxed max-w-sm">Receive structured strategy, copy, and recommendations you can send directly to your client.</p>
             </div>
             <div class="py-8 md:py-12 md:pl-10 flex items-center">
                 <!-- Mock: Structured output document -->
-                <div class="w-full rounded-xl border border-[#e5e5e5] overflow-hidden bg-white" style="box-shadow: 4px 6px 24px -4px rgba(0,0,0,0.08);">
+                <div class="card-lift w-full rounded-xl border border-[#e5e5e5] overflow-hidden bg-white" style="box-shadow: 4px 6px 24px -4px rgba(0,0,0,0.08);">
                     <div class="h-1.5 bg-brand"></div>
                     <div class="p-5 text-[13px]">
                         <div class="flex items-center justify-between mb-4">
@@ -1375,46 +1474,148 @@
 
     <!-- ========== SCRIPTS ========== -->
     <script>
+        // ===== Intersection Observer (general) =====
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
         }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
 
+        // ===== Hero choreographed entrance =====
+        const heroTimings = [
+            { delay: 100, dur: 900, rise: 24 },
+            { delay: 300, dur: 700, rise: 16 },
+            { delay: 500, dur: 600, rise: 12 },
+            { delay: 700, dur: 500, rise: 12 },
+            { delay: 600, dur: 800, rise: 40, scale: true },
+        ];
+
         document.fonts.ready.then(() => {
-            document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+            const heroSection = document.querySelector('.hero-dots-wrap');
+            let heroEls = [];
+            if (heroSection) {
+                heroEls = heroSection.querySelectorAll(':scope > .fade-up');
+                heroEls.forEach((el, i) => {
+                    if (heroTimings[i]) {
+                        const t = heroTimings[i];
+                        el.style.transitionDelay = t.delay + 'ms';
+                        el.style.transitionDuration = t.dur + 'ms';
+                        el.style.transform = t.scale
+                            ? 'translateY(' + t.rise + 'px) scale(0.97)'
+                            : 'translateY(' + t.rise + 'px)';
+                    }
+                });
+
+                // Hero-specific observer: clears inline transform so CSS .visible takes over
+                const heroObs = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('visible');
+                            // Set final inline transform (matches CSS .visible but includes scale for dashboard)
+                            const idx = Array.from(heroEls).indexOf(entry.target);
+                            entry.target.style.transform = (heroTimings[idx] && heroTimings[idx].scale)
+                                ? 'translateY(0) scale(1)'
+                                : 'translateY(0)';
+                            heroObs.unobserve(entry.target);
+                        }
+                    });
+                }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+                heroEls.forEach(el => heroObs.observe(el));
+            }
+
+            // Observe all non-hero fade-up elements with the general observer
+            document.querySelectorAll('.fade-up').forEach(el => {
+                if (!Array.from(heroEls).includes(el)) observer.observe(el);
+            });
+
+            // Observe step numbers
+            document.querySelectorAll('.step-num').forEach(el => observer.observe(el));
         });
 
+        // ===== Pencil underline draw-on =====
+        const pencilTarget = document.getElementById('pencil-target');
+        if (pencilTarget) {
+            const pencilObs = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const svg = entry.target.querySelector('.pencil-draw');
+                        if (svg) svg.classList.add('draw-visible');
+                        pencilObs.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.3 });
+            pencilObs.observe(pencilTarget);
+        }
+
+        // ===== Chat sequential entrance =====
+        const chatContainer = document.getElementById('chat-container');
+        if (chatContainer) {
+            const chatMsgs = chatContainer.querySelectorAll('.chat-msg');
+            const chatObs = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        chatMsgs.forEach((msg, i) => {
+                            setTimeout(() => msg.classList.add('msg-visible'), i * 150);
+                        });
+                        chatObs.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.2 });
+            chatObs.observe(chatContainer);
+        }
+
+        // ===== Nav scroll =====
         const nav = document.getElementById('nav');
         window.addEventListener('scroll', () => {
             nav.classList.toggle('nav-scrolled', window.scrollY > 20);
         }, { passive: true });
 
+        // ===== Mobile menu =====
         document.getElementById('menuToggle').addEventListener('click', () => {
             document.getElementById('mobileMenu').classList.toggle('hidden');
         });
 
-        // Vertical agent tabs
+        // ===== Agent tabs with crossfade =====
         document.querySelectorAll('.vtab').forEach(tab => {
             tab.addEventListener('click', () => {
                 const target = tab.dataset.vtab;
+                const currentPanel = document.querySelector('.agent-vpanel.active');
+                const nextPanel = document.querySelector(`[data-vpanel="${target}"]`);
+
+                if (currentPanel === nextPanel) return;
+
+                // Update tab states
                 document.querySelectorAll('.vtab').forEach(t => { t.classList.remove('active'); t.classList.add('text-gray-500'); });
                 tab.classList.add('active');
                 tab.classList.remove('text-gray-500');
-                document.querySelectorAll('.agent-vpanel').forEach(p => p.classList.remove('active'));
-                document.querySelector(`[data-vpanel="${target}"]`).classList.add('active');
+
+                // Fade out current panel, then switch
+                if (currentPanel) {
+                    currentPanel.animate([
+                        { opacity: 1 },
+                        { opacity: 0 }
+                    ], { duration: 150, easing: 'ease' }).onfinish = () => {
+                        currentPanel.classList.remove('active');
+                        nextPanel.classList.add('active');
+                    };
+                } else {
+                    nextPanel.classList.add('active');
+                }
             });
         });
 
+        // ===== FAQ =====
         function toggleFaq(button) {
             const item = button.parentElement;
             item.querySelector('.faq-answer').classList.toggle('open');
             item.querySelector('.faq-chevron').classList.toggle('open');
         }
 
+        // ===== Mobile menu close on nav =====
         document.querySelectorAll('#mobileMenu a[href^="#"]').forEach(link => {
             link.addEventListener('click', () => document.getElementById('mobileMenu').classList.add('hidden'));
         });
 
-        // Review carousel
+        // ===== Review carousel =====
         (function() {
             const cards = document.querySelectorAll('.review-card');
             const dots = document.querySelectorAll('.review-dot');
@@ -1443,11 +1644,9 @@
                 });
             });
 
-            // Arrow buttons
             document.getElementById('reviewPrev').addEventListener('click', () => { current = (current - 1 + total) % total; setPositions(); });
             document.getElementById('reviewNext').addEventListener('click', () => { current = (current + 1) % total; setPositions(); });
 
-            // Click prev/next cards to navigate
             cards.forEach(card => {
                 card.addEventListener('click', () => {
                     if (card.classList.contains('prev')) { current = (current - 1 + total) % total; setPositions(); }
