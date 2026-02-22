@@ -86,7 +86,63 @@
         .stagger > .fade-up:nth-child(3) { transition-delay: 160ms; }
         .stagger > .fade-up:nth-child(4) { transition-delay: 240ms; }
 
-        .btn-press:active { transform: scale(0.97); }
+        .btn-press {
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.15s ease-out, box-shadow 0.2s ease-out;
+        }
+        .btn-press:hover {
+            transform: translateY(-1px);
+        }
+        .btn-press:active {
+            transform: scale(0.97) translateY(0) !important;
+        }
+
+        /* Button text scroll-up on hover */
+        .btn-scroll {
+            display: inline-block;
+            overflow: hidden;
+        }
+        .btn-scroll span {
+            display: inline-block;
+            position: relative;
+            transition: transform 0.35s cubic-bezier(0.65, 0, 0.35, 1);
+        }
+        .btn-scroll span::after {
+            content: attr(data-text);
+            position: absolute;
+            left: 0;
+            top: 100%;
+            width: 100%;
+        }
+        .btn-press:hover .btn-scroll span {
+            transform: translateY(-100%);
+        }
+
+        /* Button shimmer sweep */
+        @keyframes btn-shimmer {
+            0%, 88% { transform: translateX(-100%) skewX(-20deg); }
+            97% { transform: translateX(200%) skewX(-20deg); }
+            100% { transform: translateX(200%) skewX(-20deg); }
+        }
+        .btn-press::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            background: linear-gradient(
+                100deg,
+                transparent 20%,
+                rgba(255,255,255,0.2) 45%,
+                rgba(255,255,255,0.35) 50%,
+                rgba(255,255,255,0.2) 55%,
+                transparent 80%
+            );
+            transform: translateX(-100%) skewX(-20deg);
+            animation: btn-shimmer 12s ease-in-out infinite;
+            pointer-events: none;
+            z-index: 1;
+        }
 
         .nav-scrolled {
             background: rgba(247,248,249,0.85);
@@ -346,6 +402,14 @@
             transform: translateX(4px);
         }
 
+        /* Pricing button hover glows */
+        #pricing a.border:hover {
+            box-shadow: 0 0 16px rgba(87,98,213,0.1);
+        }
+        #pricing a.gradient-bg:hover {
+            box-shadow: 0 0 24px rgba(87,98,213,0.25);
+        }
+
         /* CTA button hover glow */
         a.bg-brand {
             transition: background-color 0.15s, box-shadow 0.2s ease-out;
@@ -383,6 +447,9 @@
             .chat-msg { opacity: 1 !important; transform: none !important; transition: none !important; }
             .step-num { opacity: 1 !important; transform: none !important; transition: none !important; }
             .agent-vpanel.active { animation: none !important; }
+            .btn-press::before { animation: none !important; }
+            .btn-press:hover { transform: none !important; }
+            .btn-press:hover .btn-scroll span { transform: none !important; }
         }
 
         /* Heading font utility */
@@ -411,7 +478,7 @@
             </div>
             <div class="flex items-center gap-4">
                 <a href="#" class="hidden md:inline-flex items-center px-4 py-2 bg-brand text-white text-[13px] font-heading font-medium rounded-full hover:bg-brand-dark transition-colors duration-150 btn-press">
-                    Start free
+                    <span class="btn-scroll"><span data-text="Start free">Start free</span></span>
                 </a>
                 <button id="menuToggle" class="md:hidden p-2 -mr-2">
                     <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 6h14M3 10h14M3 14h14" stroke-linecap="round"/></svg>
@@ -443,11 +510,11 @@
             <div class="mt-8 flex items-center justify-center gap-3 flex-wrap fade-up">
                 <a href="#" class="inline-flex items-center gap-2 px-6 py-3 bg-brand text-white text-[14px] font-heading font-medium rounded-full hover:bg-brand-dark transition-colors duration-150 btn-press">
                     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="12" height="10" rx="1.5"/><path d="M2 5l6 4 6-4"/></svg>
-                    Start free with email
+                    <span class="btn-scroll"><span data-text="Start free with email">Start free with email</span></span>
                 </a>
-                <a href="#" class="inline-flex items-center gap-2 px-6 py-3 bg-white border border-gray-200 text-dark text-[14px] font-heading font-medium rounded-full hover:border-gray-300 hover:bg-surface-card transition-all duration-150 btn-press">
+                <a href="#" class="inline-flex items-center gap-2 px-6 py-3 bg-white text-dark text-[14px] font-heading font-medium rounded-full hover:bg-surface-card transition-all duration-150 btn-press border border-gray-200 hover:border-gray-300">
                     <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M15.545 6.558a9.42 9.42 0 01.139 1.626c0 2.434-.89 4.49-2.422 5.879C11.868 15.3 10.114 16 8 16a8 8 0 010-16c2.157 0 3.965.784 5.348 2.066L11.14 4.255C10.34 3.501 9.274 3.077 8 3.077a4.923 4.923 0 00-4.66 6.544A4.924 4.924 0 008 12.923c2.21 0 3.633-1.115 4.148-2.615H8V7.077h7.545v-.52z" fill="#4285F4"/><path d="M1.474 4.732A7.944 7.944 0 010 8c0 1.2.262 2.34.734 3.366l2.607-2.023A4.88 4.88 0 013.077 8c0-.467.066-.919.189-1.349L.659 4.635l.815.097z" fill="#FBBC05"/><path d="M8 3.077c1.274 0 2.34.424 3.14 1.178l2.208-2.189C11.965.784 10.157 0 8 0 4.89 0 2.208 1.815.734 4.634l2.607 1.987A4.923 4.923 0 018 3.077z" fill="#EA4335"/><path d="M8 12.923a4.923 4.923 0 01-4.66-3.289L.734 11.366C2.208 14.185 4.89 16 8 16c2.114 0 3.868-.7 5.262-1.937l-2.478-1.923c-.71.477-1.62.783-2.784.783z" fill="#34A853"/></svg>
-                    Start free with Google
+                    <span class="btn-scroll"><span data-text="Start free with Google">Start free with Google</span></span>
                 </a>
             </div>
             <div class="mt-8 flex items-center justify-center gap-2 fade-up">
@@ -1327,7 +1394,7 @@
                     <span class="text-[13px] text-gray-400">/month</span>
                 </div>
                 <p class="mt-2 text-[13px] text-gray-500">Explore the platform with limited access.</p>
-                <a href="#" class="mt-6 flex items-center justify-center px-5 py-2.5 border border-gray-200 text-dark text-[13px] font-heading font-medium rounded-full hover:border-brand hover:text-brand transition-all duration-150 btn-press">Start Free</a>
+                <a href="#" class="mt-6 flex items-center justify-center px-5 py-2.5 border border-gray-200 text-dark text-[13px] font-heading font-medium rounded-full hover:border-brand hover:text-brand transition-all duration-150 btn-press"><span class="btn-scroll"><span data-text="Start Free">Start Free</span></span></a>
                 <ul class="mt-6 space-y-2.5 text-[13px] text-gray-600">
                     <li>1 project</li>
                     <li>All 6 agents</li>
@@ -1342,7 +1409,7 @@
                     <span class="text-[13px] text-gray-400">/month</span>
                 </div>
                 <p class="mt-2 text-[13px] text-gray-500">Everything to manage multiple clients.</p>
-                <a href="#" class="mt-6 flex items-center justify-center px-5 py-2.5 gradient-bg text-white text-[13px] font-heading font-medium rounded-full hover:opacity-90 transition-opacity duration-150 btn-press">Start Free Trial</a>
+                <a href="#" class="mt-6 flex items-center justify-center px-5 py-2.5 gradient-bg text-white text-[13px] font-heading font-medium rounded-full hover:opacity-90 transition-opacity duration-150 btn-press"><span class="btn-scroll"><span data-text="Start Free Trial">Start Free Trial</span></span></a>
                 <ul class="mt-6 space-y-2.5 text-[13px] text-gray-600">
                     <li>Unlimited projects</li>
                     <li>All 6 agents</li>
@@ -1357,7 +1424,7 @@
                     <span class="text-[13px] text-gray-400">/month</span>
                 </div>
                 <p class="mt-2 text-[13px] text-gray-500">For agencies with shared workspaces.</p>
-                <a href="#" class="mt-6 flex items-center justify-center px-5 py-2.5 border border-gray-200 text-dark text-[13px] font-heading font-medium rounded-full hover:border-brand hover:text-brand transition-all duration-150 btn-press">Start Free Trial</a>
+                <a href="#" class="mt-6 flex items-center justify-center px-5 py-2.5 border border-gray-200 text-dark text-[13px] font-heading font-medium rounded-full hover:border-brand hover:text-brand transition-all duration-150 btn-press"><span class="btn-scroll"><span data-text="Start Free Trial">Start Free Trial</span></span></a>
                 <ul class="mt-6 space-y-2.5 text-[13px] text-gray-600">
                     <li>Everything in Pro</li>
                     <li>Up to 5 team members</li>
@@ -1416,7 +1483,7 @@
                 Join 200+ marketers using Agenso to deliver better work, faster. Free to start, no credit card required.
             </p>
             <a href="#" class="inline-flex items-center mt-8 px-6 py-3 bg-white text-dark text-[14px] font-heading font-medium rounded-full hover:bg-surface-card transition-colors duration-150 btn-press">
-                Get Started Now
+                <span class="btn-scroll"><span data-text="Get Started Now">Get Started Now</span></span>
             </a>
         </div>
     </section>
