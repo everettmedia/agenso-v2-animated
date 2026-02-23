@@ -142,10 +142,10 @@
         }
 
         .nav-scrolled {
-            background: rgba(247,248,249,0.85);
+            background: rgba(18,17,20,0.85);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
-            border-bottom: 1px solid rgba(0,0,0,0.06);
+            border-bottom: 1px solid rgba(255,255,255,0.06);
         }
 
         /* Motion background — Spline embed */
@@ -167,11 +167,11 @@
         .site-channel {
             max-width: 1200px;
             margin: 0 auto;
-            border-left: 1px solid rgba(200, 200, 200, 0.5);
-            border-right: 1px solid rgba(200, 200, 200, 0.5);
+            border-left: 1px solid rgba(46, 45, 49, 0.8);
+            border-right: 1px solid rgba(46, 45, 49, 0.8);
             position: relative;
             z-index: 1;
-            background: rgba(247, 248, 249, 0.70);
+            background: rgba(18, 17, 20, 0.85);
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
             will-change: transform;
@@ -180,7 +180,7 @@
         }
         @media (max-width: 1200px) {
             .site-channel {
-                background: rgba(247, 248, 249, 0.95);
+                background: rgba(18, 17, 20, 0.95);
             }
         }
         .site-channel > section {
@@ -195,7 +195,7 @@
             left: 50%;
             transform: translateX(-50%);
             width: 100vw;
-            border-bottom: 1px solid #e5e5e5;
+            border-bottom: 1px solid #2e2d31;
         }
         .site-channel > section:last-child::after { display: none; }
         .site-channel > section.no-divider::after { display: none; }
@@ -216,7 +216,7 @@
             left: -24px; right: -24px;
             bottom: -4rem;
             height: 340px;
-            background-image: radial-gradient(circle, #c8c8c8 1px, transparent 1px);
+            background-image: radial-gradient(circle, rgba(255,255,255,0.15) 1px, transparent 1px);
             background-size: 14px 14px;
             background-position: 7px 7px;
             -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 100%);
@@ -269,7 +269,7 @@
         /* Horizontal tabs */
         .vtab { cursor: pointer; transition: color 0.15s, background 0.15s; }
         .vtab.active { background: #5762d5; color: white; }
-        .vtab:not(.active):hover { background: #f7f8f9; }
+        .vtab:not(.active):hover { background: #1e1d21; }
 
         /* Review carousel */
         .review-card {
@@ -388,7 +388,7 @@
         }
         .card-lift:hover {
             transform: translateY(-4px);
-            box-shadow: 8px 16px 40px -8px rgba(0,0,0,0.15) !important;
+            box-shadow: 8px 16px 40px -8px rgba(0,0,0,0.4) !important;
         }
 
         /* Learn more arrow slide */
@@ -453,24 +453,24 @@
     </style>
     <script type="module" src="https://unpkg.com/@splinetool/viewer@1.12.58/build/spline-viewer.js"></script>
 </head>
-<body class="text-dark font-sans overflow-x-hidden" style="background: #edeef0;">
+<body class="text-white font-sans overflow-x-hidden" style="background: #0a090c;">
 
     <!-- ========== MOTION BACKGROUND (Spline) ========== -->
     <div class="motion-bg hidden lg:block" aria-hidden="true">
-        <spline-viewer url="https://prod.spline.design/ev3mWah4dznGqZ4C/scene.splinecode" background="transparent"></spline-viewer>
+        <spline-viewer url="https://prod.spline.design/NVfL5tyqywiyrluy/scene.splinecode" background="transparent"></spline-viewer>
     </div>
 
     <!-- ========== NAVIGATION ========== -->
-    <nav id="nav" class="fixed top-0 left-0 right-0 z-50 transition-all duration-200 border-b border-[#e5e5e5]">
+    <nav id="nav" class="fixed top-0 left-0 right-0 z-50 transition-all duration-200 border-b border-[#2e2d31]">
         <div class="max-w-[1200px] mx-auto px-6 h-16 flex items-center justify-between">
             <div class="flex items-center flex-1">
-                <img src="https://res.cloudinary.com/dxyxrrgj8/image/upload/v1771242506/Agenso_6_dr0eg8.png" alt="Agenso" class="h-7 md:h-8">
+                <img src="https://res.cloudinary.com/dxyxrrgj8/image/upload/v1771242739/Agenso_7_jeg2ol.png" alt="Agenso" class="h-7 md:h-8">
             </div>
             <div class="hidden md:flex items-center gap-7">
-                <a href="#agents" class="nav-underline text-[13px] font-heading font-medium text-gray-600 hover:text-dark transition-colors duration-150">Agents</a>
-                <a href="#how-it-works" class="nav-underline text-[13px] font-heading font-medium text-gray-600 hover:text-dark transition-colors duration-150">How It Works</a>
-                <a href="#pricing" class="nav-underline text-[13px] font-heading font-medium text-gray-600 hover:text-dark transition-colors duration-150">Pricing</a>
-                <a href="#" class="nav-underline text-[13px] font-heading font-medium text-gray-600 hover:text-dark transition-colors duration-150">Login</a>
+                <a href="#agents" class="nav-underline text-[13px] font-heading font-medium text-gray-400 hover:text-white transition-colors duration-150">Agents</a>
+                <a href="#how-it-works" class="nav-underline text-[13px] font-heading font-medium text-gray-400 hover:text-white transition-colors duration-150">How It Works</a>
+                <a href="#pricing" class="nav-underline text-[13px] font-heading font-medium text-gray-400 hover:text-white transition-colors duration-150">Pricing</a>
+                <a href="#" class="nav-underline text-[13px] font-heading font-medium text-gray-400 hover:text-white transition-colors duration-150">Login</a>
             </div>
             <div class="flex items-center gap-4 flex-1 justify-end">
                 <a href="#" class="hidden md:inline-flex items-center px-4 py-2 bg-brand text-white text-[13px] font-heading font-medium rounded-full hover:bg-brand-dark transition-colors duration-150 btn-press">
@@ -481,13 +481,13 @@
                 </button>
             </div>
         </div>
-        <div id="mobileMenu" class="hidden md:hidden bg-surface border-t border-gray-100 px-6 py-4">
+        <div id="mobileMenu" class="hidden md:hidden bg-[#161518] border-t border-[#2e2d31] px-6 py-4">
             <div class="flex flex-col gap-3">
-                <a href="#agents" class="text-[14px] font-heading text-gray-600 py-2">Agents</a>
-                <a href="#how-it-works" class="text-[14px] font-heading text-gray-600 py-2">How It Works</a>
-                <a href="#pricing" class="text-[14px] font-heading text-gray-600 py-2">Pricing</a>
-                <a href="#" class="text-[14px] font-heading text-gray-600 py-2">Login</a>
-                <a href="#" class="mt-2 inline-flex items-center justify-center px-4 py-2.5 bg-dark text-white text-[14px] font-heading font-medium rounded-full">Start Free</a>
+                <a href="#agents" class="text-[14px] font-heading text-gray-400 py-2">Agents</a>
+                <a href="#how-it-works" class="text-[14px] font-heading text-gray-400 py-2">How It Works</a>
+                <a href="#pricing" class="text-[14px] font-heading text-gray-400 py-2">Pricing</a>
+                <a href="#" class="text-[14px] font-heading text-gray-400 py-2">Login</a>
+                <a href="#" class="mt-2 inline-flex items-center justify-center px-4 py-2.5 gradient-bg text-white text-[14px] font-heading font-medium rounded-full">Start Free</a>
             </div>
         </div>
     </nav>
@@ -497,7 +497,7 @@
     <!-- ========== HERO ========== -->
     <section class="pt-32 pb-16 md:pt-40 md:pb-24 px-6">
         <div class="text-center hero-dots-wrap">
-            <h1 class="font-heading text-[32px] md:text-[44px] lg:text-[52px] font-medium leading-[1.1] tracking-tight-3 text-dark max-w-3xl mx-auto fade-up">
+            <h1 class="font-heading text-[32px] md:text-[44px] lg:text-[52px] font-medium leading-[1.1] tracking-tight-3 text-white max-w-3xl mx-auto fade-up">
                 AI Agents Trained for<br>Real Marketing Output
             </h1>
             <p class="mt-5 text-[16px] md:text-[17px] text-gray-500 max-w-lg mx-auto leading-relaxed fade-up">
@@ -508,21 +508,21 @@
                     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="12" height="10" rx="1.5"/><path d="M2 5l6 4 6-4"/></svg>
                     <span class="btn-scroll"><span data-text="Start free with email">Start free with email</span></span>
                 </a>
-                <a href="#" class="inline-flex items-center gap-2 px-6 py-3 bg-white text-dark text-[14px] font-heading font-medium rounded-full hover:bg-surface-card transition-all duration-150 btn-press border border-gray-200 hover:border-gray-300">
+                <a href="#" class="inline-flex items-center gap-2 px-6 py-3 bg-[#1e1d21] text-white text-[14px] font-heading font-medium rounded-full hover:bg-[#232226] transition-all duration-150 btn-press border border-[#2e2d31] hover:border-[#3e3d41]">
                     <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M15.545 6.558a9.42 9.42 0 01.139 1.626c0 2.434-.89 4.49-2.422 5.879C11.868 15.3 10.114 16 8 16a8 8 0 010-16c2.157 0 3.965.784 5.348 2.066L11.14 4.255C10.34 3.501 9.274 3.077 8 3.077a4.923 4.923 0 00-4.66 6.544A4.924 4.924 0 008 12.923c2.21 0 3.633-1.115 4.148-2.615H8V7.077h7.545v-.52z" fill="#4285F4"/><path d="M1.474 4.732A7.944 7.944 0 010 8c0 1.2.262 2.34.734 3.366l2.607-2.023A4.88 4.88 0 013.077 8c0-.467.066-.919.189-1.349L.659 4.635l.815.097z" fill="#FBBC05"/><path d="M8 3.077c1.274 0 2.34.424 3.14 1.178l2.208-2.189C11.965.784 10.157 0 8 0 4.89 0 2.208 1.815.734 4.634l2.607 1.987A4.923 4.923 0 018 3.077z" fill="#EA4335"/><path d="M8 12.923a4.923 4.923 0 01-4.66-3.289L.734 11.366C2.208 14.185 4.89 16 8 16c2.114 0 3.868-.7 5.262-1.937l-2.478-1.923c-.71.477-1.62.783-2.784.783z" fill="#34A853"/></svg>
                     <span class="btn-scroll"><span data-text="Start free with Google">Start free with Google</span></span>
                 </a>
             </div>
             <div class="mt-8 flex items-center justify-center gap-2 fade-up">
                 <div class="flex -space-x-2">
-                    <img src="https://i.pravatar.cc/56?img=32" alt="" class="w-7 h-7 rounded-full border-2 border-surface object-cover">
-                    <img src="https://i.pravatar.cc/56?img=47" alt="" class="w-7 h-7 rounded-full border-2 border-surface object-cover">
-                    <img src="https://i.pravatar.cc/56?img=12" alt="" class="w-7 h-7 rounded-full border-2 border-surface object-cover">
-                    <img src="https://i.pravatar.cc/56?img=25" alt="" class="w-7 h-7 rounded-full border-2 border-surface object-cover">
+                    <img src="https://i.pravatar.cc/56?img=32" alt="" class="w-7 h-7 rounded-full border-2 border-[#161518] object-cover">
+                    <img src="https://i.pravatar.cc/56?img=47" alt="" class="w-7 h-7 rounded-full border-2 border-[#161518] object-cover">
+                    <img src="https://i.pravatar.cc/56?img=12" alt="" class="w-7 h-7 rounded-full border-2 border-[#161518] object-cover">
+                    <img src="https://i.pravatar.cc/56?img=25" alt="" class="w-7 h-7 rounded-full border-2 border-[#161518] object-cover">
                 </div>
                 <p class="text-[14px] text-gray-400">Trusted by 200+ marketers in beta</p>
             </div>
-            <div class="mt-14 md:mt-20 border-t border-[#e5e5e5]" style="width:100vw;margin-left:calc(-50vw + 50%)"></div>
+            <div class="mt-14 md:mt-20 border-t border-[#2e2d31]" style="width:100vw;margin-left:calc(-50vw + 50%)"></div>
             <div class="mt-14 md:mt-20 relative z-10 max-w-5xl mx-auto fade-up">
                 <img src="https://res.cloudinary.com/dxyxrrgj8/image/upload/v1771247433/Gemini_Generated_Image_fg2xjqfg2xjqfg2x_eh2ts8.png" alt="Agenso platform dashboard" class="w-full rounded-xl" style="box-shadow: 8px 35px 80px -10px rgba(10,9,12,0.5), 4px 15px 30px -5px rgba(10,9,12,0.35), 0 0 0 1px rgba(10,9,12,0.05)">
             </div>
@@ -589,9 +589,9 @@
                 </p>
             </div>
             <!-- Mock ChatGPT conversation -->
-            <div class="card-lift fade-up rounded-xl border border-[#e5e5e5] overflow-hidden bg-white" style="box-shadow: 6px 8px 30px -6px rgba(0,0,0,0.15);">
+            <div class="card-lift fade-up rounded-xl border border-[#2e2d31] overflow-hidden bg-[#161518]" style="box-shadow: 6px 8px 30px -6px rgba(0,0,0,0.4);">
                 <!-- Window bar -->
-                <div class="flex items-center gap-2 px-4 py-3 border-b border-[#e5e5e5] bg-[#fafafa]">
+                <div class="flex items-center gap-2 px-4 py-3 border-b border-[#2e2d31] bg-[#1a191d]">
                     <div class="flex gap-1.5">
                         <div class="w-2.5 h-2.5 rounded-full bg-[#ff5f57]"></div>
                         <div class="w-2.5 h-2.5 rounded-full bg-[#febc2e]"></div>
@@ -603,49 +603,49 @@
                 <div id="chat-container" class="p-4 space-y-3 text-[13px]">
                     <!-- User msg 1 -->
                     <div class="chat-msg flex justify-end">
-                        <div class="bg-[#f0f0f0] rounded-2xl rounded-br-sm px-3.5 py-2 max-w-[85%] text-dark">Write Meta ad copy for my client's summer campaign</div>
+                        <div class="bg-[#232226] rounded-2xl rounded-br-sm px-3.5 py-2 max-w-[85%] text-white">Write Meta ad copy for my client's summer campaign</div>
                     </div>
                     <!-- AI response (truncated) -->
                     <div class="chat-msg flex justify-start">
-                        <div class="bg-white border border-[#e5e5e5] rounded-2xl rounded-bl-sm px-3.5 py-2 max-w-[85%] text-gray-400 italic">Here's some ad copy for a summer campaign...</div>
+                        <div class="bg-[#161518] border border-[#2e2d31] rounded-2xl rounded-bl-sm px-3.5 py-2 max-w-[85%] text-gray-400 italic">Here's some ad copy for a summer campaign...</div>
                     </div>
                     <!-- User msg 2 -->
                     <div class="chat-msg flex justify-end">
-                        <div class="bg-[#f0f0f0] rounded-2xl rounded-br-sm px-3.5 py-2 max-w-[85%] text-dark">No, follow the brand guidelines I gave you before</div>
+                        <div class="bg-[#232226] rounded-2xl rounded-br-sm px-3.5 py-2 max-w-[85%] text-white">No, follow the brand guidelines I gave you before</div>
                     </div>
                     <!-- AI response with warning -->
                     <div class="chat-msg flex justify-start">
-                        <div class="bg-[#fef2f2] border border-[#fecaca] rounded-2xl rounded-bl-sm px-3.5 py-2 max-w-[85%] text-[#e5484d] text-[12px]">I don't have access to previous conversations. Could you share the brand guidelines again?</div>
+                        <div class="bg-[#3b1c1c] border border-[#5c2a2a] rounded-2xl rounded-bl-sm px-3.5 py-2 max-w-[85%] text-[#e5484d] text-[12px]">I don't have access to previous conversations. Could you share the brand guidelines again?</div>
                     </div>
                     <!-- User msg 3 - frustrated -->
                     <div class="chat-msg flex justify-end">
-                        <div class="bg-[#f0f0f0] rounded-2xl rounded-br-sm px-3.5 py-2 max-w-[85%] text-dark">The tone is casual, audience is 25-34, budget is $2k/mo. We talked about this yesterday.</div>
+                        <div class="bg-[#232226] rounded-2xl rounded-br-sm px-3.5 py-2 max-w-[85%] text-white">The tone is casual, audience is 25-34, budget is $2k/mo. We talked about this yesterday.</div>
                     </div>
                     <!-- User msg 4 - giving up -->
                     <div class="chat-msg flex justify-end">
-                        <div class="bg-[#f0f0f0] rounded-2xl rounded-br-sm px-3.5 py-2 max-w-[85%] text-gray-300">And make sure you use the metrics from last month's report...</div>
+                        <div class="bg-[#232226] rounded-2xl rounded-br-sm px-3.5 py-2 max-w-[85%] text-gray-500">And make sure you use the metrics from last month's report...</div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-0 border-t border-[#e5e5e5] -mx-6 px-6 stagger">
-            <div class="fade-up border-b md:border-b-0 md:border-r border-[#e5e5e5] py-10 md:py-14 md:pr-8">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-0 border-t border-[#2e2d31] -mx-6 px-6 stagger">
+            <div class="fade-up border-b md:border-b-0 md:border-r border-[#2e2d31] py-10 md:py-14 md:pr-8">
                 <p class="text-[28px] md:text-[32px] font-heading font-semibold text-brand leading-none mb-4">01</p>
-                <h3 class="text-[18px] md:text-[20px] font-heading font-semibold text-dark mb-2">Inconsistent quality</h3>
+                <h3 class="text-[18px] md:text-[20px] font-heading font-semibold text-white mb-2">Inconsistent quality</h3>
                 <p class="text-[15px] text-gray-500 leading-relaxed">
                     Some outputs are great. Others are unusable. You can't send unpredictable work to clients.
                 </p>
             </div>
-            <div class="fade-up border-b md:border-b-0 md:border-r border-[#e5e5e5] py-10 md:py-14 md:px-8">
+            <div class="fade-up border-b md:border-b-0 md:border-r border-[#2e2d31] py-10 md:py-14 md:px-8">
                 <p class="text-[28px] md:text-[32px] font-heading font-semibold text-brand leading-none mb-4">02</p>
-                <h3 class="text-[18px] md:text-[20px] font-heading font-semibold text-dark mb-2">Context amnesia</h3>
+                <h3 class="text-[18px] md:text-[20px] font-heading font-semibold text-white mb-2">Context amnesia</h3>
                 <p class="text-[15px] text-gray-500 leading-relaxed">
                     Every session starts from zero. You re-explain your client's business, tone, and goals — every time.
                 </p>
             </div>
             <div class="fade-up py-10 md:py-14 md:pl-8">
                 <p class="text-[28px] md:text-[32px] font-heading font-semibold text-brand leading-none mb-4">03</p>
-                <h3 class="text-[18px] md:text-[20px] font-heading font-semibold text-dark mb-2">Prompt fatigue</h3>
+                <h3 class="text-[18px] md:text-[20px] font-heading font-semibold text-white mb-2">Prompt fatigue</h3>
                 <p class="text-[15px] text-gray-500 leading-relaxed">
                     You're a marketer, not a prompt engineer. You shouldn't need perfect prompts for useful output.
                 </p>
@@ -667,8 +667,8 @@
         </div>
 
         <!-- Feature 1: Image left, text right -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-0 border-t border-[#e5e5e5] fade-up">
-            <div class="bg-surface-card aspect-[4/3] md:aspect-auto md:min-h-[320px] flex items-center justify-center border-b md:border-b-0 md:border-r border-[#e5e5e5]">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-0 border-t border-[#2e2d31] fade-up">
+            <div class="bg-[#1e1d21] aspect-[4/3] md:aspect-auto md:min-h-[320px] flex items-center justify-center border-b md:border-b-0 md:border-r border-[#2e2d31]">
                 <img src="https://res.cloudinary.com/dxyxrrgj8/image/upload/v1771247433/Gemini_Generated_Image_fg2xjqfg2xjqfg2x_eh2ts8.png" alt="Zero hallucination outputs" class="w-full h-full object-cover">
             </div>
             <div class="py-10 md:py-16 px-0 md:pl-10 flex flex-col justify-center">
@@ -687,7 +687,7 @@
         </div>
 
         <!-- Feature 2: Text left, image right -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-0 border-t border-[#e5e5e5] fade-up">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-0 border-t border-[#2e2d31] fade-up">
             <div class="py-10 md:py-16 px-0 md:pr-10 flex flex-col justify-center order-2 md:order-1">
                 <p class="text-[12px] font-heading font-medium text-brand uppercase tracking-wider mb-3">Pre-trained expertise</p>
                 <h3 class="font-heading text-[24px] md:text-[28px] font-medium tracking-tight-2 leading-[1.2]">
@@ -701,14 +701,14 @@
                     <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M2 6h8M7 3l3 3-3 3"/></svg>
                 </a>
             </div>
-            <div class="bg-surface-card aspect-[4/3] md:aspect-auto md:min-h-[320px] flex items-center justify-center border-b md:border-b-0 md:border-l border-[#e5e5e5] order-1 md:order-2">
+            <div class="bg-[#1e1d21] aspect-[4/3] md:aspect-auto md:min-h-[320px] flex items-center justify-center border-b md:border-b-0 md:border-l border-[#2e2d31] order-1 md:order-2">
                 <img src="https://res.cloudinary.com/dxyxrrgj8/image/upload/v1771247433/Gemini_Generated_Image_fg2xjqfg2xjqfg2x_eh2ts8.png" alt="Pre-trained marketing agents" class="w-full h-full object-cover">
             </div>
         </div>
 
         <!-- Feature 3: Image left, text right -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-0 border-t border-b border-[#e5e5e5] fade-up">
-            <div class="bg-surface-card aspect-[4/3] md:aspect-auto md:min-h-[320px] flex items-center justify-center border-b md:border-b-0 md:border-r border-[#e5e5e5]">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-0 border-t border-b border-[#2e2d31] fade-up">
+            <div class="bg-[#1e1d21] aspect-[4/3] md:aspect-auto md:min-h-[320px] flex items-center justify-center border-b md:border-b-0 md:border-r border-[#2e2d31]">
                 <img src="https://res.cloudinary.com/dxyxrrgj8/image/upload/v1771247433/Gemini_Generated_Image_fg2xjqfg2xjqfg2x_eh2ts8.png" alt="Persistent client context" class="w-full h-full object-cover">
             </div>
             <div class="py-10 md:py-16 px-0 md:pl-10 flex flex-col justify-center">
@@ -740,31 +740,31 @@
         </div>
 
         <div class="fade-up">
-            <div class="border border-[#e5e5e5] rounded-xl overflow-hidden">
+            <div class="border border-[#2e2d31] rounded-xl overflow-hidden">
                 <!-- Horizontal tab bar -->
-                <div class="vtab-bar grid grid-cols-3 md:grid-cols-6 border-b border-[#e5e5e5] bg-white">
-                    <button class="vtab active py-4 text-[13px] font-heading font-medium border-r border-[#e5e5e5]" data-vtab="meta">Meta Ads</button>
-                    <button class="vtab py-4 text-[13px] font-heading font-medium text-gray-500 border-r border-[#e5e5e5]" data-vtab="google">Google Ads</button>
-                    <button class="vtab py-4 text-[13px] font-heading font-medium text-gray-500 border-r md:border-r border-[#e5e5e5] md:border-r-[#e5e5e5]" data-vtab="email">Email</button>
-                    <button class="vtab py-4 text-[13px] font-heading font-medium text-gray-500 border-r border-[#e5e5e5] border-t md:border-t-0" data-vtab="seo">SEO</button>
-                    <button class="vtab py-4 text-[13px] font-heading font-medium text-gray-500 border-r border-[#e5e5e5] border-t md:border-t-0" data-vtab="cro">CRO</button>
-                    <button class="vtab py-4 text-[13px] font-heading font-medium text-gray-500 border-t md:border-t-0" data-vtab="strategy">Strategy</button>
+                <div class="vtab-bar grid grid-cols-3 md:grid-cols-6 border-b border-[#2e2d31] bg-[#161518]">
+                    <button class="vtab active py-4 text-[13px] font-heading font-medium border-r border-[#2e2d31]" data-vtab="meta">Meta Ads</button>
+                    <button class="vtab py-4 text-[13px] font-heading font-medium text-gray-400 border-r border-[#2e2d31]" data-vtab="google">Google Ads</button>
+                    <button class="vtab py-4 text-[13px] font-heading font-medium text-gray-400 border-r md:border-r border-[#2e2d31] md:border-r-[#2e2d31]" data-vtab="email">Email</button>
+                    <button class="vtab py-4 text-[13px] font-heading font-medium text-gray-400 border-r border-[#2e2d31] border-t md:border-t-0" data-vtab="seo">SEO</button>
+                    <button class="vtab py-4 text-[13px] font-heading font-medium text-gray-400 border-r border-[#2e2d31] border-t md:border-t-0" data-vtab="cro">CRO</button>
+                    <button class="vtab py-4 text-[13px] font-heading font-medium text-gray-400 border-t md:border-t-0" data-vtab="strategy">Strategy</button>
                 </div>
 
                 <!-- Panel content -->
-                <div class="bg-white">
+                <div class="bg-[#161518]">
                     <!-- Meta Ads -->
                     <div class="agent-vpanel active" data-vpanel="meta">
                         <div class="grid grid-cols-1 md:grid-cols-2">
-                            <div class="p-6 md:p-8 md:border-r border-[#e5e5e5]">
-                                <span class="text-[12px] font-heading font-medium text-brand bg-brand-subtle px-2.5 py-1 rounded-full">Live API access</span>
+                            <div class="p-6 md:p-8 md:border-r border-[#2e2d31]">
+                                <span class="text-[12px] font-heading font-medium text-brand-light bg-brand/15 px-2.5 py-1 rounded-full">Live API access</span>
                                 <h3 class="text-[20px] md:text-[24px] font-heading font-semibold mt-4 mb-3">Meta Ads Agent</h3>
                                 <p class="text-[14px] text-gray-500 leading-relaxed">
                                     Connects to your Meta Ads account via API. Reads campaign performance, identifies underperforming ad sets, and recommends specific changes to targeting, budgets, and creative.
                                 </p>
                                 <div class="mt-6">
                                     <p class="text-[12px] font-heading font-medium text-gray-400 uppercase tracking-wider mb-3">What you'll get</p>
-                                    <ul class="space-y-2 text-[14px] text-gray-600">
+                                    <ul class="space-y-2 text-[14px] text-gray-300">
                                         <li class="flex items-center gap-2"><span class="w-1 h-1 rounded-full bg-brand flex-shrink-0"></span>Full campaign architecture with ad set targeting</li>
                                         <li class="flex items-center gap-2"><span class="w-1 h-1 rounded-full bg-brand flex-shrink-0"></span>3-5 ad copy variations per ad set</li>
                                         <li class="flex items-center gap-2"><span class="w-1 h-1 rounded-full bg-brand flex-shrink-0"></span>Budget allocation across audiences</li>
@@ -773,7 +773,7 @@
                                     </ul>
                                 </div>
                             </div>
-                            <div class="aspect-[4/3] md:aspect-auto bg-surface-card">
+                            <div class="aspect-[4/3] md:aspect-auto bg-[#1e1d21]">
                                 <img src="https://res.cloudinary.com/dxyxrrgj8/image/upload/v1771247433/Gemini_Generated_Image_fg2xjqfg2xjqfg2x_eh2ts8.png" alt="Meta Ads Agent interface" class="w-full h-full object-cover">
                             </div>
                         </div>
@@ -781,15 +781,15 @@
                     <!-- Google Ads -->
                     <div class="agent-vpanel" data-vpanel="google">
                         <div class="grid grid-cols-1 md:grid-cols-2">
-                            <div class="p-6 md:p-8 md:border-r border-[#e5e5e5]">
-                                <span class="text-[12px] font-heading font-medium text-brand bg-brand-subtle px-2.5 py-1 rounded-full">Live API access</span>
+                            <div class="p-6 md:p-8 md:border-r border-[#2e2d31]">
+                                <span class="text-[12px] font-heading font-medium text-brand-light bg-brand/15 px-2.5 py-1 rounded-full">Live API access</span>
                                 <h3 class="text-[20px] md:text-[24px] font-heading font-semibold mt-4 mb-3">Google Ads Agent</h3>
                                 <p class="text-[14px] text-gray-500 leading-relaxed">
                                     Pulls live data from your Google Ads account. Reviews search terms, quality scores, and bid performance — then tells you exactly what to pause, scale, or restructure.
                                 </p>
                                 <div class="mt-6">
                                     <p class="text-[12px] font-heading font-medium text-gray-400 uppercase tracking-wider mb-3">What you'll get</p>
-                                    <ul class="space-y-2 text-[14px] text-gray-600">
+                                    <ul class="space-y-2 text-[14px] text-gray-300">
                                         <li class="flex items-center gap-2"><span class="w-1 h-1 rounded-full bg-brand flex-shrink-0"></span>Search term analysis with negative keywords</li>
                                         <li class="flex items-center gap-2"><span class="w-1 h-1 rounded-full bg-brand flex-shrink-0"></span>RSA headline & description sets</li>
                                         <li class="flex items-center gap-2"><span class="w-1 h-1 rounded-full bg-brand flex-shrink-0"></span>Bid strategy with projected impact</li>
@@ -798,7 +798,7 @@
                                     </ul>
                                 </div>
                             </div>
-                            <div class="aspect-[4/3] md:aspect-auto bg-surface-card">
+                            <div class="aspect-[4/3] md:aspect-auto bg-[#1e1d21]">
                                 <img src="https://res.cloudinary.com/dxyxrrgj8/image/upload/v1771247433/Gemini_Generated_Image_fg2xjqfg2xjqfg2x_eh2ts8.png" alt="Google Ads Agent interface" class="w-full h-full object-cover">
                             </div>
                         </div>
@@ -806,15 +806,15 @@
                     <!-- Email -->
                     <div class="agent-vpanel" data-vpanel="email">
                         <div class="grid grid-cols-1 md:grid-cols-2">
-                            <div class="p-6 md:p-8 md:border-r border-[#e5e5e5]">
-                                <span class="text-[12px] font-heading font-medium text-gray-500 bg-gray-100 px-2.5 py-1 rounded-full">Klaviyo & Mailchimp ready</span>
+                            <div class="p-6 md:p-8 md:border-r border-[#2e2d31]">
+                                <span class="text-[12px] font-heading font-medium text-gray-400 bg-[#232226] px-2.5 py-1 rounded-full">Klaviyo & Mailchimp ready</span>
                                 <h3 class="text-[20px] md:text-[24px] font-heading font-semibold mt-4 mb-3">Email Marketing Agent</h3>
                                 <p class="text-[14px] text-gray-500 leading-relaxed">
                                     Writes full email sequences, subject lines, and flow logic. Give it a goal — welcome series, abandoned cart, re-engagement — and it builds the entire structure with copy ready to drop in.
                                 </p>
                                 <div class="mt-6">
                                     <p class="text-[12px] font-heading font-medium text-gray-400 uppercase tracking-wider mb-3">What you'll get</p>
-                                    <ul class="space-y-2 text-[14px] text-gray-600">
+                                    <ul class="space-y-2 text-[14px] text-gray-300">
                                         <li class="flex items-center gap-2"><span class="w-1 h-1 rounded-full bg-brand flex-shrink-0"></span>5-7 email sequences with full copy</li>
                                         <li class="flex items-center gap-2"><span class="w-1 h-1 rounded-full bg-brand flex-shrink-0"></span>Subject line A/B variants</li>
                                         <li class="flex items-center gap-2"><span class="w-1 h-1 rounded-full bg-brand flex-shrink-0"></span>Trigger logic and send timing</li>
@@ -823,7 +823,7 @@
                                     </ul>
                                 </div>
                             </div>
-                            <div class="aspect-[4/3] md:aspect-auto bg-surface-card">
+                            <div class="aspect-[4/3] md:aspect-auto bg-[#1e1d21]">
                                 <img src="https://res.cloudinary.com/dxyxrrgj8/image/upload/v1771247433/Gemini_Generated_Image_fg2xjqfg2xjqfg2x_eh2ts8.png" alt="Email Marketing Agent interface" class="w-full h-full object-cover">
                             </div>
                         </div>
@@ -831,15 +831,15 @@
                     <!-- SEO -->
                     <div class="agent-vpanel" data-vpanel="seo">
                         <div class="grid grid-cols-1 md:grid-cols-2">
-                            <div class="p-6 md:p-8 md:border-r border-[#e5e5e5]">
-                                <span class="text-[12px] font-heading font-medium text-brand bg-brand-subtle px-2.5 py-1 rounded-full">Search Console API</span>
+                            <div class="p-6 md:p-8 md:border-r border-[#2e2d31]">
+                                <span class="text-[12px] font-heading font-medium text-brand-light bg-brand/15 px-2.5 py-1 rounded-full">Search Console API</span>
                                 <h3 class="text-[20px] md:text-[24px] font-heading font-semibold mt-4 mb-3">SEO Agent</h3>
                                 <p class="text-[14px] text-gray-500 leading-relaxed">
                                     Connects to Google Search Console. Analyzes your rankings, click-through rates, and indexing issues — then builds keyword strategies, content briefs, and on-page fixes based on real data.
                                 </p>
                                 <div class="mt-6">
                                     <p class="text-[12px] font-heading font-medium text-gray-400 uppercase tracking-wider mb-3">What you'll get</p>
-                                    <ul class="space-y-2 text-[14px] text-gray-600">
+                                    <ul class="space-y-2 text-[14px] text-gray-300">
                                         <li class="flex items-center gap-2"><span class="w-1 h-1 rounded-full bg-brand flex-shrink-0"></span>Keyword-targeted content briefs</li>
                                         <li class="flex items-center gap-2"><span class="w-1 h-1 rounded-full bg-brand flex-shrink-0"></span>On-page optimization checklist</li>
                                         <li class="flex items-center gap-2"><span class="w-1 h-1 rounded-full bg-brand flex-shrink-0"></span>Technical issue priority list</li>
@@ -848,7 +848,7 @@
                                     </ul>
                                 </div>
                             </div>
-                            <div class="aspect-[4/3] md:aspect-auto bg-surface-card">
+                            <div class="aspect-[4/3] md:aspect-auto bg-[#1e1d21]">
                                 <img src="https://res.cloudinary.com/dxyxrrgj8/image/upload/v1771247433/Gemini_Generated_Image_fg2xjqfg2xjqfg2x_eh2ts8.png" alt="SEO Agent interface" class="w-full h-full object-cover">
                             </div>
                         </div>
@@ -856,15 +856,15 @@
                     <!-- CRO -->
                     <div class="agent-vpanel" data-vpanel="cro">
                         <div class="grid grid-cols-1 md:grid-cols-2">
-                            <div class="p-6 md:p-8 md:border-r border-[#e5e5e5]">
-                                <span class="text-[12px] font-heading font-medium text-gray-500 bg-gray-100 px-2.5 py-1 rounded-full">Conversion focused</span>
+                            <div class="p-6 md:p-8 md:border-r border-[#2e2d31]">
+                                <span class="text-[12px] font-heading font-medium text-gray-400 bg-[#232226] px-2.5 py-1 rounded-full">Conversion focused</span>
                                 <h3 class="text-[20px] md:text-[24px] font-heading font-semibold mt-4 mb-3">Website & CRO Agent</h3>
                                 <p class="text-[14px] text-gray-500 leading-relaxed">
                                     Audits your landing pages and tells you what's hurting conversions. Rewrites headlines, CTAs, and page structure. Generates A/B test hypotheses you can run immediately.
                                 </p>
                                 <div class="mt-6">
                                     <p class="text-[12px] font-heading font-medium text-gray-400 uppercase tracking-wider mb-3">What you'll get</p>
-                                    <ul class="space-y-2 text-[14px] text-gray-600">
+                                    <ul class="space-y-2 text-[14px] text-gray-300">
                                         <li class="flex items-center gap-2"><span class="w-1 h-1 rounded-full bg-brand flex-shrink-0"></span>Messaging hierarchy rewrite</li>
                                         <li class="flex items-center gap-2"><span class="w-1 h-1 rounded-full bg-brand flex-shrink-0"></span>A/B test hypotheses with rationale</li>
                                         <li class="flex items-center gap-2"><span class="w-1 h-1 rounded-full bg-brand flex-shrink-0"></span>CTA placement recommendations</li>
@@ -873,7 +873,7 @@
                                     </ul>
                                 </div>
                             </div>
-                            <div class="aspect-[4/3] md:aspect-auto bg-surface-card">
+                            <div class="aspect-[4/3] md:aspect-auto bg-[#1e1d21]">
                                 <img src="https://res.cloudinary.com/dxyxrrgj8/image/upload/v1771247433/Gemini_Generated_Image_fg2xjqfg2xjqfg2x_eh2ts8.png" alt="Website & CRO Agent interface" class="w-full h-full object-cover">
                             </div>
                         </div>
@@ -881,15 +881,15 @@
                     <!-- Strategy -->
                     <div class="agent-vpanel" data-vpanel="strategy">
                         <div class="grid grid-cols-1 md:grid-cols-2">
-                            <div class="p-6 md:p-8 md:border-r border-[#e5e5e5]">
-                                <span class="text-[12px] font-heading font-medium text-gray-500 bg-gray-100 px-2.5 py-1 rounded-full">Cross-channel</span>
+                            <div class="p-6 md:p-8 md:border-r border-[#2e2d31]">
+                                <span class="text-[12px] font-heading font-medium text-gray-400 bg-[#232226] px-2.5 py-1 rounded-full">Cross-channel</span>
                                 <h3 class="text-[20px] md:text-[24px] font-heading font-semibold mt-4 mb-3">Strategy & Funnels Agent</h3>
                                 <p class="text-[14px] text-gray-500 leading-relaxed">
                                     Maps out your full customer journey from first touch to close. Builds funnel structures, go-to-market plans, and cross-channel strategies that tie your other agents' work together.
                                 </p>
                                 <div class="mt-6">
                                     <p class="text-[12px] font-heading font-medium text-gray-400 uppercase tracking-wider mb-3">What you'll get</p>
-                                    <ul class="space-y-2 text-[14px] text-gray-600">
+                                    <ul class="space-y-2 text-[14px] text-gray-300">
                                         <li class="flex items-center gap-2"><span class="w-1 h-1 rounded-full bg-brand flex-shrink-0"></span>Full funnel map (awareness to close)</li>
                                         <li class="flex items-center gap-2"><span class="w-1 h-1 rounded-full bg-brand flex-shrink-0"></span>Channel strategy with budget split</li>
                                         <li class="flex items-center gap-2"><span class="w-1 h-1 rounded-full bg-brand flex-shrink-0"></span>Customer journey touchpoints</li>
@@ -898,7 +898,7 @@
                                     </ul>
                                 </div>
                             </div>
-                            <div class="aspect-[4/3] md:aspect-auto bg-surface-card">
+                            <div class="aspect-[4/3] md:aspect-auto bg-[#1e1d21]">
                                 <img src="https://res.cloudinary.com/dxyxrrgj8/image/upload/v1771247433/Gemini_Generated_Image_fg2xjqfg2xjqfg2x_eh2ts8.png" alt="Strategy & Funnels Agent interface" class="w-full h-full object-cover">
                             </div>
                         </div>
@@ -1123,22 +1123,22 @@
     <section id="how-it-works" class="pt-20 md:pt-28 px-6">
         <div class="mb-16 md:mb-20">
             <p class="text-[12px] font-heading font-medium text-brand uppercase tracking-wider mb-5 fade-up">How it works</p>
-            <h2 class="font-heading text-[36px] md:text-[52px] lg:text-[64px] font-medium tracking-tight-3 text-dark leading-[1.08] fade-up">
+            <h2 class="font-heading text-[36px] md:text-[52px] lg:text-[64px] font-medium tracking-tight-3 text-white leading-[1.08] fade-up">
                 Three steps to<br>client-ready output
             </h2>
         </div>
 
         <!-- Step 1 -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-0 border-t border-[#e5e5e5] -mx-6 px-6 fade-up">
-            <div class="py-10 md:py-16 md:pr-10 flex flex-col justify-center border-b md:border-b-0 md:border-r border-[#e5e5e5]">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-0 border-t border-[#2e2d31] -mx-6 px-6 fade-up">
+            <div class="py-10 md:py-16 md:pr-10 flex flex-col justify-center border-b md:border-b-0 md:border-r border-[#2e2d31]">
                 <p class="step-num text-[48px] md:text-[64px] font-heading font-semibold text-brand leading-none mb-5">01</p>
-                <h3 class="text-[20px] md:text-[24px] font-heading font-medium text-dark mb-3">Create a project</h3>
+                <h3 class="text-[20px] md:text-[24px] font-heading font-medium text-white mb-3">Create a project</h3>
                 <p class="text-[15px] text-gray-500 leading-relaxed max-w-sm">Add your client's industry, audience, tone, and goals and connect the needed integrations. One time. Every agent picks it up from there.</p>
             </div>
             <div class="py-8 md:py-12 md:pl-10 flex items-center">
                 <!-- Mock: Project setup form -->
-                <div class="card-lift w-full rounded-xl border border-[#e5e5e5] overflow-hidden bg-white" style="box-shadow: 4px 6px 24px -4px rgba(0,0,0,0.08);">
-                    <div class="flex items-center gap-2 px-4 py-3 border-b border-[#e5e5e5] bg-[#fafafa]">
+                <div class="card-lift w-full rounded-xl border border-[#2e2d31] overflow-hidden bg-[#161518]" style="box-shadow: 4px 6px 24px -4px rgba(0,0,0,0.3);">
+                    <div class="flex items-center gap-2 px-4 py-3 border-b border-[#2e2d31] bg-[#1a191d]">
                         <div class="flex gap-1.5">
                             <div class="w-2.5 h-2.5 rounded-full bg-[#ff5f57]"></div>
                             <div class="w-2.5 h-2.5 rounded-full bg-[#febc2e]"></div>
@@ -1149,32 +1149,32 @@
                     <div class="p-5 space-y-4 text-[13px]">
                         <div>
                             <p class="text-[11px] font-heading font-medium text-gray-400 uppercase tracking-wider mb-1.5">Client name</p>
-                            <div class="border border-[#e5e5e5] rounded-lg px-3 py-2 text-dark">Bloom & Co.</div>
+                            <div class="border border-[#2e2d31] rounded-lg px-3 py-2 bg-[#1e1d21] text-white">Bloom & Co.</div>
                         </div>
                         <div class="grid grid-cols-2 gap-3">
                             <div>
                                 <p class="text-[11px] font-heading font-medium text-gray-400 uppercase tracking-wider mb-1.5">Industry</p>
-                                <div class="border border-[#e5e5e5] rounded-lg px-3 py-2 text-dark">DTC Skincare</div>
+                                <div class="border border-[#2e2d31] rounded-lg px-3 py-2 bg-[#1e1d21] text-white">DTC Skincare</div>
                             </div>
                             <div>
                                 <p class="text-[11px] font-heading font-medium text-gray-400 uppercase tracking-wider mb-1.5">Audience</p>
-                                <div class="border border-[#e5e5e5] rounded-lg px-3 py-2 text-dark">Women 25-40</div>
+                                <div class="border border-[#2e2d31] rounded-lg px-3 py-2 bg-[#1e1d21] text-white">Women 25-40</div>
                             </div>
                         </div>
                         <div>
                             <p class="text-[11px] font-heading font-medium text-gray-400 uppercase tracking-wider mb-1.5">Brand tone</p>
                             <div class="flex gap-2">
-                                <span class="px-2.5 py-1 rounded-full bg-brand/10 text-brand text-[11px] font-heading font-medium">Warm</span>
-                                <span class="px-2.5 py-1 rounded-full bg-brand/10 text-brand text-[11px] font-heading font-medium">Clean</span>
-                                <span class="px-2.5 py-1 rounded-full bg-brand/10 text-brand text-[11px] font-heading font-medium">Premium</span>
+                                <span class="px-2.5 py-1 rounded-full bg-brand/15 text-brand-light text-[11px] font-heading font-medium">Warm</span>
+                                <span class="px-2.5 py-1 rounded-full bg-brand/15 text-brand-light text-[11px] font-heading font-medium">Clean</span>
+                                <span class="px-2.5 py-1 rounded-full bg-brand/15 text-brand-light text-[11px] font-heading font-medium">Premium</span>
                             </div>
                         </div>
                         <div>
                             <p class="text-[11px] font-heading font-medium text-gray-400 uppercase tracking-wider mb-1.5">Integrations</p>
                             <div class="flex gap-2">
-                                <span class="px-2.5 py-1 rounded-full bg-[#f0f0f0] text-dark text-[11px] font-heading font-medium">Meta Ads</span>
-                                <span class="px-2.5 py-1 rounded-full bg-[#f0f0f0] text-dark text-[11px] font-heading font-medium">Google Ads</span>
-                                <span class="px-2.5 py-1 rounded-full bg-[#f0f0f0] text-dark text-[11px] font-heading font-medium">Search Console</span>
+                                <span class="px-2.5 py-1 rounded-full bg-[#232226] text-white text-[11px] font-heading font-medium">Meta Ads</span>
+                                <span class="px-2.5 py-1 rounded-full bg-[#232226] text-white text-[11px] font-heading font-medium">Google Ads</span>
+                                <span class="px-2.5 py-1 rounded-full bg-[#232226] text-white text-[11px] font-heading font-medium">Search Console</span>
                             </div>
                         </div>
                     </div>
@@ -1183,11 +1183,11 @@
         </div>
 
         <!-- Step 2 -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-0 border-t border-[#e5e5e5] -mx-6 px-6 fade-up">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-0 border-t border-[#2e2d31] -mx-6 px-6 fade-up">
             <div class="py-8 md:py-12 md:pr-10 flex items-center order-2 md:order-1">
                 <!-- Mock: Agent chat -->
-                <div class="card-lift w-full rounded-xl border border-[#e5e5e5] overflow-hidden bg-white" style="box-shadow: 4px 6px 24px -4px rgba(0,0,0,0.08);">
-                    <div class="flex items-center justify-between px-4 py-3 border-b border-[#e5e5e5] bg-[#fafafa]">
+                <div class="card-lift w-full rounded-xl border border-[#2e2d31] overflow-hidden bg-[#161518]" style="box-shadow: 4px 6px 24px -4px rgba(0,0,0,0.3);">
+                    <div class="flex items-center justify-between px-4 py-3 border-b border-[#2e2d31] bg-[#1a191d]">
                         <div class="flex items-center gap-2">
                             <div class="flex gap-1.5">
                                 <div class="w-2.5 h-2.5 rounded-full bg-[#ff5f57]"></div>
@@ -1203,63 +1203,63 @@
                     </div>
                     <div class="p-4 space-y-3 text-[13px]">
                         <div class="flex justify-end">
-                            <div class="bg-[#f0f0f0] rounded-2xl rounded-br-sm px-3.5 py-2 max-w-[85%] text-dark">Build me a full Meta campaign for our summer moisturizer launch</div>
+                            <div class="bg-[#232226] rounded-2xl rounded-br-sm px-3.5 py-2 max-w-[85%] text-white">Build me a full Meta campaign for our summer moisturizer launch</div>
                         </div>
                         <div class="flex justify-start">
-                            <div class="bg-white border border-[#e5e5e5] rounded-2xl rounded-bl-sm px-3.5 py-2.5 max-w-[90%] text-gray-600 text-[12px] leading-relaxed">Based on Bloom & Co.'s DTC skincare positioning and your Women 25-40 audience, I'll structure a 3-tier campaign: prospecting, retargeting, and retention. Using your warm, premium tone throughout.<br><br><span class="text-brand font-medium">Generating campaign structure...</span></div>
+                            <div class="bg-[#161518] border border-[#2e2d31] rounded-2xl rounded-bl-sm px-3.5 py-2.5 max-w-[90%] text-gray-300 text-[12px] leading-relaxed">Based on Bloom & Co.'s DTC skincare positioning and your Women 25-40 audience, I'll structure a 3-tier campaign: prospecting, retargeting, and retention. Using your warm, premium tone throughout.<br><br><span class="text-brand font-medium">Generating campaign structure...</span></div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="py-10 md:py-16 md:pl-10 flex flex-col justify-center order-1 md:order-2 border-b md:border-b-0 md:border-l border-[#e5e5e5]">
+            <div class="py-10 md:py-16 md:pl-10 flex flex-col justify-center order-1 md:order-2 border-b md:border-b-0 md:border-l border-[#2e2d31]">
                 <p class="step-num text-[48px] md:text-[64px] font-heading font-semibold text-brand leading-none mb-5">02</p>
-                <h3 class="text-[20px] md:text-[24px] font-heading font-medium text-dark mb-3">Talk to any agent</h3>
+                <h3 class="text-[20px] md:text-[24px] font-heading font-medium text-white mb-3">Talk to any agent</h3>
                 <p class="text-[15px] text-gray-500 leading-relaxed max-w-sm">Describe what you need in plain English. The agent already knows best practices and your client's context.</p>
             </div>
         </div>
 
         <!-- Step 3 -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-0 border-t border-b border-[#e5e5e5] -mx-6 px-6 fade-up">
-            <div class="py-10 md:py-16 md:pr-10 flex flex-col justify-center border-b md:border-b-0 md:border-r border-[#e5e5e5]">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-0 border-t border-b border-[#2e2d31] -mx-6 px-6 fade-up">
+            <div class="py-10 md:py-16 md:pr-10 flex flex-col justify-center border-b md:border-b-0 md:border-r border-[#2e2d31]">
                 <p class="step-num text-[48px] md:text-[64px] font-heading font-semibold text-brand leading-none mb-5">03</p>
-                <h3 class="text-[20px] md:text-[24px] font-heading font-medium text-dark mb-3">Get client-ready output</h3>
+                <h3 class="text-[20px] md:text-[24px] font-heading font-medium text-white mb-3">Get client-ready output</h3>
                 <p class="text-[15px] text-gray-500 leading-relaxed max-w-sm">Receive structured strategy, copy, and recommendations you can send directly to your client.</p>
             </div>
             <div class="py-8 md:py-12 md:pl-10 flex items-center">
                 <!-- Mock: Structured output document -->
-                <div class="card-lift w-full rounded-xl border border-[#e5e5e5] overflow-hidden bg-white" style="box-shadow: 4px 6px 24px -4px rgba(0,0,0,0.08);">
+                <div class="card-lift w-full rounded-xl border border-[#2e2d31] overflow-hidden bg-[#161518]" style="box-shadow: 4px 6px 24px -4px rgba(0,0,0,0.3);">
                     <div class="h-1.5 bg-brand"></div>
                     <div class="p-5 text-[13px]">
                         <div class="flex items-center justify-between mb-4">
                             <div>
                                 <p class="text-[11px] font-heading font-medium text-brand uppercase tracking-wider">Meta Ads Campaign</p>
-                                <p class="text-[16px] font-heading font-semibold text-dark mt-1">Bloom & Co. — Summer Launch</p>
+                                <p class="text-[16px] font-heading font-semibold text-white mt-1">Bloom & Co. — Summer Launch</p>
                             </div>
                             <span class="px-2.5 py-1 rounded-full bg-[#dcfce7] text-[#16a34a] text-[10px] font-heading font-medium">Ready to send</span>
                         </div>
-                        <div class="space-y-3 border-t border-[#e5e5e5] pt-4">
+                        <div class="space-y-3 border-t border-[#2e2d31] pt-4">
                             <div class="flex items-start gap-3">
-                                <span class="w-5 h-5 rounded bg-brand/10 flex items-center justify-center flex-shrink-0 mt-0.5"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#5762d5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-                                <div><p class="font-heading font-medium text-dark text-[12px]">Campaign architecture</p><p class="text-[11px] text-gray-400">3-tier structure with budget allocation</p></div>
+                                <span class="w-5 h-5 rounded bg-brand/15 flex items-center justify-center flex-shrink-0 mt-0.5"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#5762d5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                                <div><p class="font-heading font-medium text-white text-[12px]">Campaign architecture</p><p class="text-[11px] text-gray-400">3-tier structure with budget allocation</p></div>
                             </div>
                             <div class="flex items-start gap-3">
-                                <span class="w-5 h-5 rounded bg-brand/10 flex items-center justify-center flex-shrink-0 mt-0.5"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#5762d5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-                                <div><p class="font-heading font-medium text-dark text-[12px]">Ad copy — 6 variants</p><p class="text-[11px] text-gray-400">Primary text, headlines, descriptions</p></div>
+                                <span class="w-5 h-5 rounded bg-brand/15 flex items-center justify-center flex-shrink-0 mt-0.5"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#5762d5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                                <div><p class="font-heading font-medium text-white text-[12px]">Ad copy — 6 variants</p><p class="text-[11px] text-gray-400">Primary text, headlines, descriptions</p></div>
                             </div>
                             <div class="flex items-start gap-3">
-                                <span class="w-5 h-5 rounded bg-brand/10 flex items-center justify-center flex-shrink-0 mt-0.5"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#5762d5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-                                <div><p class="font-heading font-medium text-dark text-[12px]">Audience targeting</p><p class="text-[11px] text-gray-400">Interest stacks, lookalikes, exclusions</p></div>
+                                <span class="w-5 h-5 rounded bg-brand/15 flex items-center justify-center flex-shrink-0 mt-0.5"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#5762d5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                                <div><p class="font-heading font-medium text-white text-[12px]">Audience targeting</p><p class="text-[11px] text-gray-400">Interest stacks, lookalikes, exclusions</p></div>
                             </div>
                             <div class="flex items-start gap-3">
-                                <span class="w-5 h-5 rounded bg-brand/10 flex items-center justify-center flex-shrink-0 mt-0.5"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#5762d5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-                                <div><p class="font-heading font-medium text-dark text-[12px]">Budget & bid strategy</p><p class="text-[11px] text-gray-400">Daily spend recs with scaling plan</p></div>
+                                <span class="w-5 h-5 rounded bg-brand/15 flex items-center justify-center flex-shrink-0 mt-0.5"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#5762d5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                                <div><p class="font-heading font-medium text-white text-[12px]">Budget & bid strategy</p><p class="text-[11px] text-gray-400">Daily spend recs with scaling plan</p></div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="-mx-6 h-20 md:h-28 border-b border-[#e5e5e5]" style="background-image: repeating-linear-gradient(-45deg, rgba(0,0,0,0.04) 0px, rgba(0,0,0,0.04) 1px, transparent 1px, transparent 10px);"></div>
+        <div class="-mx-6 h-20 md:h-28 border-b border-[#2e2d31]" style="background-image: repeating-linear-gradient(-45deg, rgba(255,255,255,0.035) 0px, rgba(255,255,255,0.035) 1px, transparent 1px, transparent 10px);"></div>
     </section>
 
     <!-- ========== TESTIMONIALS ========== -->
@@ -1275,18 +1275,18 @@
         <div class="relative max-w-5xl mx-auto fade-up">
             <div class="review-carousel relative" style="height: 380px;">
                 <!-- Testimonial 1 -->
-                <div class="review-card active border border-[#e5e5e5] rounded-xl p-8 md:p-10 bg-white absolute top-0 left-1/2 w-[90%] md:w-[70%] transition-all duration-500 ease-out" data-review="0">
-                    <p class="text-[20px] md:text-[24px] font-light text-dark leading-relaxed italic max-w-2xl">
+                <div class="review-card active border border-[#2e2d31] rounded-xl p-8 md:p-10 bg-[#161518] absolute top-0 left-1/2 w-[90%] md:w-[70%] transition-all duration-500 ease-out" data-review="0">
+                    <p class="text-[20px] md:text-[24px] font-light text-white leading-relaxed italic max-w-2xl">
                         "I manage 8 clients and was spending hours re-prompting ChatGPT for each one. Agenso remembers everything about each client — the output quality is night and day."
                     </p>
                     <div class="mt-6 flex items-center gap-3">
                         <img src="https://i.pravatar.cc/80?img=5" alt="" class="w-10 h-10 rounded-full object-cover">
                         <div>
-                            <p class="text-[14px] font-heading font-medium text-dark">Beta User</p>
+                            <p class="text-[14px] font-heading font-medium text-white">Beta User</p>
                             <p class="text-[13px] text-gray-400">Freelance Marketer</p>
                         </div>
                     </div>
-                    <div class="mt-8 pt-6 border-t border-[#e5e5e5] grid grid-cols-3 gap-6">
+                    <div class="mt-8 pt-6 border-t border-[#2e2d31] grid grid-cols-3 gap-6">
                         <div>
                             <p class="text-[28px] font-heading font-semibold text-brand">8</p>
                             <p class="text-[13px] text-gray-400">clients managed</p>
@@ -1302,18 +1302,18 @@
                     </div>
                 </div>
                 <!-- Testimonial 2 -->
-                <div class="review-card border border-[#e5e5e5] rounded-xl p-8 md:p-10 bg-white absolute top-0 left-1/2 w-[90%] md:w-[70%] transition-all duration-500 ease-out" data-review="1">
-                    <p class="text-[20px] md:text-[24px] font-light text-dark leading-relaxed italic max-w-2xl">
+                <div class="review-card border border-[#2e2d31] rounded-xl p-8 md:p-10 bg-[#161518] absolute top-0 left-1/2 w-[90%] md:w-[70%] transition-all duration-500 ease-out" data-review="1">
+                    <p class="text-[20px] md:text-[24px] font-light text-white leading-relaxed italic max-w-2xl">
                         "Finally, AI marketing output I can actually trust. I used to triple-check everything from ChatGPT. With Agenso, the strategy and copy just... work."
                     </p>
                     <div class="mt-6 flex items-center gap-3">
                         <img src="https://i.pravatar.cc/80?img=18" alt="" class="w-10 h-10 rounded-full object-cover">
                         <div>
-                            <p class="text-[14px] font-heading font-medium text-dark">Beta User</p>
+                            <p class="text-[14px] font-heading font-medium text-white">Beta User</p>
                             <p class="text-[13px] text-gray-400">Growth Consultant</p>
                         </div>
                     </div>
-                    <div class="mt-8 pt-6 border-t border-[#e5e5e5] grid grid-cols-3 gap-6">
+                    <div class="mt-8 pt-6 border-t border-[#2e2d31] grid grid-cols-3 gap-6">
                         <div>
                             <p class="text-[28px] font-heading font-semibold text-brand">12</p>
                             <p class="text-[13px] text-gray-400">campaigns launched</p>
@@ -1329,18 +1329,18 @@
                     </div>
                 </div>
                 <!-- Testimonial 3 -->
-                <div class="review-card border border-[#e5e5e5] rounded-xl p-8 md:p-10 bg-white absolute top-0 left-1/2 w-[90%] md:w-[70%] transition-all duration-500 ease-out" data-review="2">
-                    <p class="text-[20px] md:text-[24px] font-light text-dark leading-relaxed italic max-w-2xl">
+                <div class="review-card border border-[#2e2d31] rounded-xl p-8 md:p-10 bg-[#161518] absolute top-0 left-1/2 w-[90%] md:w-[70%] transition-all duration-500 ease-out" data-review="2">
+                    <p class="text-[20px] md:text-[24px] font-light text-white leading-relaxed italic max-w-2xl">
                         "We replaced 3 different AI tools with Agenso. One platform, six agents, and every output already knows our clients' brand voice. It's a no-brainer."
                     </p>
                     <div class="mt-6 flex items-center gap-3">
                         <img src="https://i.pravatar.cc/80?img=60" alt="" class="w-10 h-10 rounded-full object-cover">
                         <div>
-                            <p class="text-[14px] font-heading font-medium text-dark">Beta User</p>
+                            <p class="text-[14px] font-heading font-medium text-white">Beta User</p>
                             <p class="text-[13px] text-gray-400">Agency Owner · 4 person team</p>
                         </div>
                     </div>
-                    <div class="mt-8 pt-6 border-t border-[#e5e5e5] grid grid-cols-3 gap-6">
+                    <div class="mt-8 pt-6 border-t border-[#2e2d31] grid grid-cols-3 gap-6">
                         <div>
                             <p class="text-[28px] font-heading font-semibold text-brand">3</p>
                             <p class="text-[13px] text-gray-400">tools replaced</p>
@@ -1358,18 +1358,18 @@
             </div>
 
             <!-- Arrows -->
-            <button id="reviewPrev" class="absolute top-1/2 -translate-y-1/2 left-0 md:-left-4 z-20 w-10 h-10 rounded-full border border-[#e5e5e5] bg-white flex items-center justify-center text-gray-500 hover:text-dark hover:border-gray-400 transition-colors">
+            <button id="reviewPrev" class="absolute top-1/2 -translate-y-1/2 left-0 md:-left-4 z-20 w-10 h-10 rounded-full border border-[#2e2d31] bg-[#161518] flex items-center justify-center text-gray-500 hover:text-white hover:border-gray-500 transition-colors">
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 12L6 8l4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </button>
-            <button id="reviewNext" class="absolute top-1/2 -translate-y-1/2 right-0 md:-right-4 z-20 w-10 h-10 rounded-full border border-[#e5e5e5] bg-white flex items-center justify-center text-gray-500 hover:text-dark hover:border-gray-400 transition-colors">
+            <button id="reviewNext" class="absolute top-1/2 -translate-y-1/2 right-0 md:-right-4 z-20 w-10 h-10 rounded-full border border-[#2e2d31] bg-[#161518] flex items-center justify-center text-gray-500 hover:text-white hover:border-gray-500 transition-colors">
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </button>
 
             <!-- Nav dots -->
             <div class="flex justify-center gap-2 mt-8">
                 <button class="review-dot active w-2 h-2 rounded-full bg-brand transition-all duration-300" data-review-goto="0"></button>
-                <button class="review-dot w-2 h-2 rounded-full bg-gray-300 transition-all duration-300" data-review-goto="1"></button>
-                <button class="review-dot w-2 h-2 rounded-full bg-gray-300 transition-all duration-300" data-review-goto="2"></button>
+                <button class="review-dot w-2 h-2 rounded-full bg-gray-600 transition-all duration-300" data-review-goto="1"></button>
+                <button class="review-dot w-2 h-2 rounded-full bg-gray-600 transition-all duration-300" data-review-goto="2"></button>
             </div>
         </div>
     </section>
@@ -1386,21 +1386,21 @@
             </p>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto stagger">
-            <div class="fade-up bg-white border border-gray-200 rounded-xl p-6 md:p-8">
+            <div class="fade-up bg-[#161518] border border-[#2e2d31] rounded-xl p-6 md:p-8">
                 <h3 class="text-[13px] font-heading font-medium text-gray-400 uppercase tracking-wider">Free</h3>
                 <div class="mt-4 flex items-baseline gap-1">
                     <span class="text-[36px] font-heading font-semibold tracking-tight-3">$0</span>
                     <span class="text-[13px] text-gray-400">/month</span>
                 </div>
                 <p class="mt-2 text-[13px] text-gray-500">Explore the platform with limited access.</p>
-                <a href="#" class="mt-6 flex items-center justify-center px-5 py-2.5 border border-gray-200 text-dark text-[13px] font-heading font-medium rounded-full hover:border-brand hover:text-brand transition-all duration-150 btn-press"><span class="btn-scroll"><span data-text="Start Free">Start Free</span></span></a>
-                <ul class="mt-6 space-y-2.5 text-[13px] text-gray-600">
+                <a href="#" class="mt-6 flex items-center justify-center px-5 py-2.5 border border-[#2e2d31] text-white text-[13px] font-heading font-medium rounded-full hover:border-brand hover:text-brand transition-all duration-150 btn-press"><span class="btn-scroll"><span data-text="Start Free">Start Free</span></span></a>
+                <ul class="mt-6 space-y-2.5 text-[13px] text-gray-300">
                     <li>1 project</li>
                     <li>All 6 agents</li>
                     <li>50 messages/month</li>
                 </ul>
             </div>
-            <div class="fade-up bg-white border-2 rounded-xl p-6 md:p-8 pricing-popular relative">
+            <div class="fade-up bg-[#161518] border-2 rounded-xl p-6 md:p-8 pricing-popular relative">
                 <div class="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-0.5 bg-brand text-white text-[11px] font-heading font-medium rounded-full uppercase tracking-wider">Popular</div>
                 <h3 class="text-[13px] font-heading font-medium text-brand uppercase tracking-wider">Pro</h3>
                 <div class="mt-4 flex items-baseline gap-1">
@@ -1409,22 +1409,22 @@
                 </div>
                 <p class="mt-2 text-[13px] text-gray-500">Everything to manage multiple clients.</p>
                 <a href="#" class="mt-6 flex items-center justify-center px-5 py-2.5 gradient-bg text-white text-[13px] font-heading font-medium rounded-full hover:opacity-90 transition-opacity duration-150 btn-press"><span class="btn-scroll"><span data-text="Start Free Trial">Start Free Trial</span></span></a>
-                <ul class="mt-6 space-y-2.5 text-[13px] text-gray-600">
+                <ul class="mt-6 space-y-2.5 text-[13px] text-gray-300">
                     <li>Unlimited projects</li>
                     <li>All 6 agents</li>
                     <li>1,000 messages/month</li>
                     <li>Full history & priority support</li>
                 </ul>
             </div>
-            <div class="fade-up bg-white border border-gray-200 rounded-xl p-6 md:p-8">
+            <div class="fade-up bg-[#161518] border border-[#2e2d31] rounded-xl p-6 md:p-8">
                 <h3 class="text-[13px] font-heading font-medium text-gray-400 uppercase tracking-wider">Team</h3>
                 <div class="mt-4 flex items-baseline gap-1">
                     <span class="text-[36px] font-heading font-semibold tracking-tight-3">$99</span>
                     <span class="text-[13px] text-gray-400">/month</span>
                 </div>
                 <p class="mt-2 text-[13px] text-gray-500">For agencies with shared workspaces.</p>
-                <a href="#" class="mt-6 flex items-center justify-center px-5 py-2.5 border border-gray-200 text-dark text-[13px] font-heading font-medium rounded-full hover:border-brand hover:text-brand transition-all duration-150 btn-press"><span class="btn-scroll"><span data-text="Start Free Trial">Start Free Trial</span></span></a>
-                <ul class="mt-6 space-y-2.5 text-[13px] text-gray-600">
+                <a href="#" class="mt-6 flex items-center justify-center px-5 py-2.5 border border-[#2e2d31] text-white text-[13px] font-heading font-medium rounded-full hover:border-brand hover:text-brand transition-all duration-150 btn-press"><span class="btn-scroll"><span data-text="Start Free Trial">Start Free Trial</span></span></a>
+                <ul class="mt-6 space-y-2.5 text-[13px] text-gray-300">
                     <li>Everything in Pro</li>
                     <li>Up to 5 team members</li>
                     <li>5,000 messages/month</li>
@@ -1435,31 +1435,31 @@
 
         <!-- FAQ -->
         <div class="max-w-2xl mx-auto mt-16">
-            <div class="border-t border-[#e5e5e5]">
-                <div class="faq-item border-b border-[#e5e5e5]">
+            <div class="border-t border-[#2e2d31]">
+                <div class="faq-item border-b border-[#2e2d31]">
                     <button class="w-full flex items-center justify-between py-4 text-left" onclick="toggleFaq(this)">
-                        <span class="text-[15px] font-heading font-medium text-dark">How is this different from ChatGPT?</span>
+                        <span class="text-[15px] font-heading font-medium text-white">How is this different from ChatGPT?</span>
                         <svg class="faq-chevron w-4 h-4 text-gray-400 flex-shrink-0" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M4 6l4 4 4-4"/></svg>
                     </button>
                     <div class="faq-answer"><p class="pb-4 text-[14px] text-gray-500 leading-relaxed">ChatGPT is general-purpose. Agenso's agents are pre-trained on marketing with structured directives that prevent hallucinations, and they remember your client's context across every session.</p></div>
                 </div>
-                <div class="faq-item border-b border-[#e5e5e5]">
+                <div class="faq-item border-b border-[#2e2d31]">
                     <button class="w-full flex items-center justify-between py-4 text-left" onclick="toggleFaq(this)">
-                        <span class="text-[15px] font-heading font-medium text-dark">Will it work for my specific industry?</span>
+                        <span class="text-[15px] font-heading font-medium text-white">Will it work for my specific industry?</span>
                         <svg class="faq-chevron w-4 h-4 text-gray-400 flex-shrink-0" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M4 6l4 4 4-4"/></svg>
                     </button>
                     <div class="faq-answer"><p class="pb-4 text-[14px] text-gray-500 leading-relaxed">Yes. You provide your client's industry, audience, tone, and goals when setting up a project. Every agent adapts its outputs to that specific context.</p></div>
                 </div>
-                <div class="faq-item border-b border-[#e5e5e5]">
+                <div class="faq-item border-b border-[#2e2d31]">
                     <button class="w-full flex items-center justify-between py-4 text-left" onclick="toggleFaq(this)">
-                        <span class="text-[15px] font-heading font-medium text-dark">Can I trust AI outputs for client work?</span>
+                        <span class="text-[15px] font-heading font-medium text-white">Can I trust AI outputs for client work?</span>
                         <svg class="faq-chevron w-4 h-4 text-gray-400 flex-shrink-0" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M4 6l4 4 4-4"/></svg>
                     </button>
                     <div class="faq-answer"><p class="pb-4 text-[14px] text-gray-500 leading-relaxed">That's exactly what Agenso solves. Agents follow structured directives and proven frameworks. The outputs are consistent, accurate, and ready to use.</p></div>
                 </div>
-                <div class="faq-item border-b border-[#e5e5e5]">
+                <div class="faq-item border-b border-[#2e2d31]">
                     <button class="w-full flex items-center justify-between py-4 text-left" onclick="toggleFaq(this)">
-                        <span class="text-[15px] font-heading font-medium text-dark">What's included in the free plan?</span>
+                        <span class="text-[15px] font-heading font-medium text-white">What's included in the free plan?</span>
                         <svg class="faq-chevron w-4 h-4 text-gray-400 flex-shrink-0" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M4 6l4 4 4-4"/></svg>
                     </button>
                     <div class="faq-answer"><p class="pb-4 text-[14px] text-gray-500 leading-relaxed">1 project, all 6 agents, 50 messages per month. Enough to experience the quality difference before committing.</p></div>
@@ -1650,9 +1650,9 @@
                 if (currentPanel === nextPanel) return;
 
                 // Update tab states
-                document.querySelectorAll('.vtab').forEach(t => { t.classList.remove('active'); t.classList.add('text-gray-500'); });
+                document.querySelectorAll('.vtab').forEach(t => { t.classList.remove('active'); t.classList.add('text-gray-400'); });
                 tab.classList.add('active');
-                tab.classList.remove('text-gray-500');
+                tab.classList.remove('text-gray-400');
 
                 // Fade out current panel, then switch
                 if (currentPanel) {
@@ -1690,7 +1690,7 @@
 
             function setPositions() {
                 cards.forEach(c => c.classList.remove('active', 'prev', 'next'));
-                dots.forEach(d => { d.classList.remove('active'); d.classList.replace('bg-brand', 'bg-gray-300'); });
+                dots.forEach(d => { d.classList.remove('active'); d.classList.replace('bg-brand', 'bg-gray-600'); });
 
                 const prev = (current - 1 + total) % total;
                 const next = (current + 1) % total;
@@ -1700,7 +1700,7 @@
                 cards[next].classList.add('next');
 
                 dots[current].classList.add('active');
-                dots[current].classList.replace('bg-gray-300', 'bg-brand');
+                dots[current].classList.replace('bg-gray-600', 'bg-brand');
             }
 
             dots.forEach(dot => {
