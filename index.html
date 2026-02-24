@@ -435,6 +435,18 @@
             transform: scaleX(1);
         }
 
+        /* Comparison typewriter cursor */
+        .comp-typewriter::after {
+            content: '|';
+            font-weight: 300;
+            animation: comp-blink 0.6s step-end infinite;
+            margin-left: 1px;
+        }
+        .comp-typewriter.done::after { display: none; }
+        @keyframes comp-blink {
+            50% { opacity: 0; }
+        }
+
         /* Reduced motion */
         @media (prefers-reduced-motion: reduce) {
             .fade-up { transition-duration: 0.01s !important; transform: none !important; }
@@ -442,6 +454,8 @@
             .pencil-draw path { stroke-dasharray: none !important; stroke-dashoffset: 0 !important; transition: none !important; }
             .card-lift:hover { transform: none !important; }
             .chat-msg { opacity: 1 !important; transform: none !important; transition: none !important; }
+            .comp-prompt, .comp-response, .comp-verdict { opacity: 1 !important; transform: none !important; }
+            .comp-typewriter::after { display: none; }
             .step-num { opacity: 1 !important; transform: none !important; transition: none !important; }
             .agent-vpanel.active { animation: none !important; }
             .btn-press::before { animation: none !important; }
@@ -487,7 +501,7 @@
                 <a href="#how-it-works" class="text-[14px] font-heading text-gray-600 py-2">How It Works</a>
                 <a href="#pricing" class="text-[14px] font-heading text-gray-600 py-2">Pricing</a>
                 <a href="#" class="text-[14px] font-heading text-gray-600 py-2">Login</a>
-                <a href="#" class="mt-2 inline-flex items-center justify-center px-4 py-2.5 bg-dark text-white text-[14px] font-heading font-medium rounded-full">Start Free</a>
+                <a href="#" class="mt-2 inline-flex items-center justify-center px-4 py-2.5 bg-dark text-white text-[14px] font-heading font-medium rounded-full">Start free</a>
             </div>
         </div>
     </nav>
@@ -500,8 +514,8 @@
             <h1 class="font-heading text-[32px] md:text-[44px] lg:text-[52px] font-medium leading-[1.1] tracking-tight-3 text-dark max-w-3xl mx-auto fade-up">
                 AI Agents Trained for<br>Real Marketing Output
             </h1>
-            <p class="mt-5 text-[16px] md:text-[17px] text-gray-500 max-w-lg mx-auto leading-relaxed fade-up">
-                Pre-trained marketing agents that know best practices, remember your clients, and never hallucinate. Expert-level strategy, copy, and campaigns – every time.
+            <p class="mt-5 text-[16px] md:text-[17px] text-gray-500 max-w-xl mx-auto leading-relaxed fade-up">
+                Pre-trained marketing agents that connect to your ad accounts, read live data, and deliver expert-level strategy, copy, and campaigns – with zero hallucinations and full client context, every time.
             </p>
             <div class="mt-8 flex items-center justify-center gap-3 flex-wrap fade-up">
                 <a href="#" class="inline-flex items-center gap-2 px-6 py-3 bg-brand text-white text-[14px] font-heading font-medium rounded-full hover:bg-brand-dark transition-colors duration-150 btn-press">
@@ -532,7 +546,7 @@
 
     <!-- ========== INTEGRATION MARQUEE ========== -->
     <section class="py-8 md:py-10">
-        <p class="text-center text-[12px] font-heading text-gray-400 uppercase tracking-wider mb-6 px-6 fade-up">Integrations with the tools you already use</p>
+        <p class="text-center text-[12px] font-heading text-gray-400 uppercase tracking-wider mb-6 px-6 fade-up">Live connections to the platforms you already use</p>
         <div class="overflow-hidden relative" style="-webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent); mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);">
             <div class="marquee-track">
                 <div class="flex items-center gap-12 px-6">
@@ -578,76 +592,100 @@
 
     <!-- ========== THE PROBLEM ========== -->
     <section class="pt-20 md:pt-28 pb-0 px-6">
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 mb-16 md:mb-24 items-center">
-            <div>
-                <p class="text-[12px] font-heading font-medium text-brand uppercase tracking-wider mb-5 fade-up">The problem</p>
-                <h2 class="font-heading text-[28px] md:text-[36px] font-medium tracking-tight-3 fade-up">
-                    The AI tools you use for marketing<br>weren't built for marketers
-                </h2>
-                <p class="mt-4 text-[16px] text-gray-500 max-w-md leading-relaxed fade-up">
-                    General-purpose AI doesn't understand your workflow. You end up doing the hard part anyway.
-                </p>
-            </div>
-            <!-- Mock ChatGPT conversation -->
-            <div class="card-lift fade-up rounded-xl border border-[#e5e5e5] overflow-hidden bg-white" style="box-shadow: 6px 8px 30px -6px rgba(0,0,0,0.15);">
-                <!-- Window bar -->
+        <div class="text-center mb-14 md:mb-20">
+            <p class="text-[12px] font-heading font-medium text-brand uppercase tracking-wider mb-5 fade-up">The problem</p>
+            <h2 class="font-heading text-[28px] md:text-[36px] font-medium tracking-tight-3 fade-up">
+                The AI tools you use for marketing<br>don't actually know your marketing
+            </h2>
+            <p class="mt-4 text-[16px] text-gray-500 max-w-lg mx-auto leading-relaxed fade-up">
+                They can't see your ad account. They don't know your client's voice. They forget everything between sessions. You end up doing the hard part anyway.
+            </p>
+        </div>
+
+        <div id="comparison-grid" class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-16 md:mb-24 stagger">
+            <!-- Generic AI side -->
+            <div class="fade-up card-lift rounded-xl border border-[#e5e5e5] overflow-hidden bg-white" style="box-shadow: 6px 8px 30px -6px rgba(0,0,0,0.1);">
                 <div class="flex items-center gap-2 px-4 py-3 border-b border-[#e5e5e5] bg-[#fafafa]">
                     <div class="flex gap-1.5">
                         <div class="w-2.5 h-2.5 rounded-full bg-[#ff5f57]"></div>
                         <div class="w-2.5 h-2.5 rounded-full bg-[#febc2e]"></div>
                         <div class="w-2.5 h-2.5 rounded-full bg-[#28c840]"></div>
                     </div>
-                    <p class="text-[11px] text-gray-400 ml-2 font-heading">Generic AI Chat</p>
+                    <p class="text-[13px] text-dark font-heading font-medium ml-2">Generic AI Chat</p>
                 </div>
-                <!-- Messages -->
-                <div id="chat-container" class="p-4 space-y-3 text-[13px]">
-                    <!-- User msg 1 -->
-                    <div class="chat-msg flex justify-end">
-                        <div class="bg-[#f0f0f0] rounded-2xl rounded-br-sm px-3.5 py-2 max-w-[85%] text-dark">Write Meta ad copy for my client's summer campaign</div>
+                <div class="p-4 space-y-3 text-[13px]">
+                    <div class="comp-prompt flex justify-end" style="opacity:0; transform:translateY(8px); transition: opacity 0.4s, transform 0.4s;">
+                        <div class="bg-[#f0f0f0] rounded-2xl rounded-br-sm px-3.5 py-2 max-w-[85%] text-dark">Audit my Meta Ads account and tell me what to change.</div>
                     </div>
-                    <!-- AI response (truncated) -->
-                    <div class="chat-msg flex justify-start">
-                        <div class="bg-white border border-[#e5e5e5] rounded-2xl rounded-bl-sm px-3.5 py-2 max-w-[85%] text-gray-400 italic">Here's some ad copy for a summer campaign...</div>
+                    <div class="comp-response flex justify-start" style="opacity:0; transform:translateY(8px); transition: opacity 0.4s, transform 0.4s;">
+                        <div class="bg-white border border-[#e5e5e5] rounded-2xl rounded-bl-sm px-3.5 py-2.5 max-w-[90%] text-gray-500 text-[12px] leading-relaxed">
+                            <span class="comp-typewriter" data-full="I don't have access to your Meta Ads account. However, here are some general best practices:||1. Review your audience targeting regularly|2. Test multiple creative formats|3. Monitor your frequency to avoid ad fatigue|4. Use lookalike audiences for prospecting|5. Set up proper conversion tracking"></span>
+                        </div>
                     </div>
-                    <!-- User msg 2 -->
-                    <div class="chat-msg flex justify-end">
-                        <div class="bg-[#f0f0f0] rounded-2xl rounded-br-sm px-3.5 py-2 max-w-[85%] text-dark">No, follow the brand guidelines I gave you before</div>
+                </div>
+                <div class="px-4 pb-4">
+                    <div class="comp-verdict flex items-center gap-2 px-3 py-2 rounded-lg bg-[#fef2f2] border border-[#fecaca]" style="opacity:0; transform:translateY(8px); transition: opacity 0.4s, transform 0.4s;">
+                        <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" stroke="#e5484d" stroke-width="1.5"/><path d="M5 5l6 6M11 5l-6 6" stroke="#e5484d" stroke-width="1.5" stroke-linecap="round"/></svg>
+                        <p class="text-[11px] text-[#e5484d] font-heading font-medium">Generic advice. No real data. No action items.</p>
                     </div>
-                    <!-- AI response with warning -->
-                    <div class="chat-msg flex justify-start">
-                        <div class="bg-[#fef2f2] border border-[#fecaca] rounded-2xl rounded-bl-sm px-3.5 py-2 max-w-[85%] text-[#e5484d] text-[12px]">I don't have access to previous conversations. Could you share the brand guidelines again?</div>
+                </div>
+            </div>
+
+            <!-- Agenso side -->
+            <div class="fade-up card-lift rounded-xl border border-brand/30 overflow-hidden bg-white" style="box-shadow: 6px 8px 30px -6px rgba(0,0,0,0.1);">
+                <div class="flex items-center justify-between px-4 py-3 border-b border-[#e5e5e5] bg-[#fafafa]">
+                    <div class="flex items-center gap-2">
+                        <div class="flex gap-1.5">
+                            <div class="w-2.5 h-2.5 rounded-full bg-[#ff5f57]"></div>
+                            <div class="w-2.5 h-2.5 rounded-full bg-[#febc2e]"></div>
+                            <div class="w-2.5 h-2.5 rounded-full bg-[#28c840]"></div>
+                        </div>
+                        <p class="text-[13px] text-dark font-heading font-medium ml-2">Agenso Meta Ads Agent</p>
                     </div>
-                    <!-- User msg 3 - frustrated -->
-                    <div class="chat-msg flex justify-end">
-                        <div class="bg-[#f0f0f0] rounded-2xl rounded-br-sm px-3.5 py-2 max-w-[85%] text-dark">The tone is casual, audience is 25-34, budget is $2k/mo. We talked about this yesterday.</div>
+                    <span class="text-[10px] font-heading font-medium text-brand bg-brand-subtle px-2 py-0.5 rounded-full">Connected via API</span>
+                </div>
+                <div class="p-4 space-y-3 text-[13px]">
+                    <div class="comp-prompt flex justify-end" style="opacity:0; transform:translateY(8px); transition: opacity 0.4s, transform 0.4s;">
+                        <div class="bg-[#f0f0f0] rounded-2xl rounded-br-sm px-3.5 py-2 max-w-[85%] text-dark">Audit my Meta Ads account and tell me what to change.</div>
                     </div>
-                    <!-- User msg 4 - giving up -->
-                    <div class="chat-msg flex justify-end">
-                        <div class="bg-[#f0f0f0] rounded-2xl rounded-br-sm px-3.5 py-2 max-w-[85%] text-gray-300">And make sure you use the metrics from last month's report...</div>
+                    <div class="comp-response flex justify-start" style="opacity:0; transform:translateY(8px); transition: opacity 0.4s, transform 0.4s;">
+                        <div class="bg-white border border-[#e5e5e5] rounded-2xl rounded-bl-sm px-3.5 py-2.5 max-w-[90%] text-gray-600 text-[12px] leading-relaxed">
+                            <span class="comp-typewriter" data-full="I've pulled the last 30 days from your Meta Ads account. Here's what I found:||{b}Ad Set &quot;Summer Prospecting — W25-34&quot;{/b} has a CPA of $38.20, which is 2.4x your account average.||{b}Ad Set &quot;Retargeting — Cart Abandoners&quot;{/b} frequency is at 6.8 — your audience is seeing the same creative too often.||{brand}Recommendation:{/brand} Pause the prospecting set, refresh retargeting creative, and reallocate $1,200/mo to your top-performing lookalike audience (CPA: $14.50)."></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="px-4 pb-4">
+                    <div class="comp-verdict flex items-center gap-2 px-3 py-2 rounded-lg bg-[#dcfce7] border border-[#bbf7d0]" style="opacity:0; transform:translateY(8px); transition: opacity 0.4s, transform 0.4s;">
+                        <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" stroke="#16a34a" stroke-width="1.5"/><path d="M5 8l2 2 4-4" stroke="#16a34a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        <p class="text-[11px] text-[#16a34a] font-heading font-medium">Specific actions from your real account data.</p>
                     </div>
                 </div>
             </div>
         </div>
+
+        <p class="text-center text-[20px] md:text-[24px] font-heading font-medium tracking-tight-2 text-dark mb-16 md:mb-24 fade-up">Same prompt. Different universe.</p>
+
+        <!-- Pain point breakdown -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-0 border-t border-[#e5e5e5] -mx-6 px-6 stagger">
             <div class="fade-up border-b md:border-b-0 md:border-r border-[#e5e5e5] py-10 md:py-14 md:pr-8">
                 <p class="text-[28px] md:text-[32px] font-heading font-semibold text-brand leading-none mb-4">01</p>
                 <h3 class="text-[18px] md:text-[20px] font-heading font-semibold text-dark mb-2">Inconsistent quality</h3>
                 <p class="text-[15px] text-gray-500 leading-relaxed">
-                    Some outputs are great. Others are unusable. You can't send unpredictable work to clients.
+                    Some outputs are great. Others hallucinate metrics, invent best practices, or miss your client's tone completely. You can't send unpredictable work to clients.
                 </p>
             </div>
             <div class="fade-up border-b md:border-b-0 md:border-r border-[#e5e5e5] py-10 md:py-14 md:px-8">
                 <p class="text-[28px] md:text-[32px] font-heading font-semibold text-brand leading-none mb-4">02</p>
                 <h3 class="text-[18px] md:text-[20px] font-heading font-semibold text-dark mb-2">Context amnesia</h3>
                 <p class="text-[15px] text-gray-500 leading-relaxed">
-                    Every session starts from zero. You re-explain your client's business, tone, and goals — every time.
+                    Every session starts from zero. You re-explain your client's business, paste in last month's data, and re-describe the brand voice. The AI forgets everything between conversations.
                 </p>
             </div>
             <div class="fade-up py-10 md:py-14 md:pl-8">
                 <p class="text-[28px] md:text-[32px] font-heading font-semibold text-brand leading-none mb-4">03</p>
-                <h3 class="text-[18px] md:text-[20px] font-heading font-semibold text-dark mb-2">Prompt fatigue</h3>
+                <h3 class="text-[18px] md:text-[20px] font-heading font-semibold text-dark mb-2">Blind to your actual data</h3>
                 <p class="text-[15px] text-gray-500 leading-relaxed">
-                    You're a marketer, not a prompt engineer. You shouldn't need perfect prompts for useful output.
+                    Generic AI can't connect to your ad accounts, read your Search Console, or pull campaign metrics. Every recommendation is based on assumptions — not your real numbers.
                 </p>
             </div>
         </div>
@@ -662,7 +700,7 @@
                 Agenso is built<br><span class="relative inline-block" id="pencil-target">with purpose<svg class="pencil-draw absolute -bottom-4 left-0 w-full" height="20" viewBox="0 0 220 10" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><defs><filter id="pencil2" x="-5%" y="-80%" width="110%" height="260%" color-interpolation-filters="sRGB"><feTurbulence type="fractalNoise" baseFrequency="0.65 0.45" numOctaves="5" seed="2" result="edgeNoise"/><feDisplacementMap in="SourceGraphic" in2="edgeNoise" scale="5" xChannelSelector="R" yChannelSelector="G" result="rough"/><feTurbulence type="fractalNoise" baseFrequency="3" numOctaves="4" seed="7" result="grain"/><feColorMatrix in="grain" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  2.5 0 0 0 -0.4" result="grainAlpha"/><feComposite in="rough" in2="grainAlpha" operator="in"/></filter><linearGradient id="pencil-fade2" x1="3" y1="0" x2="220" y2="0" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#5762d5" stop-opacity="0.85"/><stop offset="0.65" stop-color="#5762d5" stop-opacity="0.75"/><stop offset="1" stop-color="#5762d5" stop-opacity="0.1"/></linearGradient></defs><path d="M6 5.5Q3 5.5 3 6C25 5.2 55 4.5 90 5.2C125 5.9 160 4.8 195 5.5C205 5.3 212 5 215 4.9Q217 4.8 217 5.2" stroke="url(#pencil-fade2)" stroke-width="3.5" stroke-linecap="round" filter="url(#pencil2)"/><path d="M7 6Q5 6.2 5 6.5C30 5.8 60 5 95 5.6C130 6.2 165 5.1 200 5.8C210 5.5 214 5.2 216 5.1Q217 5 217 5.3" stroke="url(#pencil-fade2)" stroke-width="1.5" stroke-linecap="round" filter="url(#pencil2)" opacity="0.4"/></svg></span>
             </h2>
             <p class="mt-5 text-[16px] text-gray-500 max-w-lg leading-relaxed fade-up">
-                Not another ChatGPT wrapper. Purpose-built marketing agents with guardrails, expertise, and memory.
+                Not another ChatGPT wrapper. Purpose-built marketing agents with live data access, guardrails, expertise, and memory — so you can deliver better work in less time.
             </p>
         </div>
 
@@ -677,7 +715,7 @@
                     Outputs you can trust<br>to send to clients
                 </h3>
                 <p class="mt-4 text-[15px] text-gray-500 leading-relaxed max-w-sm">
-                    Every output follows your project's rules — your client's tone of voice, audience, goals, and constraints are applied automatically, every time. Not sometimes. Every time.
+                    Every output follows your project's rules — your client's tone of voice, audience, goals, and constraints are applied automatically, every time. Not sometimes. Every time. Stop triple-checking AI output. Start sending it straight to clients.
                 </p>
                 <a href="#" class="learn-more-link mt-6 inline-flex items-center gap-1.5 text-[13px] font-heading font-medium text-brand hover:text-brand-dark transition-colors">
                     Learn more
@@ -694,7 +732,7 @@
                     Agents that already know<br>marketing
                 </h3>
                 <p class="mt-4 text-[15px] text-gray-500 leading-relaxed max-w-sm">
-                    Each agent is already trained on current best practices for its discipline. You don't need to teach it anything or craft the perfect prompt — just say what you need.
+                    Each agent knows more about its discipline than any individual marketer. Current platform best practices, proven frameworks, optimal structures — all built in. You don't teach it. It teaches you what to do.
                 </p>
                 <a href="#" class="learn-more-link mt-6 inline-flex items-center gap-1.5 text-[13px] font-heading font-medium text-brand hover:text-brand-dark transition-colors">
                     Learn more
@@ -717,7 +755,7 @@
                     Set up once, agents<br>remember forever
                 </h3>
                 <p class="mt-4 text-[15px] text-gray-500 leading-relaxed max-w-sm">
-                    Set up a project with your client's industry, audience, tone, and goals. Every agent applies that context to every output — and there's no context window limit. Your 50th message is as precise as your first.
+                    Set up a project with your client's industry, audience, tone, and goals. Every agent applies that context to every output — and there's no context window limit. Your 50th message is as precise as your first. Onboard a new client in minutes. The agents handle the rest — forever.
                 </p>
                 <a href="#" class="learn-more-link mt-6 inline-flex items-center gap-1.5 text-[13px] font-heading font-medium text-brand hover:text-brand-dark transition-colors">
                     Learn more
@@ -760,7 +798,7 @@
                                 <span class="text-[12px] font-heading font-medium text-brand bg-brand-subtle px-2.5 py-1 rounded-full">Live API access</span>
                                 <h3 class="text-[20px] md:text-[24px] font-heading font-semibold mt-4 mb-3">Meta Ads Agent</h3>
                                 <p class="text-[14px] text-gray-500 leading-relaxed">
-                                    Connects to your Meta Ads account via API. Reads campaign performance, identifies underperforming ad sets, and recommends specific changes to targeting, budgets, and creative.
+                                    Connects to your Meta Ads account via API. Reads campaign performance, identifies underperforming ad sets, and recommends specific changes to targeting, budgets, and creative. Audit an entire ad account's history in seconds — work that takes a human analyst hours.
                                 </p>
                                 <div class="mt-6">
                                     <p class="text-[12px] font-heading font-medium text-gray-400 uppercase tracking-wider mb-3">What you'll get</p>
@@ -785,7 +823,7 @@
                                 <span class="text-[12px] font-heading font-medium text-brand bg-brand-subtle px-2.5 py-1 rounded-full">Live API access</span>
                                 <h3 class="text-[20px] md:text-[24px] font-heading font-semibold mt-4 mb-3">Google Ads Agent</h3>
                                 <p class="text-[14px] text-gray-500 leading-relaxed">
-                                    Pulls live data from your Google Ads account. Reviews search terms, quality scores, and bid performance — then tells you exactly what to pause, scale, or restructure.
+                                    Pulls live data from your Google Ads account. Reviews search terms, quality scores, and bid performance — then tells you exactly what to pause, scale, or restructure. Get told exactly which campaigns to pause, scale, or restructure — based on your actual numbers.
                                 </p>
                                 <div class="mt-6">
                                     <p class="text-[12px] font-heading font-medium text-gray-400 uppercase tracking-wider mb-3">What you'll get</p>
@@ -810,7 +848,7 @@
                                 <span class="text-[12px] font-heading font-medium text-gray-500 bg-gray-100 px-2.5 py-1 rounded-full">Klaviyo & Mailchimp ready</span>
                                 <h3 class="text-[20px] md:text-[24px] font-heading font-semibold mt-4 mb-3">Email Marketing Agent</h3>
                                 <p class="text-[14px] text-gray-500 leading-relaxed">
-                                    Writes full email sequences, subject lines, and flow logic. Give it a goal — welcome series, abandoned cart, re-engagement — and it builds the entire structure with copy ready to drop in.
+                                    Writes full email sequences, subject lines, and flow logic. Give it a goal — welcome series, abandoned cart, re-engagement — and it builds the entire structure with copy ready to drop in. Deliver a complete email strategy in minutes, not days.
                                 </p>
                                 <div class="mt-6">
                                     <p class="text-[12px] font-heading font-medium text-gray-400 uppercase tracking-wider mb-3">What you'll get</p>
@@ -835,7 +873,7 @@
                                 <span class="text-[12px] font-heading font-medium text-brand bg-brand-subtle px-2.5 py-1 rounded-full">Search Console API</span>
                                 <h3 class="text-[20px] md:text-[24px] font-heading font-semibold mt-4 mb-3">SEO Agent</h3>
                                 <p class="text-[14px] text-gray-500 leading-relaxed">
-                                    Connects to Google Search Console. Analyzes your rankings, click-through rates, and indexing issues — then builds keyword strategies, content briefs, and on-page fixes based on real data.
+                                    Connects to Google Search Console. Analyzes your rankings, click-through rates, and indexing issues — then builds keyword strategies, content briefs, and on-page fixes based on real data. Full Semrush-level keyword intelligence, content strategy, and technical audits — built into a single agent that reads your Search Console data.
                                 </p>
                                 <div class="mt-6">
                                     <p class="text-[12px] font-heading font-medium text-gray-400 uppercase tracking-wider mb-3">What you'll get</p>
@@ -860,7 +898,7 @@
                                 <span class="text-[12px] font-heading font-medium text-gray-500 bg-gray-100 px-2.5 py-1 rounded-full">Conversion focused</span>
                                 <h3 class="text-[20px] md:text-[24px] font-heading font-semibold mt-4 mb-3">Website & CRO Agent</h3>
                                 <p class="text-[14px] text-gray-500 leading-relaxed">
-                                    Audits your landing pages and tells you what's hurting conversions. Rewrites headlines, CTAs, and page structure. Generates A/B test hypotheses you can run immediately.
+                                    Audits your landing pages and tells you what's hurting conversions. Rewrites headlines, CTAs, and page structure. Generates A/B test hypotheses you can run immediately. Generate test hypotheses backed by conversion data, not guesswork.
                                 </p>
                                 <div class="mt-6">
                                     <p class="text-[12px] font-heading font-medium text-gray-400 uppercase tracking-wider mb-3">What you'll get</p>
@@ -885,7 +923,7 @@
                                 <span class="text-[12px] font-heading font-medium text-gray-500 bg-gray-100 px-2.5 py-1 rounded-full">Cross-channel</span>
                                 <h3 class="text-[20px] md:text-[24px] font-heading font-semibold mt-4 mb-3">Strategy & Funnels Agent</h3>
                                 <p class="text-[14px] text-gray-500 leading-relaxed">
-                                    Maps out your full customer journey from first touch to close. Builds funnel structures, go-to-market plans, and cross-channel strategies that tie your other agents' work together.
+                                    Maps out your full customer journey from first touch to close. Builds funnel structures, go-to-market plans, and cross-channel strategies that tie your other agents' work together. Deliver comprehensive go-to-market plans in minutes that would take days to build manually.
                                 </p>
                                 <div class="mt-6">
                                     <p class="text-[12px] font-heading font-medium text-gray-400 uppercase tracking-wider mb-3">What you'll get</p>
@@ -908,7 +946,7 @@
         </div>
         <div class="text-center mt-14 md:mt-20 fade-up">
             <a href="#" class="inline-flex items-center px-6 py-3 bg-brand text-white text-[14px] font-heading font-medium rounded-full hover:bg-brand-dark transition-colors duration-150 btn-press">
-                <span class="btn-scroll"><span data-text="Try Agenso Agents">Try Agenso Agents</span></span>
+                <span class="btn-scroll"><span data-text="See what your agents can do">See what your agents can do</span></span>
             </a>
         </div>
     </section>
@@ -924,7 +962,7 @@
             <div class="mb-24 md:mb-28 fade-up">
                 <p class="text-[14px] font-heading font-medium text-[#90ddf0] uppercase tracking-wider mb-5">Why Agenso</p>
                 <h2 class="font-heading text-[40px] md:text-[56px] lg:text-[72px] font-medium tracking-tight-3 text-white leading-[1.08] max-w-4xl">
-                    No hallucinations.<br>No context limits.<br>No prompt engineering.
+                    Connected to your data.<br>Smarter than any prompt.<br>Built for real marketing work.
                 </h2>
             </div>
 
@@ -934,7 +972,7 @@
                 <div class="absolute inset-0 pointer-events-none" style="background-image: radial-gradient(circle, rgba(255,255,255,0.35) 1px, transparent 1px); background-size: 14px 14px; -webkit-mask-image: linear-gradient(to left, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.3) 35%, rgba(0,0,0,0.15) 55%, rgba(0,0,0,0.05) 70%, rgba(0,0,0,0) 80%); mask-image: linear-gradient(to left, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.3) 35%, rgba(0,0,0,0.15) 55%, rgba(0,0,0,0.05) 70%, rgba(0,0,0,0) 80%);"></div>
                 <div class="relative z-10">
                     <p class="text-[96px] md:text-[140px] lg:text-[180px] font-heading font-semibold gradient-text leading-none" style="background: linear-gradient(135deg, #90ddf0 0%, #5762d5 55%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;">99.9%</p>
-                    <p class="text-[16px] md:text-[18px] text-gray-400 mt-4 max-w-lg">of outputs are client-ready with no edits needed. Structured frameworks prevent hallucinations before they happen.</p>
+                    <p class="text-[16px] md:text-[18px] text-gray-400 mt-4 max-w-lg">hallucination-free. Structured frameworks and verified data sources prevent hallucinations before they happen.</p>
                 </div>
             </div>
 
@@ -964,9 +1002,9 @@
                     </div>
                 </div>
                 <div class="px-6 py-12 md:py-16 flex flex-col justify-center gap-8">
-                    <p class="text-[22px] md:text-[28px] font-heading font-medium text-white leading-[1.25]">Agenso is where freelance marketers put AI to work. Pull &amp; audit live ad data, create brand content for every client, and deliver 10x higher quality than standard chat models.</p>
+                    <p class="text-[22px] md:text-[28px] font-heading font-medium text-white leading-[1.25]">Agenso agents connect to your live ad accounts and Search Console, read your actual data, and deliver the kind of recommendations a senior strategist would charge thousands for. Scale to more clients without more headcount — and deliver better work to every one of them.</p>
                     <a href="#" class="inline-flex items-center gap-2 px-6 py-3 rounded-full text-white text-[14px] font-heading font-medium self-start transition-opacity duration-200 hover:opacity-90" style="background: linear-gradient(to right, #90ddf0, #6366f1);">
-                        Start Free
+                        Start your first project free
                         <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
                     </a>
                 </div>
@@ -980,7 +1018,7 @@
                 </div>
                 <div class="px-6 py-12 md:py-[72px] flex flex-col border-b border-[#2e2d31]" style="min-height:200px;">
                     <svg width="16" height="16" viewBox="0 0 16 16" fill="#90ddf0"><path d="M8 1 Q10.5 5.5 15 8 Q10.5 10.5 8 15 Q5.5 10.5 1 8 Q5.5 5.5 8 1 Z"/></svg>
-                    <p class="text-[17px] md:text-[18px] font-heading font-medium text-white leading-[1.3] mt-auto pt-8">Every output follows your client's brand voice — applied automatically</p>
+                    <p class="text-[17px] md:text-[18px] font-heading font-medium text-white leading-[1.3] mt-auto pt-8">Agents that know more about marketing best practices than any individual marketer</p>
                 </div>
                 <div class="px-6 py-12 md:py-[72px] flex flex-col border-b md:border-b-0 border-[#2e2d31] md:border-r" style="min-height:200px;">
                     <svg width="16" height="16" viewBox="0 0 16 16" fill="#90ddf0"><path d="M8 1 Q10.5 5.5 15 8 Q10.5 10.5 8 15 Q5.5 10.5 1 8 Q5.5 5.5 8 1 Z"/></svg>
@@ -988,7 +1026,7 @@
                 </div>
                 <div class="px-6 py-12 md:py-[72px] flex flex-col" style="min-height:200px;">
                     <svg width="16" height="16" viewBox="0 0 16 16" fill="#90ddf0"><path d="M8 1 Q10.5 5.5 15 8 Q10.5 10.5 8 15 Q5.5 10.5 1 8 Q5.5 5.5 8 1 Z"/></svg>
-                    <p class="text-[17px] md:text-[18px] font-heading font-medium text-white leading-[1.3] mt-auto pt-8">Scale your agency's output without scaling your headcount</p>
+                    <p class="text-[17px] md:text-[18px] font-heading font-medium text-white leading-[1.3] mt-auto pt-8">Save 5+ hours per week on reporting, audits, and campaign creation</p>
                 </div>
             </div>
 
@@ -1119,6 +1157,60 @@
 
     <main class="site-channel">
 
+    <!-- ========== WHO IT'S FOR ========== -->
+    <section class="py-20 md:py-28 px-6">
+        <div class="max-w-3xl mx-auto text-center mb-14 md:mb-20">
+            <p class="text-[12px] font-heading font-medium text-brand uppercase tracking-wider mb-5 fade-up">Who it's for</p>
+            <h2 class="font-heading text-[36px] md:text-[52px] lg:text-[64px] font-medium tracking-tight-3 leading-[1.08] fade-up">
+                Whether you manage<br>one client or twenty
+            </h2>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto stagger">
+            <!-- Solo Freelancer -->
+            <div class="fade-up border border-[#e5e5e5] rounded-xl p-6 md:p-8">
+                <h3 class="text-[18px] md:text-[20px] font-heading font-medium text-dark mb-2">Solo Freelancer</h3>
+                <p class="text-[14px] font-heading font-medium text-brand mb-4">Do the work of a team — by yourself</p>
+                <p class="text-[14px] text-gray-500 leading-relaxed mb-6">
+                    You wear every hat. Agenso's agents handle the heavy lifting across ads, email, SEO, and strategy — so you can take on more clients without burning out.
+                </p>
+                <ul class="space-y-2.5 text-[13px] text-gray-600">
+                    <li class="flex items-center gap-2"><span class="w-1 h-1 rounded-full bg-brand flex-shrink-0"></span>Audit new client accounts in seconds</li>
+                    <li class="flex items-center gap-2"><span class="w-1 h-1 rounded-full bg-brand flex-shrink-0"></span>Deliver strategy decks in minutes</li>
+                    <li class="flex items-center gap-2"><span class="w-1 h-1 rounded-full bg-brand flex-shrink-0"></span>Reclaim 5+ hours every week</li>
+                </ul>
+            </div>
+
+            <!-- Small Agency -->
+            <div class="fade-up border border-[#e5e5e5] rounded-xl p-6 md:p-8">
+                <h3 class="text-[18px] md:text-[20px] font-heading font-medium text-dark mb-2">Small Agency</h3>
+                <p class="text-[14px] font-heading font-medium text-brand mb-4">Scale output without scaling headcount</p>
+                <p class="text-[14px] text-gray-500 leading-relaxed mb-6">
+                    Your team manages multiple clients across channels. Agenso gives every team member agents that already know each client's context, brand voice, and goals.
+                </p>
+                <ul class="space-y-2.5 text-[13px] text-gray-600">
+                    <li class="flex items-center gap-2"><span class="w-1 h-1 rounded-full bg-brand flex-shrink-0"></span>Separate projects per client</li>
+                    <li class="flex items-center gap-2"><span class="w-1 h-1 rounded-full bg-brand flex-shrink-0"></span>Consistent quality across the team</li>
+                    <li class="flex items-center gap-2"><span class="w-1 h-1 rounded-full bg-brand flex-shrink-0"></span>Standardize deliverables instantly</li>
+                </ul>
+            </div>
+
+            <!-- Marketing Consultant -->
+            <div class="fade-up border border-[#e5e5e5] rounded-xl p-6 md:p-8">
+                <h3 class="text-[18px] md:text-[20px] font-heading font-medium text-dark mb-2">Marketing Consultant</h3>
+                <p class="text-[14px] font-heading font-medium text-brand mb-4">Look like a senior strategist on every call</p>
+                <p class="text-[14px] text-gray-500 leading-relaxed mb-6">
+                    Connect your client's ad accounts before the first meeting. Walk in with a full audit, specific recommendations, and a strategy the client can act on immediately.
+                </p>
+                <ul class="space-y-2.5 text-[13px] text-gray-600">
+                    <li class="flex items-center gap-2"><span class="w-1 h-1 rounded-full bg-brand flex-shrink-0"></span>Comprehensive audits from real data</li>
+                    <li class="flex items-center gap-2"><span class="w-1 h-1 rounded-full bg-brand flex-shrink-0"></span>Data-backed recommendations</li>
+                    <li class="flex items-center gap-2"><span class="w-1 h-1 rounded-full bg-brand flex-shrink-0"></span>Win more clients with better output</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
     <!-- ========== HOW IT WORKS ========== -->
     <section id="how-it-works" class="pt-20 md:pt-28 px-6">
         <div class="mb-16 md:mb-20">
@@ -1213,8 +1305,8 @@
             </div>
             <div class="py-10 md:py-16 md:pl-10 flex flex-col justify-center order-1 md:order-2 border-b md:border-b-0 md:border-l border-[#e5e5e5]">
                 <p class="step-num text-[48px] md:text-[64px] font-heading font-semibold text-brand leading-none mb-5">02</p>
-                <h3 class="text-[20px] md:text-[24px] font-heading font-medium text-dark mb-3">Talk to any agent</h3>
-                <p class="text-[15px] text-gray-500 leading-relaxed max-w-sm">Describe what you need in plain English. The agent already knows best practices and your client's context.</p>
+                <h3 class="text-[20px] md:text-[24px] font-heading font-medium text-dark mb-3">Ask any agent — or let it tell you what to do</h3>
+                <p class="text-[15px] text-gray-500 leading-relaxed max-w-sm">Describe what you need in plain English — or just connect an ad account and let the agent analyze it. It already knows your client's context and knows more about platform best practices than any individual marketer.</p>
             </div>
         </div>
 
@@ -1223,7 +1315,7 @@
             <div class="py-10 md:py-16 md:pr-10 flex flex-col justify-center border-b md:border-b-0 md:border-r border-[#e5e5e5]">
                 <p class="step-num text-[48px] md:text-[64px] font-heading font-semibold text-brand leading-none mb-5">03</p>
                 <h3 class="text-[20px] md:text-[24px] font-heading font-medium text-dark mb-3">Get client-ready output</h3>
-                <p class="text-[15px] text-gray-500 leading-relaxed max-w-sm">Receive structured strategy, copy, and recommendations you can send directly to your client.</p>
+                <p class="text-[15px] text-gray-500 leading-relaxed max-w-sm">Receive structured strategy, copy, and recommendations you can send directly to your client. Reports that used to take hours, done in minutes.</p>
             </div>
             <div class="py-8 md:py-12 md:pl-10 flex items-center">
                 <!-- Mock: Structured output document -->
@@ -1375,6 +1467,36 @@
     </section>
 
 
+    <!-- ========== ROI SECTION ========== -->
+    <section class="pb-20 md:pb-28 px-6">
+        <div class="max-w-2xl mx-auto fade-up">
+            <div class="border border-[#e5e5e5] rounded-xl bg-white p-8 md:p-12 text-center">
+                <h2 class="font-heading text-[28px] md:text-[36px] font-medium tracking-tight-3 text-dark mb-8">
+                    It pays for itself in the first week
+                </h2>
+                <div class="flex items-center justify-center gap-3 md:gap-5 flex-wrap mb-8">
+                    <div>
+                        <p class="text-[40px] md:text-[52px] font-heading font-semibold text-brand leading-none">5hrs</p>
+                        <p class="text-[13px] text-gray-400 mt-1">saved per week</p>
+                    </div>
+                    <p class="text-[28px] md:text-[36px] font-heading text-dark">&times;</p>
+                    <div>
+                        <p class="text-[40px] md:text-[52px] font-heading font-semibold text-brand leading-none">$75</p>
+                        <p class="text-[13px] text-gray-400 mt-1">hourly rate</p>
+                    </div>
+                    <p class="text-[28px] md:text-[36px] font-heading text-dark">=</p>
+                    <div>
+                        <p class="text-[40px] md:text-[52px] font-heading font-semibold text-brand leading-none">$375</p>
+                        <p class="text-[13px] text-gray-400 mt-1">per week</p>
+                    </div>
+                </div>
+                <p class="text-[16px] text-gray-500 leading-relaxed max-w-md mx-auto">
+                    in reclaimed capacity for $49/month. Take on another client. Finish early on Friday. The ROI is immediate.
+                </p>
+            </div>
+        </div>
+    </section>
+
     <!-- ========== PRICING ========== -->
     <section id="pricing" class="py-20 md:py-28 px-6">
         <div class="max-w-3xl mx-auto text-center mb-14 md:mb-20">
@@ -1393,7 +1515,7 @@
                     <span class="text-[13px] text-gray-400">/month</span>
                 </div>
                 <p class="mt-2 text-[13px] text-gray-500">Explore the platform with limited access.</p>
-                <a href="#" class="mt-6 flex items-center justify-center px-5 py-2.5 border border-gray-200 text-dark text-[13px] font-heading font-medium rounded-full hover:border-brand hover:text-brand transition-all duration-150 btn-press"><span class="btn-scroll"><span data-text="Start Free">Start Free</span></span></a>
+                <a href="#" class="mt-6 flex items-center justify-center px-5 py-2.5 border border-gray-200 text-dark text-[13px] font-heading font-medium rounded-full hover:border-brand hover:text-brand transition-all duration-150 btn-press"><span class="btn-scroll"><span data-text="Try your first project free">Try your first project free</span></span></a>
                 <ul class="mt-6 space-y-2.5 text-[13px] text-gray-600">
                     <li>1 project</li>
                     <li>All 6 agents</li>
@@ -1407,8 +1529,8 @@
                     <span class="text-[36px] font-heading font-semibold tracking-tight-3">$49</span>
                     <span class="text-[13px] text-gray-400">/month</span>
                 </div>
-                <p class="mt-2 text-[13px] text-gray-500">Everything to manage multiple clients.</p>
-                <a href="#" class="mt-6 flex items-center justify-center px-5 py-2.5 gradient-bg text-white text-[13px] font-heading font-medium rounded-full hover:opacity-90 transition-opacity duration-150 btn-press"><span class="btn-scroll"><span data-text="Start Free Trial">Start Free Trial</span></span></a>
+                <p class="mt-2 text-[13px] text-gray-500">Everything to manage multiple clients. Connect live ad accounts and save hours every week.</p>
+                <a href="#" class="mt-6 flex items-center justify-center px-5 py-2.5 gradient-bg text-white text-[13px] font-heading font-medium rounded-full hover:opacity-90 transition-opacity duration-150 btn-press"><span class="btn-scroll"><span data-text="Start your free Pro trial">Start your free Pro trial</span></span></a>
                 <ul class="mt-6 space-y-2.5 text-[13px] text-gray-600">
                     <li>Unlimited projects</li>
                     <li>All 6 agents</li>
@@ -1423,7 +1545,7 @@
                     <span class="text-[13px] text-gray-400">/month</span>
                 </div>
                 <p class="mt-2 text-[13px] text-gray-500">For agencies with shared workspaces.</p>
-                <a href="#" class="mt-6 flex items-center justify-center px-5 py-2.5 border border-gray-200 text-dark text-[13px] font-heading font-medium rounded-full hover:border-brand hover:text-brand transition-all duration-150 btn-press"><span class="btn-scroll"><span data-text="Start Free Trial">Start Free Trial</span></span></a>
+                <a href="#" class="mt-6 flex items-center justify-center px-5 py-2.5 border border-gray-200 text-dark text-[13px] font-heading font-medium rounded-full hover:border-brand hover:text-brand transition-all duration-150 btn-press"><span class="btn-scroll"><span data-text="Start your free team trial">Start your free team trial</span></span></a>
                 <ul class="mt-6 space-y-2.5 text-[13px] text-gray-600">
                     <li>Everything in Pro</li>
                     <li>Up to 5 team members</li>
@@ -1476,13 +1598,13 @@
         <div class="absolute top-0 bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[1200px] border-l border-r border-[#2e2d31] pointer-events-none z-[1]"></div>
         <div class="max-w-[1200px] mx-auto px-6 text-center relative z-10 fade-up">
             <h2 class="font-heading text-[28px] md:text-[40px] lg:text-[48px] font-medium tracking-tight-3 text-white leading-[1.1] max-w-xl mx-auto">
-                Stop fighting AI.<br><span class="gradient-text">Work with Agenso.</span>
+                Stop prompting. Start delivering.<br><span class="gradient-text">Work with Agenso.</span>
             </h2>
             <p class="mt-4 text-[15px] md:text-[16px] text-gray-400 max-w-md mx-auto leading-relaxed">
-                Join 200+ marketers using Agenso to deliver better work, faster. Free to start, no credit card required.
+                Join 200+ marketers delivering better work in less time. Six expert agents, live data connections, and zero hallucinations. Free to start, no credit card required.
             </p>
             <a href="#" class="inline-flex items-center mt-8 px-6 py-3 bg-white text-dark text-[14px] font-heading font-medium rounded-full hover:bg-surface-card transition-colors duration-150 btn-press">
-                <span class="btn-scroll"><span data-text="Get Started Now">Get Started Now</span></span>
+                <span class="btn-scroll"><span data-text="Deploy your first agent free">Deploy your first agent free</span></span>
             </a>
         </div>
     </section>
@@ -1627,6 +1749,91 @@
                 });
             }, { threshold: 0.2 });
             chatObs.observe(chatContainer);
+        }
+
+        // ===== Comparison typewriter =====
+        const compGrid = document.getElementById('comparison-grid');
+        if (compGrid) {
+            const cards = compGrid.querySelectorAll('.card-lift');
+            const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+            function showEl(el) {
+                el.style.opacity = '1';
+                el.style.transform = 'translateY(0)';
+            }
+
+            function typewrite(el, speed, cb) {
+                const raw = el.dataset.full;
+                if (prefersReduced) {
+                    el.innerHTML = parseMarkup(raw);
+                    el.classList.add('done');
+                    if (cb) cb();
+                    return;
+                }
+                let i = 0;
+                el.innerHTML = '';
+                const tick = () => {
+                    if (i >= raw.length) {
+                        el.innerHTML = parseMarkup(raw);
+                        el.classList.add('done');
+                        if (cb) cb();
+                        return;
+                    }
+                    // Skip markup tags in one jump
+                    if (raw[i] === '{') {
+                        const close = raw.indexOf('}', i);
+                        if (close !== -1) { i = close + 1; }
+                    }
+                    // Handle pipe as line break
+                    if (raw[i] === '|') {
+                        i++;
+                        el.innerHTML = parseMarkup(raw.substring(0, i));
+                        setTimeout(tick, speed * 3);
+                        return;
+                    }
+                    i++;
+                    el.innerHTML = parseMarkup(raw.substring(0, i));
+                    setTimeout(tick, speed);
+                };
+                tick();
+            }
+
+            function parseMarkup(str) {
+                return str
+                    .replace(/\|/g, '<br>')
+                    .replace(/\{b\}([\s\S]*?)\{\/b\}/g, '<span class="font-medium text-dark">$1</span>')
+                    .replace(/\{brand\}([\s\S]*?)\{\/brand\}/g, '<span class="text-brand font-medium">$1</span>')
+                    .replace(/"([^"]*?)"/g, '\u201C$1\u201D');
+            }
+
+            const compObs = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (!entry.isIntersecting) return;
+                    compObs.unobserve(entry.target);
+
+                    cards.forEach((card, cardIdx) => {
+                        const prompt = card.querySelector('.comp-prompt');
+                        const response = card.querySelector('.comp-response');
+                        const typeEl = card.querySelector('.comp-typewriter');
+                        const verdict = card.querySelector('.comp-verdict');
+                        const baseDelay = cardIdx * 200;
+
+                        // 1. Show user prompt
+                        setTimeout(() => showEl(prompt), baseDelay + 300);
+                        // 2. Show response bubble (empty), then type
+                        setTimeout(() => {
+                            showEl(response);
+                            setTimeout(() => {
+                                typewrite(typeEl, cardIdx === 0 ? 18 : 12, () => {
+                                    // 3. Show verdict after typing finishes
+                                    setTimeout(() => showEl(verdict), 400);
+                                });
+                            }, 300);
+                        }, baseDelay + 900);
+                    });
+                });
+            }, { threshold: 0.2 });
+            compObs.observe(compGrid);
         }
 
         // ===== Nav scroll =====
