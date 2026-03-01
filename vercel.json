@@ -1,6 +1,7 @@
 {
   "redirects": [
     { "source": "/index.html", "destination": "/", "permanent": false },
+    { "source": "/homepage.html", "destination": "/", "permanent": false },
     { "source": "/landing-page.html", "destination": "/", "permanent": false },
     { "source": "/LP-test.html", "destination": "/", "permanent": false }
   ],

@@ -86,7 +86,60 @@
         .stagger > .fade-up:nth-child(3) { transition-delay: 160ms; }
         .stagger > .fade-up:nth-child(4) { transition-delay: 240ms; }
 
-        .btn-press:active { transform: scale(0.97); }
+        .btn-press {
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.15s ease-out, box-shadow 0.2s ease-out;
+        }
+        .btn-press:active {
+            transform: scale(0.97) !important;
+        }
+
+        /* Button text scroll-up on hover */
+        .btn-scroll {
+            display: inline-block;
+            overflow: hidden;
+        }
+        .btn-scroll span {
+            display: inline-block;
+            position: relative;
+            transition: transform 0.35s cubic-bezier(0.65, 0, 0.35, 1);
+        }
+        .btn-scroll span::after {
+            content: attr(data-text);
+            position: absolute;
+            left: 0;
+            top: 100%;
+            width: 100%;
+        }
+        .btn-press:hover .btn-scroll span {
+            transform: translateY(-100%);
+        }
+
+        /* Button shimmer sweep */
+        @keyframes btn-shimmer {
+            0%, 88% { transform: translateX(-100%) skewX(-20deg); }
+            97% { transform: translateX(200%) skewX(-20deg); }
+            100% { transform: translateX(200%) skewX(-20deg); }
+        }
+        .btn-press::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            background: linear-gradient(
+                100deg,
+                transparent 20%,
+                rgba(255,255,255,0.2) 45%,
+                rgba(255,255,255,0.35) 50%,
+                rgba(255,255,255,0.2) 55%,
+                transparent 80%
+            );
+            transform: translateX(-100%) skewX(-20deg);
+            animation: btn-shimmer 12s ease-in-out infinite;
+            pointer-events: none;
+            z-index: 1;
+        }
 
         .nav-scrolled {
             background: rgba(247,248,249,0.85);
@@ -105,10 +158,26 @@
             contain: strict;
         }
         .motion-bg spline-viewer {
-            width: 100%;
-            height: 100%;
+            width: 120vw;
+            height: 120vh;
             display: block;
             pointer-events: none;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        @media (min-width: 1800px) {
+            .motion-bg spline-viewer {
+                width: 150vw;
+                height: 150vh;
+            }
+        }
+        @media (min-width: 2400px) {
+            .motion-bg spline-viewer {
+                width: 180vw;
+                height: 180vh;
+            }
         }
 
         .site-channel {
@@ -125,9 +194,9 @@
             transform: translateZ(0);
             contain: layout style paint;
         }
-        @media (max-width: 1200px) {
+        @media (min-width: 1200px) {
             .site-channel {
-                background: rgba(247, 248, 249, 0.95);
+                background: rgba(247, 248, 249, 0.65);
             }
         }
         .site-channel > section {
@@ -258,7 +327,7 @@
 
         /* Agent panel */
         .agent-vpanel { display: none; }
-        .agent-vpanel.active { display: block; }
+        .agent-vpanel.active { display: block; animation: panelFadeIn 0.2s ease forwards; }
 
         /* FAQ */
         .faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
@@ -286,6 +355,129 @@
             border-image: linear-gradient(135deg, #90ddf0, #5762d5) 1;
         }
 
+        /* ===== ANIMATION ENHANCEMENTS ===== */
+
+        /* Pencil underline draw-on */
+        .pencil-draw path {
+            stroke-dasharray: 500;
+            stroke-dashoffset: 500;
+            transition: stroke-dashoffset 0.8s ease-out 0.2s;
+        }
+        .pencil-draw.draw-visible path {
+            stroke-dashoffset: 0;
+        }
+
+        /* Agent panel crossfade */
+        @keyframes panelFadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Chat sequential entrance */
+        .chat-msg {
+            opacity: 0;
+            transform: translateY(8px);
+            transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+                        transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .chat-msg.msg-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Step number scale entrance */
+        .step-num {
+            display: inline-block;
+            opacity: 0;
+            transform: scale(0.85);
+            transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+                        transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .step-num.visible {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        /* Card hover lift */
+        .card-lift {
+            transition: transform 0.2s ease-out, box-shadow 0.2s ease-out;
+        }
+        .card-lift:hover {
+            transform: translateY(-4px);
+            box-shadow: 8px 16px 40px -8px rgba(0,0,0,0.15) !important;
+        }
+
+        /* Learn more arrow slide */
+        .learn-more-link svg {
+            transition: transform 0.15s ease-out;
+        }
+        .learn-more-link:hover svg {
+            transform: translateX(4px);
+        }
+
+        /* Pricing button hover glows */
+        #pricing a.border:hover {
+            box-shadow: 0 0 16px rgba(87,98,213,0.1);
+        }
+        #pricing a.gradient-bg:hover {
+            box-shadow: 0 0 24px rgba(87,98,213,0.25);
+        }
+
+        /* CTA button hover glow */
+        a.bg-brand {
+            transition: background-color 0.15s, box-shadow 0.2s ease-out;
+        }
+        a.bg-brand:hover {
+            box-shadow: 0 0 20px rgba(87, 98, 213, 0.2);
+        }
+
+        /* Nav link hover underline (desktop) */
+        .nav-underline {
+            position: relative;
+        }
+        .nav-underline::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            right: 0;
+            height: 1.5px;
+            background: #5762d5;
+            transform: scaleX(0);
+            transform-origin: center;
+            transition: transform 0.15s ease-out;
+        }
+        .nav-underline:hover::after {
+            transform: scaleX(1);
+        }
+
+        /* Comparison typewriter cursor */
+        .comp-typewriter::after {
+            content: '|';
+            font-weight: 300;
+            animation: comp-blink 0.6s step-end infinite;
+            margin-left: 1px;
+        }
+        .comp-typewriter.done::after { display: none; }
+        @keyframes comp-blink {
+            50% { opacity: 0; }
+        }
+
+        /* Reduced motion */
+        @media (prefers-reduced-motion: reduce) {
+            .fade-up { transition-duration: 0.01s !important; transform: none !important; }
+            .fade-up.visible { transform: none !important; }
+            .pencil-draw path { stroke-dasharray: none !important; stroke-dashoffset: 0 !important; transition: none !important; }
+            .card-lift:hover { transform: none !important; }
+            .chat-msg { opacity: 1 !important; transform: none !important; transition: none !important; }
+            .comp-prompt, .comp-response, .comp-verdict { opacity: 1 !important; transform: none !important; }
+            .comp-typewriter::after { display: none; }
+            .step-num { opacity: 1 !important; transform: none !important; transition: none !important; }
+            .agent-vpanel.active { animation: none !important; }
+            .btn-press::before { animation: none !important; }
+            .btn-press:hover .btn-scroll span { transform: none !important; }
+        }
+
         /* Heading font utility */
         .font-heading { font-family: 'Clash Grotesk', -apple-system, BlinkMacSystemFont, sans-serif; }
     </style>
@@ -295,24 +487,24 @@
 
     <!-- ========== MOTION BACKGROUND (Spline) ========== -->
     <div class="motion-bg hidden lg:block" aria-hidden="true">
-        <spline-viewer url="https://prod.spline.design/ev3mWah4dznGqZ4C/scene.splinecode" background="transparent"></spline-viewer>
+        <spline-viewer url="https://prod.spline.design/ev3mWah4dznGqZ4C/scene.splinecode"></spline-viewer>
     </div>
 
     <!-- ========== NAVIGATION ========== -->
     <nav id="nav" class="fixed top-0 left-0 right-0 z-50 transition-all duration-200 border-b border-[#e5e5e5]">
         <div class="max-w-[1200px] mx-auto px-6 h-16 flex items-center justify-between">
-            <div class="flex items-center">
+            <div class="flex items-center flex-1">
                 <img src="https://res.cloudinary.com/dxyxrrgj8/image/upload/v1771242506/Agenso_6_dr0eg8.png" alt="Agenso" class="h-7 md:h-8">
             </div>
             <div class="hidden md:flex items-center gap-7">
-                <a href="#agents" class="text-[13px] font-heading font-medium text-gray-600 hover:text-dark transition-colors duration-150">Agents</a>
-                <a href="#how-it-works" class="text-[13px] font-heading font-medium text-gray-600 hover:text-dark transition-colors duration-150">How It Works</a>
-                <a href="#pricing" class="text-[13px] font-heading font-medium text-gray-600 hover:text-dark transition-colors duration-150">Pricing</a>
-                <a href="#" class="text-[13px] font-heading font-medium text-gray-600 hover:text-dark transition-colors duration-150">Login</a>
+                <a href="#agents" class="nav-underline text-[13px] font-heading font-medium text-gray-600 hover:text-dark transition-colors duration-150">Agents</a>
+                <a href="#how-it-works" class="nav-underline text-[13px] font-heading font-medium text-gray-600 hover:text-dark transition-colors duration-150">How It Works</a>
+                <a href="#pricing" class="nav-underline text-[13px] font-heading font-medium text-gray-600 hover:text-dark transition-colors duration-150">Pricing</a>
+                <a href="#" class="nav-underline text-[13px] font-heading font-medium text-gray-600 hover:text-dark transition-colors duration-150">Login</a>
             </div>
-            <div class="flex items-center gap-4">
+            <div class="flex items-center gap-4 flex-1 justify-end">
                 <a href="#" class="hidden md:inline-flex items-center px-4 py-2 bg-brand text-white text-[13px] font-heading font-medium rounded-full hover:bg-brand-dark transition-colors duration-150 btn-press">
-                    Start free
+                    <span class="btn-scroll"><span data-text="Start free">Start free</span></span>
                 </a>
                 <button id="menuToggle" class="md:hidden p-2 -mr-2">
                     <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 6h14M3 10h14M3 14h14" stroke-linecap="round"/></svg>
@@ -325,7 +517,7 @@
                 <a href="#how-it-works" class="text-[14px] font-heading text-gray-600 py-2">How It Works</a>
                 <a href="#pricing" class="text-[14px] font-heading text-gray-600 py-2">Pricing</a>
                 <a href="#" class="text-[14px] font-heading text-gray-600 py-2">Login</a>
-                <a href="#" class="mt-2 inline-flex items-center justify-center px-4 py-2.5 bg-dark text-white text-[14px] font-heading font-medium rounded-full">Start Free</a>
+                <a href="#" class="mt-2 inline-flex items-center justify-center px-4 py-2.5 bg-dark text-white text-[14px] font-heading font-medium rounded-full">Start free</a>
             </div>
         </div>
     </nav>
@@ -336,27 +528,27 @@
     <section class="pt-32 pb-16 md:pt-40 md:pb-24 px-6">
         <div class="text-center hero-dots-wrap">
             <h1 class="font-heading text-[32px] md:text-[44px] lg:text-[52px] font-medium leading-[1.1] tracking-tight-3 text-dark max-w-3xl mx-auto fade-up">
-                Pre-trained AI Agents<br>for Real Marketers
+                AI Agents Trained for<br>Real Marketing Output
             </h1>
-            <p class="mt-5 text-[16px] md:text-[17px] text-gray-500 max-w-lg mx-auto leading-relaxed fade-up">
-                Pre-trained marketing agents that know best practices, remember your clients, and never hallucinate. Expert-level strategy, copy, and campaigns — every time.
+            <p class="mt-5 text-[16px] md:text-[17px] text-gray-500 max-w-xl mx-auto leading-relaxed fade-up">
+                Pre-trained marketing agents that connect to your ad accounts, read live data, and deliver expert-level strategy, copy, and campaigns — with zero hallucinations and full client context that grows with every conversation.
             </p>
             <div class="mt-8 flex items-center justify-center gap-3 flex-wrap fade-up">
                 <a href="#" class="inline-flex items-center gap-2 px-6 py-3 bg-brand text-white text-[14px] font-heading font-medium rounded-full hover:bg-brand-dark transition-colors duration-150 btn-press">
                     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="12" height="10" rx="1.5"/><path d="M2 5l6 4 6-4"/></svg>
-                    Start free with email
+                    <span class="btn-scroll"><span data-text="Start free with email">Start free with email</span></span>
                 </a>
-                <a href="#" class="inline-flex items-center gap-2 px-6 py-3 bg-white border border-gray-200 text-dark text-[14px] font-heading font-medium rounded-full hover:border-gray-300 hover:bg-surface-card transition-all duration-150 btn-press">
+                <a href="#" class="inline-flex items-center gap-2 px-6 py-3 bg-white text-dark text-[14px] font-heading font-medium rounded-full hover:bg-surface-card transition-all duration-150 btn-press border border-gray-200 hover:border-gray-300">
                     <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M15.545 6.558a9.42 9.42 0 01.139 1.626c0 2.434-.89 4.49-2.422 5.879C11.868 15.3 10.114 16 8 16a8 8 0 010-16c2.157 0 3.965.784 5.348 2.066L11.14 4.255C10.34 3.501 9.274 3.077 8 3.077a4.923 4.923 0 00-4.66 6.544A4.924 4.924 0 008 12.923c2.21 0 3.633-1.115 4.148-2.615H8V7.077h7.545v-.52z" fill="#4285F4"/><path d="M1.474 4.732A7.944 7.944 0 010 8c0 1.2.262 2.34.734 3.366l2.607-2.023A4.88 4.88 0 013.077 8c0-.467.066-.919.189-1.349L.659 4.635l.815.097z" fill="#FBBC05"/><path d="M8 3.077c1.274 0 2.34.424 3.14 1.178l2.208-2.189C11.965.784 10.157 0 8 0 4.89 0 2.208 1.815.734 4.634l2.607 1.987A4.923 4.923 0 018 3.077z" fill="#EA4335"/><path d="M8 12.923a4.923 4.923 0 01-4.66-3.289L.734 11.366C2.208 14.185 4.89 16 8 16c2.114 0 3.868-.7 5.262-1.937l-2.478-1.923c-.71.477-1.62.783-2.784.783z" fill="#34A853"/></svg>
-                    Start free with Google
+                    <span class="btn-scroll"><span data-text="Start free with Google">Start free with Google</span></span>
                 </a>
             </div>
             <div class="mt-8 flex items-center justify-center gap-2 fade-up">
                 <div class="flex -space-x-2">
-                    <div class="w-7 h-7 rounded-full bg-gray-300 border-2 border-surface"></div>
-                    <div class="w-7 h-7 rounded-full bg-gray-400 border-2 border-surface"></div>
-                    <div class="w-7 h-7 rounded-full bg-gray-300 border-2 border-surface"></div>
-                    <div class="w-7 h-7 rounded-full bg-gray-400 border-2 border-surface"></div>
+                    <img src="https://i.pravatar.cc/56?img=32" alt="" class="w-7 h-7 rounded-full border-2 border-surface object-cover">
+                    <img src="https://i.pravatar.cc/56?img=47" alt="" class="w-7 h-7 rounded-full border-2 border-surface object-cover">
+                    <img src="https://i.pravatar.cc/56?img=12" alt="" class="w-7 h-7 rounded-full border-2 border-surface object-cover">
+                    <img src="https://i.pravatar.cc/56?img=25" alt="" class="w-7 h-7 rounded-full border-2 border-surface object-cover">
                 </div>
                 <p class="text-[14px] text-gray-400">Trusted by 200+ marketers in beta</p>
             </div>
@@ -370,10 +562,8 @@
 
     <!-- ========== INTEGRATION MARQUEE ========== -->
     <section class="py-8 md:py-10">
-        <p class="text-center text-[12px] font-heading text-gray-400 uppercase tracking-wider mb-6 px-6 fade-up">Integrations with the tools you already use</p>
-        <div class="overflow-hidden relative">
-            <div class="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-surface to-transparent z-10"></div>
-            <div class="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-surface to-transparent z-10"></div>
+        <p class="text-center text-[12px] font-heading text-gray-400 uppercase tracking-wider mb-6 px-6 fade-up">Live connections to the platforms you already use</p>
+        <div class="overflow-hidden relative" style="-webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent); mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);">
             <div class="marquee-track">
                 <div class="flex items-center gap-12 px-6">
                     <span class="text-[14px] font-heading font-medium text-gray-400 whitespace-nowrap">Meta Ads</span>
@@ -418,76 +608,100 @@
 
     <!-- ========== THE PROBLEM ========== -->
     <section class="pt-20 md:pt-28 pb-0 px-6">
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 mb-16 md:mb-24 items-center">
-            <div>
-                <p class="text-[12px] font-heading font-medium text-brand uppercase tracking-wider mb-5 fade-up">The problem</p>
-                <h2 class="font-heading text-[28px] md:text-[36px] font-medium tracking-tight-3 fade-up">
-                    The AI tools you use for marketing<br>weren't built for marketers
-                </h2>
-                <p class="mt-4 text-[16px] text-gray-500 max-w-md leading-relaxed fade-up">
-                    General-purpose AI doesn't understand your workflow. You end up doing the hard part anyway.
-                </p>
-            </div>
-            <!-- Mock ChatGPT conversation -->
-            <div class="fade-up rounded-xl border border-[#e5e5e5] overflow-hidden bg-white" style="box-shadow: 6px 8px 30px -6px rgba(0,0,0,0.15);">
-                <!-- Window bar -->
+        <div class="text-center mb-14 md:mb-20">
+            <p class="text-[12px] font-heading font-medium text-brand uppercase tracking-wider mb-5 fade-up">The problem</p>
+            <h2 class="font-heading text-[28px] md:text-[36px] font-medium tracking-tight-3 fade-up">
+                The AI tools you use for marketing<br>don't actually know your marketing
+            </h2>
+            <p class="mt-4 text-[16px] text-gray-500 max-w-lg mx-auto leading-relaxed fade-up">
+                They can't see your ad account. They don't know your client's voice. They forget everything between sessions. You end up doing the hard part anyway.
+            </p>
+        </div>
+
+        <div id="comparison-grid" class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-16 md:mb-24 stagger">
+            <!-- Generic AI side -->
+            <div class="fade-up card-lift rounded-xl border border-[#e5e5e5] overflow-hidden bg-white" style="box-shadow: 6px 8px 30px -6px rgba(0,0,0,0.1);">
                 <div class="flex items-center gap-2 px-4 py-3 border-b border-[#e5e5e5] bg-[#fafafa]">
                     <div class="flex gap-1.5">
                         <div class="w-2.5 h-2.5 rounded-full bg-[#ff5f57]"></div>
                         <div class="w-2.5 h-2.5 rounded-full bg-[#febc2e]"></div>
                         <div class="w-2.5 h-2.5 rounded-full bg-[#28c840]"></div>
                     </div>
-                    <p class="text-[11px] text-gray-400 ml-2 font-heading">Generic AI Chat</p>
+                    <p class="text-[13px] text-dark font-heading font-medium ml-2">Generic AI Chat</p>
                 </div>
-                <!-- Messages -->
                 <div class="p-4 space-y-3 text-[13px]">
-                    <!-- User msg 1 -->
-                    <div class="flex justify-end">
-                        <div class="bg-[#f0f0f0] rounded-2xl rounded-br-sm px-3.5 py-2 max-w-[85%] text-dark">Write Meta ad copy for my client's summer campaign</div>
+                    <div class="comp-prompt flex justify-end" style="opacity:0; transform:translateY(8px); transition: opacity 0.4s, transform 0.4s;">
+                        <div class="bg-[#f0f0f0] rounded-2xl rounded-br-sm px-3.5 py-2 max-w-[85%] text-dark">Audit my Meta Ads account and tell me what to change.</div>
                     </div>
-                    <!-- AI response (truncated) -->
-                    <div class="flex justify-start">
-                        <div class="bg-white border border-[#e5e5e5] rounded-2xl rounded-bl-sm px-3.5 py-2 max-w-[85%] text-gray-400 italic">Here's some ad copy for a summer campaign...</div>
+                    <div class="comp-response flex justify-start" style="opacity:0; transform:translateY(8px); transition: opacity 0.4s, transform 0.4s;">
+                        <div class="bg-white border border-[#e5e5e5] rounded-2xl rounded-bl-sm px-3.5 py-2.5 max-w-[90%] text-gray-500 text-[12px] leading-relaxed">
+                            <span class="comp-typewriter" data-full="I don't have access to your Meta Ads account. If you paste your campaign data here, I'll do my best to analyze it. In the meantime, here are some general tips:||1. Review your audience targeting regularly|2. Test multiple ad creative formats|3. Watch your ad frequency to avoid fatigue|4. Try lookalike audiences for prospecting|5. Make sure your conversion tracking is set up||Share your metrics and I'll try to give you some recommendations based on what you provide."></span>
+                        </div>
                     </div>
-                    <!-- User msg 2 -->
-                    <div class="flex justify-end">
-                        <div class="bg-[#f0f0f0] rounded-2xl rounded-br-sm px-3.5 py-2 max-w-[85%] text-dark">No, follow the brand guidelines I gave you before</div>
+                </div>
+                <div class="px-4 pb-4">
+                    <div class="comp-verdict flex items-center gap-2 px-3 py-2 rounded-lg bg-[#fef2f2] border border-[#fecaca]" style="opacity:0; transform:translateY(8px); transition: opacity 0.4s, transform 0.4s;">
+                        <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" stroke="#e5484d" stroke-width="1.5"/><path d="M5 5l6 6M11 5l-6 6" stroke="#e5484d" stroke-width="1.5" stroke-linecap="round"/></svg>
+                        <p class="text-[11px] text-[#e5484d] font-heading font-medium">Generic advice. No real data. No action items.</p>
                     </div>
-                    <!-- AI response with warning -->
-                    <div class="flex justify-start">
-                        <div class="bg-[#fef2f2] border border-[#fecaca] rounded-2xl rounded-bl-sm px-3.5 py-2 max-w-[85%] text-[#e5484d] text-[12px]">I don't have access to previous conversations. Could you share the brand guidelines again?</div>
+                </div>
+            </div>
+
+            <!-- Agenso side -->
+            <div class="fade-up card-lift rounded-xl border border-brand/30 overflow-hidden bg-white" style="box-shadow: 6px 8px 30px -6px rgba(0,0,0,0.1);">
+                <div class="flex items-center justify-between px-4 py-3 border-b border-[#e5e5e5] bg-[#fafafa]">
+                    <div class="flex items-center gap-2">
+                        <div class="flex gap-1.5">
+                            <div class="w-2.5 h-2.5 rounded-full bg-[#ff5f57]"></div>
+                            <div class="w-2.5 h-2.5 rounded-full bg-[#febc2e]"></div>
+                            <div class="w-2.5 h-2.5 rounded-full bg-[#28c840]"></div>
+                        </div>
+                        <p class="text-[13px] text-dark font-heading font-medium ml-2">Agenso Meta Ads Agent</p>
                     </div>
-                    <!-- User msg 3 - frustrated -->
-                    <div class="flex justify-end">
-                        <div class="bg-[#f0f0f0] rounded-2xl rounded-br-sm px-3.5 py-2 max-w-[85%] text-dark">The tone is casual, audience is 25-34, budget is $2k/mo. We talked about this yesterday.</div>
+                    <span class="text-[10px] font-heading font-medium text-brand bg-brand-subtle px-2 py-0.5 rounded-full">Connected via API</span>
+                </div>
+                <div class="p-4 space-y-3 text-[13px]">
+                    <div class="comp-prompt flex justify-end" style="opacity:0; transform:translateY(8px); transition: opacity 0.4s, transform 0.4s;">
+                        <div class="bg-[#f0f0f0] rounded-2xl rounded-br-sm px-3.5 py-2 max-w-[85%] text-dark">Audit my Meta Ads account and tell me what to change.</div>
                     </div>
-                    <!-- User msg 4 - giving up -->
-                    <div class="flex justify-end">
-                        <div class="bg-[#f0f0f0] rounded-2xl rounded-br-sm px-3.5 py-2 max-w-[85%] text-gray-300">And make sure you use the metrics from last month's report...</div>
+                    <div class="comp-response flex justify-start" style="opacity:0; transform:translateY(8px); transition: opacity 0.4s, transform 0.4s;">
+                        <div class="bg-white border border-[#e5e5e5] rounded-2xl rounded-bl-sm px-3.5 py-2.5 max-w-[90%] text-gray-600 text-[12px] leading-relaxed">
+                            <span class="comp-typewriter" data-full="I've pulled the last 30 days from your Meta Ads account. Here's what I found:||{b}Ad Set &quot;Summer Prospecting — W25-34&quot;{/b} has a CPA of $38.20, which is 2.4x your account average.||{b}Ad Set &quot;Retargeting — Cart Abandoners&quot;{/b} frequency is at 6.8 — your audience is seeing the same creative too often.||{brand}Recommendation:{/brand} Pause the prospecting set, refresh retargeting creative, and reallocate $1,200/mo to your top-performing lookalike audience (CPA: $14.50)."></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="px-4 pb-4">
+                    <div class="comp-verdict flex items-center gap-2 px-3 py-2 rounded-lg bg-[#dcfce7] border border-[#bbf7d0]" style="opacity:0; transform:translateY(8px); transition: opacity 0.4s, transform 0.4s;">
+                        <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" stroke="#16a34a" stroke-width="1.5"/><path d="M5 8l2 2 4-4" stroke="#16a34a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        <p class="text-[11px] text-[#16a34a] font-heading font-medium">Specific actions from your real account data.</p>
                     </div>
                 </div>
             </div>
         </div>
+
+        <p class="text-center text-[20px] md:text-[24px] font-heading font-medium tracking-tight-2 text-dark mb-16 md:mb-24 fade-up">Same prompt. Different universe.</p>
+
+        <!-- Pain point breakdown -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-0 border-t border-[#e5e5e5] -mx-6 px-6 stagger">
             <div class="fade-up border-b md:border-b-0 md:border-r border-[#e5e5e5] py-10 md:py-14 md:pr-8">
                 <p class="text-[28px] md:text-[32px] font-heading font-semibold text-brand leading-none mb-4">01</p>
                 <h3 class="text-[18px] md:text-[20px] font-heading font-semibold text-dark mb-2">Inconsistent quality</h3>
                 <p class="text-[15px] text-gray-500 leading-relaxed">
-                    Some outputs are great. Others are unusable. You can't send unpredictable work to clients.
+                    Some outputs are great. Others hallucinate metrics, invent best practices, or miss your client's tone completely. You can't send unpredictable work to clients.
                 </p>
             </div>
             <div class="fade-up border-b md:border-b-0 md:border-r border-[#e5e5e5] py-10 md:py-14 md:px-8">
                 <p class="text-[28px] md:text-[32px] font-heading font-semibold text-brand leading-none mb-4">02</p>
                 <h3 class="text-[18px] md:text-[20px] font-heading font-semibold text-dark mb-2">Context amnesia</h3>
                 <p class="text-[15px] text-gray-500 leading-relaxed">
-                    Every session starts from zero. You re-explain your client's business, tone, and goals — every time.
+                    Every session starts from zero. You re-explain your client's business, paste in last month's data, and re-describe the brand voice. The AI forgets everything between conversations.
                 </p>
             </div>
             <div class="fade-up py-10 md:py-14 md:pl-8">
                 <p class="text-[28px] md:text-[32px] font-heading font-semibold text-brand leading-none mb-4">03</p>
-                <h3 class="text-[18px] md:text-[20px] font-heading font-semibold text-dark mb-2">Prompt fatigue</h3>
+                <h3 class="text-[18px] md:text-[20px] font-heading font-semibold text-dark mb-2">Blind to your actual data</h3>
                 <p class="text-[15px] text-gray-500 leading-relaxed">
-                    You're a marketer, not a prompt engineer. You shouldn't need perfect prompts for useful output.
+                    Generic AI can't connect to your ad accounts, your analytics, your email platform, or your store. Every recommendation is based on assumptions — not your real numbers.
                 </p>
             </div>
         </div>
@@ -499,10 +713,10 @@
         <div class="mb-16 md:mb-24">
             <p class="text-[12px] font-heading font-medium text-brand uppercase tracking-wider mb-5 fade-up">What makes us different</p>
             <h2 class="font-heading text-[40px] md:text-[56px] lg:text-[72px] font-medium tracking-tight-3 leading-[1.08] fade-up">
-                Agenso is built<br><span class="relative inline-block">with purpose<svg class="absolute -bottom-4 left-0 w-full" height="20" viewBox="0 0 220 10" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><defs><filter id="pencil2" x="-5%" y="-80%" width="110%" height="260%" color-interpolation-filters="sRGB"><feTurbulence type="fractalNoise" baseFrequency="0.65 0.45" numOctaves="5" seed="2" result="edgeNoise"/><feDisplacementMap in="SourceGraphic" in2="edgeNoise" scale="5" xChannelSelector="R" yChannelSelector="G" result="rough"/><feTurbulence type="fractalNoise" baseFrequency="3" numOctaves="4" seed="7" result="grain"/><feColorMatrix in="grain" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  2.5 0 0 0 -0.4" result="grainAlpha"/><feComposite in="rough" in2="grainAlpha" operator="in"/></filter><linearGradient id="pencil-fade2" x1="3" y1="0" x2="220" y2="0" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#5762d5" stop-opacity="0.85"/><stop offset="0.65" stop-color="#5762d5" stop-opacity="0.75"/><stop offset="1" stop-color="#5762d5" stop-opacity="0.1"/></linearGradient></defs><path d="M6 5.5Q3 5.5 3 6C25 5.2 55 4.5 90 5.2C125 5.9 160 4.8 195 5.5C205 5.3 212 5 215 4.9Q217 4.8 217 5.2" stroke="url(#pencil-fade2)" stroke-width="3.5" stroke-linecap="round" filter="url(#pencil2)"/><path d="M7 6Q5 6.2 5 6.5C30 5.8 60 5 95 5.6C130 6.2 165 5.1 200 5.8C210 5.5 214 5.2 216 5.1Q217 5 217 5.3" stroke="url(#pencil-fade2)" stroke-width="1.5" stroke-linecap="round" filter="url(#pencil2)" opacity="0.4"/></svg></span>
+                Agenso is built<br><span class="relative inline-block" id="pencil-target">with purpose<svg class="pencil-draw absolute -bottom-4 left-0 w-full" height="20" viewBox="0 0 220 10" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><defs><filter id="pencil2" x="-5%" y="-80%" width="110%" height="260%" color-interpolation-filters="sRGB"><feTurbulence type="fractalNoise" baseFrequency="0.65 0.45" numOctaves="5" seed="2" result="edgeNoise"/><feDisplacementMap in="SourceGraphic" in2="edgeNoise" scale="5" xChannelSelector="R" yChannelSelector="G" result="rough"/><feTurbulence type="fractalNoise" baseFrequency="3" numOctaves="4" seed="7" result="grain"/><feColorMatrix in="grain" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  2.5 0 0 0 -0.4" result="grainAlpha"/><feComposite in="rough" in2="grainAlpha" operator="in"/></filter><linearGradient id="pencil-fade2" x1="3" y1="0" x2="220" y2="0" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#5762d5" stop-opacity="0.85"/><stop offset="0.65" stop-color="#5762d5" stop-opacity="0.75"/><stop offset="1" stop-color="#5762d5" stop-opacity="0.1"/></linearGradient></defs><path d="M6 5.5Q3 5.5 3 6C25 5.2 55 4.5 90 5.2C125 5.9 160 4.8 195 5.5C205 5.3 212 5 215 4.9Q217 4.8 217 5.2" stroke="url(#pencil-fade2)" stroke-width="3.5" stroke-linecap="round" filter="url(#pencil2)"/><path d="M7 6Q5 6.2 5 6.5C30 5.8 60 5 95 5.6C130 6.2 165 5.1 200 5.8C210 5.5 214 5.2 216 5.1Q217 5 217 5.3" stroke="url(#pencil-fade2)" stroke-width="1.5" stroke-linecap="round" filter="url(#pencil2)" opacity="0.4"/></svg></span>
             </h2>
             <p class="mt-5 text-[16px] text-gray-500 max-w-lg leading-relaxed fade-up">
-                Not another ChatGPT wrapper. Purpose-built marketing agents with guardrails, expertise, and memory.
+                Not another ChatGPT wrapper. Purpose-built marketing agents with live data access, guardrails, expertise, and memory — so you can deliver better work in less time.
             </p>
         </div>
 
@@ -517,9 +731,9 @@
                     Outputs you can trust<br>to send to clients
                 </h3>
                 <p class="mt-4 text-[15px] text-gray-500 leading-relaxed max-w-sm">
-                    Every output follows your project's rules — your client's tone of voice, audience, goals, and constraints are applied automatically, every time. Not sometimes. Every time.
+                    Every output is grounded, not generated blind. Before responding, each agent re-ingests your project context — your client's tone, audience, goals, and constraints — so nothing drifts. It references the full chat thread, so details from message 1 still inform message 50. And every response follows a pre-built structure and framework specific to its discipline. The AI doesn't improvise. It executes within strict guardrails, every time.
                 </p>
-                <a href="#" class="mt-6 inline-flex items-center gap-1.5 text-[13px] font-heading font-medium text-brand hover:text-brand-dark transition-colors">
+                <a href="#" class="learn-more-link mt-6 inline-flex items-center gap-1.5 text-[13px] font-heading font-medium text-brand hover:text-brand-dark transition-colors">
                     Learn more
                     <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M2 6h8M7 3l3 3-3 3"/></svg>
                 </a>
@@ -534,9 +748,9 @@
                     Agents that already know<br>marketing
                 </h3>
                 <p class="mt-4 text-[15px] text-gray-500 leading-relaxed max-w-sm">
-                    Each agent is already trained on current best practices for its discipline. You don't need to teach it anything or craft the perfect prompt — just say what you need.
+                    Each agent is loaded with its discipline's proven frameworks, current platform best practices, and optimal structures — not just general marketing knowledge. You don't teach it the playbook. It already knows the playbook, and applies it to your client automatically.
                 </p>
-                <a href="#" class="mt-6 inline-flex items-center gap-1.5 text-[13px] font-heading font-medium text-brand hover:text-brand-dark transition-colors">
+                <a href="#" class="learn-more-link mt-6 inline-flex items-center gap-1.5 text-[13px] font-heading font-medium text-brand hover:text-brand-dark transition-colors">
                     Learn more
                     <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M2 6h8M7 3l3 3-3 3"/></svg>
                 </a>
@@ -557,9 +771,9 @@
                     Set up once, agents<br>remember forever
                 </h3>
                 <p class="mt-4 text-[15px] text-gray-500 leading-relaxed max-w-sm">
-                    Set up a project with your client's industry, audience, tone, and goals. Every agent applies that context to every output — and there's no context window limit. Your 50th message is as precise as your first.
+                    Paste a URL and Agenso reads your client's entire website — pulling industry, positioning, product details, and messaging automatically. Connect Shopify to give agents access to AOV, revenue trends, and customer behavior. Add tone, audience, and goals to complete the picture. Every agent remembers its own conversation history, so the more you use it, the sharper it gets. And before every single output, agents re-digest key project context — your 50th message is as informed as your first.
                 </p>
-                <a href="#" class="mt-6 inline-flex items-center gap-1.5 text-[13px] font-heading font-medium text-brand hover:text-brand-dark transition-colors">
+                <a href="#" class="learn-more-link mt-6 inline-flex items-center gap-1.5 text-[13px] font-heading font-medium text-brand hover:text-brand-dark transition-colors">
                     Learn more
                     <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M2 6h8M7 3l3 3-3 3"/></svg>
                 </a>
@@ -569,7 +783,7 @@
 
 
     <!-- ========== AGENT SHOWCASE ========== -->
-    <section id="agents" class="pt-6 md:pt-8 pb-20 md:pb-28 px-6">
+    <section id="agents" class="pt-6 md:pt-8 pb-18 md:pb-28 px-6">
         <div class="max-w-3xl mx-auto text-center mb-14 md:mb-20">
             <h2 class="font-heading text-[36px] md:text-[52px] lg:text-[64px] font-medium tracking-tight-3 leading-[1.08] fade-up">
                 Six expert agents.<br>Every discipline covered.
@@ -600,7 +814,7 @@
                                 <span class="text-[12px] font-heading font-medium text-brand bg-brand-subtle px-2.5 py-1 rounded-full">Live API access</span>
                                 <h3 class="text-[20px] md:text-[24px] font-heading font-semibold mt-4 mb-3">Meta Ads Agent</h3>
                                 <p class="text-[14px] text-gray-500 leading-relaxed">
-                                    Connects to your Meta Ads account via API. Reads campaign performance, identifies underperforming ad sets, and recommends specific changes to targeting, budgets, and creative.
+                                    Connects to your Meta Ads account via API. Reads campaign performance, identifies underperforming ad sets, and recommends specific changes to targeting, budgets, and creative. Audit an entire ad account's history in seconds — work that takes a human analyst hours.
                                 </p>
                                 <div class="mt-6">
                                     <p class="text-[12px] font-heading font-medium text-gray-400 uppercase tracking-wider mb-3">What you'll get</p>
@@ -625,7 +839,7 @@
                                 <span class="text-[12px] font-heading font-medium text-brand bg-brand-subtle px-2.5 py-1 rounded-full">Live API access</span>
                                 <h3 class="text-[20px] md:text-[24px] font-heading font-semibold mt-4 mb-3">Google Ads Agent</h3>
                                 <p class="text-[14px] text-gray-500 leading-relaxed">
-                                    Pulls live data from your Google Ads account. Reviews search terms, quality scores, and bid performance — then tells you exactly what to pause, scale, or restructure.
+                                    Pulls live data from your Google Ads account. Reviews search terms, quality scores, and bid performance — then tells you exactly what to pause, scale, or restructure. Get told exactly which campaigns to pause, scale, or restructure — based on your actual numbers.
                                 </p>
                                 <div class="mt-6">
                                     <p class="text-[12px] font-heading font-medium text-gray-400 uppercase tracking-wider mb-3">What you'll get</p>
@@ -650,7 +864,7 @@
                                 <span class="text-[12px] font-heading font-medium text-gray-500 bg-gray-100 px-2.5 py-1 rounded-full">Klaviyo & Mailchimp ready</span>
                                 <h3 class="text-[20px] md:text-[24px] font-heading font-semibold mt-4 mb-3">Email Marketing Agent</h3>
                                 <p class="text-[14px] text-gray-500 leading-relaxed">
-                                    Writes full email sequences, subject lines, and flow logic. Give it a goal — welcome series, abandoned cart, re-engagement — and it builds the entire structure with copy ready to drop in.
+                                    Writes full email sequences, subject lines, and flow logic. Give it a goal — welcome series, abandoned cart, re-engagement — and it builds the entire structure with copy ready to drop in. Deliver a complete email strategy in minutes, not days.
                                 </p>
                                 <div class="mt-6">
                                     <p class="text-[12px] font-heading font-medium text-gray-400 uppercase tracking-wider mb-3">What you'll get</p>
@@ -675,7 +889,7 @@
                                 <span class="text-[12px] font-heading font-medium text-brand bg-brand-subtle px-2.5 py-1 rounded-full">Search Console API</span>
                                 <h3 class="text-[20px] md:text-[24px] font-heading font-semibold mt-4 mb-3">SEO Agent</h3>
                                 <p class="text-[14px] text-gray-500 leading-relaxed">
-                                    Connects to Google Search Console. Analyzes your rankings, click-through rates, and indexing issues — then builds keyword strategies, content briefs, and on-page fixes based on real data.
+                                    Connects to Google Search Console. Analyzes your rankings, click-through rates, and indexing issues — then builds keyword strategies, content briefs, and on-page fixes based on real data. Full Semrush-level keyword intelligence, content strategy, and technical audits — built into a single agent that reads your Search Console data.
                                 </p>
                                 <div class="mt-6">
                                     <p class="text-[12px] font-heading font-medium text-gray-400 uppercase tracking-wider mb-3">What you'll get</p>
@@ -700,7 +914,7 @@
                                 <span class="text-[12px] font-heading font-medium text-gray-500 bg-gray-100 px-2.5 py-1 rounded-full">Conversion focused</span>
                                 <h3 class="text-[20px] md:text-[24px] font-heading font-semibold mt-4 mb-3">Website & CRO Agent</h3>
                                 <p class="text-[14px] text-gray-500 leading-relaxed">
-                                    Audits your landing pages and tells you what's hurting conversions. Rewrites headlines, CTAs, and page structure. Generates A/B test hypotheses you can run immediately.
+                                    Audits your landing pages and tells you what's hurting conversions. Rewrites headlines, CTAs, and page structure. Generates A/B test hypotheses you can run immediately. Generate test hypotheses backed by conversion data, not guesswork.
                                 </p>
                                 <div class="mt-6">
                                     <p class="text-[12px] font-heading font-medium text-gray-400 uppercase tracking-wider mb-3">What you'll get</p>
@@ -725,7 +939,7 @@
                                 <span class="text-[12px] font-heading font-medium text-gray-500 bg-gray-100 px-2.5 py-1 rounded-full">Cross-channel</span>
                                 <h3 class="text-[20px] md:text-[24px] font-heading font-semibold mt-4 mb-3">Strategy & Funnels Agent</h3>
                                 <p class="text-[14px] text-gray-500 leading-relaxed">
-                                    Maps out your full customer journey from first touch to close. Builds funnel structures, go-to-market plans, and cross-channel strategies that tie your other agents' work together.
+                                    Maps out your full customer journey from first touch to close. Builds funnel structures, go-to-market plans, and cross-channel strategies that tie your other agents' work together. Deliver comprehensive go-to-market plans in minutes that would take days to build manually.
                                 </p>
                                 <div class="mt-6">
                                     <p class="text-[12px] font-heading font-medium text-gray-400 uppercase tracking-wider mb-3">What you'll get</p>
@@ -746,6 +960,11 @@
                 </div>
             </div>
         </div>
+        <div class="text-center mt-14 md:mt-20 fade-up">
+            <a href="#" class="inline-flex items-center px-6 py-3 bg-brand text-white text-[14px] font-heading font-medium rounded-full hover:bg-brand-dark transition-colors duration-150 btn-press">
+                <span class="btn-scroll"><span data-text="See what your agents can do">See what your agents can do</span></span>
+            </a>
+        </div>
     </section>
 
 
@@ -753,197 +972,197 @@
 
     <!-- ========== IMPACT SECTION (DARK) ========== -->
     <section class="bg-dark pt-16 md:pt-24 pb-40 md:pb-48 relative overflow-hidden noise" style="z-index:2;">
-        <div class="absolute top-0 bottom-40 md:bottom-48 left-1/2 -translate-x-1/2 w-full max-w-[1200px] border-l border-r border-[#2e2d31] pointer-events-none z-[1]"></div>
+        <div class="absolute top-0 bottom-40 md:bottom-48 left-1/2 -translate-x-1/2 w-full max-w-[1200px] border-l border-r border-[#3a393d] pointer-events-none z-[1]"></div>
         <div class="max-w-[1200px] mx-auto px-6 relative z-10">
             <!-- Left-aligned bold heading -->
             <div class="mb-24 md:mb-28 fade-up">
                 <p class="text-[14px] font-heading font-medium text-[#90ddf0] uppercase tracking-wider mb-5">Why Agenso</p>
                 <h2 class="font-heading text-[40px] md:text-[56px] lg:text-[72px] font-medium tracking-tight-3 text-white leading-[1.08] max-w-4xl">
-                    No hallucinations.<br>No context limits.<br>No prompt engineering.
+                    Connected to your data.<br>Smarter than any prompt.<br>Built for real marketing work.
                 </h2>
             </div>
 
             <!-- Massive focal stat -->
-            <div class="border-t border-[#2e2d31] -mx-6 px-6 py-[77px] md:py-[114px] fade-up relative overflow-hidden">
+            <div class="border-t border-[#3a393d] -mx-6 px-6 py-[77px] md:py-[114px] fade-up relative overflow-hidden">
                 <!-- Dot grid fading from right to left -->
                 <div class="absolute inset-0 pointer-events-none" style="background-image: radial-gradient(circle, rgba(255,255,255,0.35) 1px, transparent 1px); background-size: 14px 14px; -webkit-mask-image: linear-gradient(to left, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.3) 35%, rgba(0,0,0,0.15) 55%, rgba(0,0,0,0.05) 70%, rgba(0,0,0,0) 80%); mask-image: linear-gradient(to left, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.3) 35%, rgba(0,0,0,0.15) 55%, rgba(0,0,0,0.05) 70%, rgba(0,0,0,0) 80%);"></div>
                 <div class="relative z-10">
                     <p class="text-[96px] md:text-[140px] lg:text-[180px] font-heading font-semibold gradient-text leading-none" style="background: linear-gradient(135deg, #90ddf0 0%, #5762d5 55%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;">99.9%</p>
-                    <p class="text-[16px] md:text-[18px] text-gray-400 mt-4 max-w-lg">of outputs are client-ready with no edits needed. Structured frameworks prevent hallucinations before they happen.</p>
+                    <p class="text-[16px] md:text-[18px] text-gray-400 mt-4 max-w-lg">hallucination-free. Structured frameworks and verified data sources prevent hallucinations before they happen.</p>
                 </div>
             </div>
 
             <!-- What Agenso handles -->
 
             <!-- Section heading -->
-            <div class="border-t border-[#2e2d31] -mx-6 px-6 pt-28 md:pt-36 pb-10 md:pb-14 fade-up" style="background-image: linear-gradient(to right, #0a090c 1px, transparent 1px, transparent calc(100% - 1px), #0a090c calc(100% - 1px));">
+            <div class="border-t border-[#3a393d] -mx-6 px-6 pt-28 md:pt-36 pb-10 md:pb-14 fade-up" style="background-image: linear-gradient(to right, #0a090c 1px, transparent 1px, transparent calc(100% - 1px), #0a090c calc(100% - 1px));">
                 <p class="text-[14px] font-heading font-medium text-[#90ddf0] uppercase tracking-wider mb-4">What your agents can do</p>
                 <h3 class="font-heading text-[32px] md:text-[44px] font-medium text-white tracking-tight-3 leading-[1.08]">Built for every brief.</h3>
             </div>
 
             <!-- Texture stripe -->
-            <div class="border-t border-[#2e2d31] -mx-6 h-10 fade-up" style="background-image: repeating-linear-gradient(-45deg, rgba(255,255,255,0.035) 0px, rgba(255,255,255,0.035) 1px, transparent 1px, transparent 8px);"></div>
+            <div class="border-t border-[#3a393d] -mx-6 h-10 fade-up" style="background-image: repeating-linear-gradient(-45deg, rgba(255,255,255,0.055) 0px, rgba(255,255,255,0.055) 1px, transparent 1px, transparent 8px);"></div>
 
             <!-- Stats (left) | Statement (right) -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-0 border-t border-[#2e2d31] -mx-6 fade-up">
-                <div class="px-6 py-12 md:py-16 border-b md:border-b-0 md:border-r border-[#2e2d31]">
-                    <div class="divide-y divide-[#2e2d31]">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-0 border-t border-[#3a393d] -mx-6 fade-up">
+                <div class="px-6 py-12 md:py-16 border-b md:border-b-0 md:border-r border-[#3a393d]">
+                    <div class="divide-y divide-[#3a393d]">
                         <div class="pb-7">
                             <p class="text-[52px] md:text-[60px] font-heading font-semibold text-[#90ddf0] leading-none">&infin;</p>
                             <p class="text-[13px] text-gray-400 mt-2 leading-relaxed">Context window — your 50th message is as sharp as your first.</p>
                         </div>
                         <div class="pt-7">
-                            <p class="text-[52px] md:text-[60px] font-heading font-semibold text-[#90ddf0] leading-none">3</p>
-                            <p class="text-[13px] text-gray-400 mt-2 leading-relaxed">Live API integrations — Meta Ads, Google Ads, and Search Console.</p>
+                            <p class="text-[52px] md:text-[60px] font-heading font-semibold text-[#90ddf0] leading-none">8</p>
+                            <p class="text-[13px] text-gray-400 mt-2 leading-relaxed">Live platform integrations — Meta Ads, Google Ads, Search Console, Google Analytics, Klaviyo, Shopify, Active Campaign & Mailchimp.</p>
                         </div>
                     </div>
                 </div>
                 <div class="px-6 py-12 md:py-16 flex flex-col justify-center gap-8">
-                    <p class="text-[22px] md:text-[28px] font-heading font-medium text-white leading-[1.25]">Agenso is where freelance marketers put AI to work. Pull &amp; audit live ad data, create brand content for every client, and deliver 10x higher quality than standard chat models.</p>
+                    <p class="text-[22px] md:text-[28px] font-heading font-medium text-white leading-[1.25]">Connected to your ad accounts, your Shopify store, and your client's own website. Reading real performance data and applying it to every output — so you can scale without adding headcount.</p>
                     <a href="#" class="inline-flex items-center gap-2 px-6 py-3 rounded-full text-white text-[14px] font-heading font-medium self-start transition-opacity duration-200 hover:opacity-90" style="background: linear-gradient(to right, #90ddf0, #6366f1);">
-                        Start Free
+                        Start your first project free
                         <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
                     </a>
                 </div>
             </div>
 
             <!-- 2x2 feature grid -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-0 border-t border-[#2e2d31] -mx-6 fade-up">
-                <div class="px-6 py-12 md:py-[72px] flex flex-col border-b border-[#2e2d31] md:border-r" style="min-height:200px;">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-0 border-t border-[#3a393d] -mx-6 fade-up">
+                <div class="px-6 py-12 md:py-[72px] flex flex-col border-b border-[#3a393d] md:border-r" style="min-height:200px;">
                     <svg width="16" height="16" viewBox="0 0 16 16" fill="#90ddf0"><path d="M8 1 Q10.5 5.5 15 8 Q10.5 10.5 8 15 Q5.5 10.5 1 8 Q5.5 5.5 8 1 Z"/></svg>
-                    <p class="text-[17px] md:text-[18px] font-heading font-medium text-white leading-[1.3] mt-auto pt-8">Connected to live ad data from Meta, Google Ads &amp; Search Console</p>
+                    <p class="text-[17px] md:text-[18px] font-heading font-medium text-white leading-[1.3] mt-auto pt-8">Connected to 8 live platforms — ads, analytics, email, and ecommerce</p>
                 </div>
-                <div class="px-6 py-12 md:py-[72px] flex flex-col border-b border-[#2e2d31]" style="min-height:200px;">
+                <div class="px-6 py-12 md:py-[72px] flex flex-col border-b border-[#3a393d]" style="min-height:200px;">
                     <svg width="16" height="16" viewBox="0 0 16 16" fill="#90ddf0"><path d="M8 1 Q10.5 5.5 15 8 Q10.5 10.5 8 15 Q5.5 10.5 1 8 Q5.5 5.5 8 1 Z"/></svg>
-                    <p class="text-[17px] md:text-[18px] font-heading font-medium text-white leading-[1.3] mt-auto pt-8">Every output follows your client's brand voice — applied automatically</p>
+                    <p class="text-[17px] md:text-[18px] font-heading font-medium text-white leading-[1.3] mt-auto pt-8">Loaded with proven frameworks and best practices</p>
                 </div>
-                <div class="px-6 py-12 md:py-[72px] flex flex-col border-b md:border-b-0 border-[#2e2d31] md:border-r" style="min-height:200px;">
+                <div class="px-6 py-12 md:py-[72px] flex flex-col border-b md:border-b-0 border-[#3a393d] md:border-r" style="min-height:200px;">
                     <svg width="16" height="16" viewBox="0 0 16 16" fill="#90ddf0"><path d="M8 1 Q10.5 5.5 15 8 Q10.5 10.5 8 15 Q5.5 10.5 1 8 Q5.5 5.5 8 1 Z"/></svg>
                     <p class="text-[17px] md:text-[18px] font-heading font-medium text-white leading-[1.3] mt-auto pt-8">One workspace for every client — shared agents, separate projects</p>
                 </div>
                 <div class="px-6 py-12 md:py-[72px] flex flex-col" style="min-height:200px;">
                     <svg width="16" height="16" viewBox="0 0 16 16" fill="#90ddf0"><path d="M8 1 Q10.5 5.5 15 8 Q10.5 10.5 8 15 Q5.5 10.5 1 8 Q5.5 5.5 8 1 Z"/></svg>
-                    <p class="text-[17px] md:text-[18px] font-heading font-medium text-white leading-[1.3] mt-auto pt-8">Scale your agency's output without scaling your headcount</p>
+                    <p class="text-[17px] md:text-[18px] font-heading font-medium text-white leading-[1.3] mt-auto pt-8">Save 5+ hours per week on reporting, audits, and campaign creation</p>
                 </div>
             </div>
 
             <!-- 3 scrolling use-case rows -->
-            <div class="border-t border-[#2e2d31] border-b border-[#2e2d31] -mx-6 overflow-hidden py-5 space-y-3 fade-up">
+            <div class="border-t border-[#3a393d] border-b border-[#3a393d] -mx-6 overflow-hidden py-5 space-y-3 fade-up">
 
                 <!-- Row 1: left -->
                 <div class="overflow-hidden">
                     <div class="marquee-track gap-2">
-                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#2e2d31] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Write ad copy</span>
-                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#2e2d31] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Generate social posts</span>
-                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#2e2d31] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Draft email campaigns</span>
-                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#2e2d31] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Create video scripts</span>
-                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#2e2d31] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Write landing page copy</span>
-                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#2e2d31] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Build content calendars</span>
-                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#2e2d31] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Repurpose blog content</span>
-                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#2e2d31] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Write product descriptions</span>
-                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#2e2d31] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Draft press releases</span>
-                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#2e2d31] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Create newsletter copy</span>
-                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#2e2d31] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Generate A/B variants</span>
-                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#2e2d31] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Refresh campaign creative</span>
-                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#2e2d31] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Script YouTube ads</span>
-                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#2e2d31] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Write retargeting ads</span>
-                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#2e2d31] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Create audience briefs</span>
-                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#2e2d31] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Draft onboarding emails</span>
+                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#3a393d] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Write ad copy</span>
+                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#3a393d] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Generate social posts</span>
+                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#3a393d] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Draft email campaigns</span>
+                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#3a393d] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Create video scripts</span>
+                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#3a393d] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Write landing page copy</span>
+                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#3a393d] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Build content calendars</span>
+                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#3a393d] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Repurpose blog content</span>
+                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#3a393d] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Write product descriptions</span>
+                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#3a393d] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Draft press releases</span>
+                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#3a393d] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Create newsletter copy</span>
+                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#3a393d] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Generate A/B variants</span>
+                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#3a393d] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Refresh campaign creative</span>
+                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#3a393d] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Script YouTube ads</span>
+                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#3a393d] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Write retargeting ads</span>
+                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#3a393d] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Create audience briefs</span>
+                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#3a393d] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Draft onboarding emails</span>
                                 <!-- duplicate for loop -->
-                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#2e2d31] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Write ad copy</span>
-                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#2e2d31] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Generate social posts</span>
-                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#2e2d31] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Draft email campaigns</span>
-                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#2e2d31] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Create video scripts</span>
-                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#2e2d31] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Write landing page copy</span>
-                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#2e2d31] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Build content calendars</span>
-                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#2e2d31] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Repurpose blog content</span>
-                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#2e2d31] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Write product descriptions</span>
-                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#2e2d31] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Draft press releases</span>
-                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#2e2d31] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Create newsletter copy</span>
-                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#2e2d31] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Generate A/B variants</span>
-                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#2e2d31] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Refresh campaign creative</span>
-                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#2e2d31] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Script YouTube ads</span>
-                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#2e2d31] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Write retargeting ads</span>
-                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#2e2d31] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Create audience briefs</span>
-                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#2e2d31] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Draft onboarding emails</span>
+                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#3a393d] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Write ad copy</span>
+                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#3a393d] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Generate social posts</span>
+                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#3a393d] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Draft email campaigns</span>
+                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#3a393d] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Create video scripts</span>
+                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#3a393d] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Write landing page copy</span>
+                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#3a393d] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Build content calendars</span>
+                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#3a393d] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Repurpose blog content</span>
+                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#3a393d] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Write product descriptions</span>
+                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#3a393d] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Draft press releases</span>
+                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#3a393d] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Create newsletter copy</span>
+                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#3a393d] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Generate A/B variants</span>
+                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#3a393d] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Refresh campaign creative</span>
+                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#3a393d] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Script YouTube ads</span>
+                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#3a393d] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Write retargeting ads</span>
+                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#3a393d] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Create audience briefs</span>
+                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#3a393d] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Draft onboarding emails</span>
                             </div>
                         </div>
 
                         <!-- Row 2: right -->
                         <div class="overflow-hidden">
                             <div class="marquee-track-reverse gap-2">
-                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#2e2d31] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Analyze ad performance</span>
-                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#2e2d31] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Build weekly reports</span>
-                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#2e2d31] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Track ROAS trends</span>
-                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#2e2d31] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Summarize campaign data</span>
-                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#2e2d31] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Flag underperforming ads</span>
-                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#2e2d31] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Audit ad accounts</span>
-                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#2e2d31] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Compare month-over-month</span>
-                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#2e2d31] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Identify winning creatives</span>
-                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#2e2d31] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Report on budget pacing</span>
-                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#2e2d31] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Build campaign strategies</span>
-                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#2e2d31] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Plan audience targeting</span>
-                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#2e2d31] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Recommend budget splits</span>
-                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#2e2d31] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Map customer journeys</span>
-                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#2e2d31] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Audit competitor ads</span>
-                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#2e2d31] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Create go-to-market plans</span>
-                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#2e2d31] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Generate performance decks</span>
+                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#3a393d] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Analyze ad performance</span>
+                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#3a393d] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Build weekly reports</span>
+                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#3a393d] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Track ROAS trends</span>
+                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#3a393d] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Summarize campaign data</span>
+                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#3a393d] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Flag underperforming ads</span>
+                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#3a393d] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Audit ad accounts</span>
+                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#3a393d] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Compare month-over-month</span>
+                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#3a393d] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Identify winning creatives</span>
+                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#3a393d] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Report on budget pacing</span>
+                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#3a393d] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Build campaign strategies</span>
+                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#3a393d] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Plan audience targeting</span>
+                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#3a393d] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Recommend budget splits</span>
+                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#3a393d] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Map customer journeys</span>
+                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#3a393d] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Audit competitor ads</span>
+                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#3a393d] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Create go-to-market plans</span>
+                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#3a393d] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Generate performance decks</span>
                                 <!-- duplicate for loop -->
-                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#2e2d31] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Analyze ad performance</span>
-                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#2e2d31] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Build weekly reports</span>
-                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#2e2d31] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Track ROAS trends</span>
-                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#2e2d31] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Summarize campaign data</span>
-                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#2e2d31] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Flag underperforming ads</span>
-                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#2e2d31] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Audit ad accounts</span>
-                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#2e2d31] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Compare month-over-month</span>
-                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#2e2d31] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Identify winning creatives</span>
-                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#2e2d31] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Report on budget pacing</span>
-                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#2e2d31] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Build campaign strategies</span>
-                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#2e2d31] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Plan audience targeting</span>
-                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#2e2d31] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Recommend budget splits</span>
-                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#2e2d31] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Map customer journeys</span>
-                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#2e2d31] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Audit competitor ads</span>
-                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#2e2d31] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Create go-to-market plans</span>
-                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#2e2d31] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Generate performance decks</span>
+                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#3a393d] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Analyze ad performance</span>
+                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#3a393d] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Build weekly reports</span>
+                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#3a393d] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Track ROAS trends</span>
+                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#3a393d] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Summarize campaign data</span>
+                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#3a393d] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Flag underperforming ads</span>
+                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#3a393d] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Audit ad accounts</span>
+                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#3a393d] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Compare month-over-month</span>
+                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#3a393d] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Identify winning creatives</span>
+                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#3a393d] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Report on budget pacing</span>
+                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#3a393d] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Build campaign strategies</span>
+                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#3a393d] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Plan audience targeting</span>
+                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#3a393d] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Recommend budget splits</span>
+                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#3a393d] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Map customer journeys</span>
+                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#3a393d] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Audit competitor ads</span>
+                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#3a393d] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Create go-to-market plans</span>
+                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#3a393d] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Generate performance decks</span>
                             </div>
                         </div>
 
                         <!-- Row 3: left slow -->
                         <div class="overflow-hidden">
                             <div class="marquee-track-slow gap-2">
-                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#2e2d31] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Onboard new clients</span>
-                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#2e2d31] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Prepare client reports</span>
-                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#2e2d31] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Draft client emails</span>
-                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#2e2d31] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Summarize client meetings</span>
-                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#2e2d31] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Scale across accounts</span>
-                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#2e2d31] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Standardize deliverables</span>
-                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#2e2d31] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Brief creative teams</span>
-                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#2e2d31] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Document workflows</span>
-                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#2e2d31] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Manage multiple brands</span>
-                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#2e2d31] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Create client briefs</span>
-                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#2e2d31] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Generate project updates</span>
-                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#2e2d31] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Answer client questions</span>
-                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#2e2d31] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Define brand voice</span>
-                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#2e2d31] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Plan campaign timelines</span>
-                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#2e2d31] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Create agency SOPs</span>
-                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#2e2d31] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Review creative assets</span>
+                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#3a393d] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Onboard new clients</span>
+                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#3a393d] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Prepare client reports</span>
+                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#3a393d] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Draft client emails</span>
+                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#3a393d] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Summarize client meetings</span>
+                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#3a393d] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Scale across accounts</span>
+                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#3a393d] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Standardize deliverables</span>
+                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#3a393d] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Brief creative teams</span>
+                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#3a393d] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Document workflows</span>
+                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#3a393d] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Manage multiple brands</span>
+                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#3a393d] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Create client briefs</span>
+                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#3a393d] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Generate project updates</span>
+                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#3a393d] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Answer client questions</span>
+                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#3a393d] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Define brand voice</span>
+                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#3a393d] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Plan campaign timelines</span>
+                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#3a393d] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Create agency SOPs</span>
+                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#3a393d] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Review creative assets</span>
                                 <!-- duplicate for loop -->
-                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#2e2d31] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Onboard new clients</span>
-                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#2e2d31] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Prepare client reports</span>
-                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#2e2d31] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Draft client emails</span>
-                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#2e2d31] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Summarize client meetings</span>
-                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#2e2d31] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Scale across accounts</span>
-                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#2e2d31] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Standardize deliverables</span>
-                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#2e2d31] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Brief creative teams</span>
-                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#2e2d31] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Document workflows</span>
-                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#2e2d31] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Manage multiple brands</span>
-                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#2e2d31] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Create client briefs</span>
-                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#2e2d31] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Generate project updates</span>
-                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#2e2d31] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Answer client questions</span>
-                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#2e2d31] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Define brand voice</span>
-                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#2e2d31] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Plan campaign timelines</span>
-                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#2e2d31] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Create agency SOPs</span>
-                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#2e2d31] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Review creative assets</span>
+                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#3a393d] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Onboard new clients</span>
+                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#3a393d] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Prepare client reports</span>
+                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#3a393d] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Draft client emails</span>
+                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#3a393d] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Summarize client meetings</span>
+                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#3a393d] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Scale across accounts</span>
+                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#3a393d] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Standardize deliverables</span>
+                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#3a393d] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Brief creative teams</span>
+                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#3a393d] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Document workflows</span>
+                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#3a393d] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Manage multiple brands</span>
+                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#3a393d] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Create client briefs</span>
+                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#3a393d] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Generate project updates</span>
+                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#3a393d] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Answer client questions</span>
+                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#3a393d] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Define brand voice</span>
+                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#3a393d] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Plan campaign timelines</span>
+                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#3a393d] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Create agency SOPs</span>
+                                <span class="inline-flex items-center px-4 py-[7px] rounded-full border border-[#3a393d] text-[13px] text-gray-400 whitespace-nowrap bg-[#181818] mr-2">Review creative assets</span>
                             </div>
                         </div>
 
@@ -953,6 +1172,60 @@
     </section>
 
     <main class="site-channel">
+
+    <!-- ========== WHO IT'S FOR ========== -->
+    <section class="py-20 md:py-28 px-6">
+        <div class="max-w-3xl mx-auto text-center mb-14 md:mb-20">
+            <p class="text-[12px] font-heading font-medium text-brand uppercase tracking-wider mb-5 fade-up">Who it's for</p>
+            <h2 class="font-heading text-[36px] md:text-[52px] lg:text-[64px] font-medium tracking-tight-3 leading-[1.08] fade-up">
+                Whether you manage<br>one client or twenty
+            </h2>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto stagger">
+            <!-- Solo Freelancer -->
+            <div class="fade-up border border-[#e5e5e5] rounded-xl p-6 md:p-8">
+                <h3 class="text-[18px] md:text-[20px] font-heading font-medium text-dark mb-2">Solo Freelancer</h3>
+                <p class="text-[14px] font-heading font-medium text-brand mb-4">Do the work of a team — by yourself</p>
+                <p class="text-[14px] text-gray-500 leading-relaxed mb-6">
+                    You wear every hat. Agenso's agents handle the heavy lifting across ads, email, SEO, and strategy — so you can take on more clients without burning out.
+                </p>
+                <ul class="space-y-2.5 text-[13px] text-gray-600">
+                    <li class="flex items-center gap-2"><span class="w-1 h-1 rounded-full bg-brand flex-shrink-0"></span>Audit new client accounts in seconds</li>
+                    <li class="flex items-center gap-2"><span class="w-1 h-1 rounded-full bg-brand flex-shrink-0"></span>Deliver strategy decks in minutes</li>
+                    <li class="flex items-center gap-2"><span class="w-1 h-1 rounded-full bg-brand flex-shrink-0"></span>Reclaim 5+ hours every week</li>
+                </ul>
+            </div>
+
+            <!-- Small Agency -->
+            <div class="fade-up border border-[#e5e5e5] rounded-xl p-6 md:p-8">
+                <h3 class="text-[18px] md:text-[20px] font-heading font-medium text-dark mb-2">Small Agency</h3>
+                <p class="text-[14px] font-heading font-medium text-brand mb-4">Scale output without scaling headcount</p>
+                <p class="text-[14px] text-gray-500 leading-relaxed mb-6">
+                    Your team manages multiple clients across channels. Agenso gives every team member agents that already know each client's context, brand voice, and goals.
+                </p>
+                <ul class="space-y-2.5 text-[13px] text-gray-600">
+                    <li class="flex items-center gap-2"><span class="w-1 h-1 rounded-full bg-brand flex-shrink-0"></span>Separate projects per client</li>
+                    <li class="flex items-center gap-2"><span class="w-1 h-1 rounded-full bg-brand flex-shrink-0"></span>Consistent quality across the team</li>
+                    <li class="flex items-center gap-2"><span class="w-1 h-1 rounded-full bg-brand flex-shrink-0"></span>Standardize deliverables instantly</li>
+                </ul>
+            </div>
+
+            <!-- Marketing Consultant -->
+            <div class="fade-up border border-[#e5e5e5] rounded-xl p-6 md:p-8">
+                <h3 class="text-[18px] md:text-[20px] font-heading font-medium text-dark mb-2">Marketing Consultant</h3>
+                <p class="text-[14px] font-heading font-medium text-brand mb-4">Look like a senior strategist on every call</p>
+                <p class="text-[14px] text-gray-500 leading-relaxed mb-6">
+                    Connect your client's ad accounts before the first meeting. Walk in with a full audit, specific recommendations, and a strategy the client can act on immediately.
+                </p>
+                <ul class="space-y-2.5 text-[13px] text-gray-600">
+                    <li class="flex items-center gap-2"><span class="w-1 h-1 rounded-full bg-brand flex-shrink-0"></span>Comprehensive audits from real data</li>
+                    <li class="flex items-center gap-2"><span class="w-1 h-1 rounded-full bg-brand flex-shrink-0"></span>Data-backed recommendations</li>
+                    <li class="flex items-center gap-2"><span class="w-1 h-1 rounded-full bg-brand flex-shrink-0"></span>Win more clients with better output</li>
+                </ul>
+            </div>
+        </div>
+    </section>
 
     <!-- ========== HOW IT WORKS ========== -->
     <section id="how-it-works" class="pt-20 md:pt-28 px-6">
@@ -966,13 +1239,13 @@
         <!-- Step 1 -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-0 border-t border-[#e5e5e5] -mx-6 px-6 fade-up">
             <div class="py-10 md:py-16 md:pr-10 flex flex-col justify-center border-b md:border-b-0 md:border-r border-[#e5e5e5]">
-                <p class="text-[48px] md:text-[64px] font-heading font-semibold text-brand leading-none mb-5">01</p>
+                <p class="step-num text-[48px] md:text-[64px] font-heading font-semibold text-brand leading-none mb-5">01</p>
                 <h3 class="text-[20px] md:text-[24px] font-heading font-medium text-dark mb-3">Create a project</h3>
-                <p class="text-[15px] text-gray-500 leading-relaxed max-w-sm">Add your client's industry, audience, tone, and goals and connect the needed integrations. One time. Every agent picks it up from there.</p>
+                <p class="text-[15px] text-gray-500 leading-relaxed max-w-sm">Paste your client's website URL and Agenso pulls their industry, positioning, and messaging automatically. Add tone, audience, and goals — connect the integrations you need. One time. Every agent picks it up from there.</p>
             </div>
             <div class="py-8 md:py-12 md:pl-10 flex items-center">
                 <!-- Mock: Project setup form -->
-                <div class="w-full rounded-xl border border-[#e5e5e5] overflow-hidden bg-white" style="box-shadow: 4px 6px 24px -4px rgba(0,0,0,0.08);">
+                <div class="card-lift w-full rounded-xl border border-[#e5e5e5] overflow-hidden bg-white" style="box-shadow: 4px 6px 24px -4px rgba(0,0,0,0.08);">
                     <div class="flex items-center gap-2 px-4 py-3 border-b border-[#e5e5e5] bg-[#fafafa]">
                         <div class="flex gap-1.5">
                             <div class="w-2.5 h-2.5 rounded-full bg-[#ff5f57]"></div>
@@ -1021,7 +1294,7 @@
         <div class="grid grid-cols-1 md:grid-cols-2 gap-0 border-t border-[#e5e5e5] -mx-6 px-6 fade-up">
             <div class="py-8 md:py-12 md:pr-10 flex items-center order-2 md:order-1">
                 <!-- Mock: Agent chat -->
-                <div class="w-full rounded-xl border border-[#e5e5e5] overflow-hidden bg-white" style="box-shadow: 4px 6px 24px -4px rgba(0,0,0,0.08);">
+                <div class="card-lift w-full rounded-xl border border-[#e5e5e5] overflow-hidden bg-white" style="box-shadow: 4px 6px 24px -4px rgba(0,0,0,0.08);">
                     <div class="flex items-center justify-between px-4 py-3 border-b border-[#e5e5e5] bg-[#fafafa]">
                         <div class="flex items-center gap-2">
                             <div class="flex gap-1.5">
@@ -1047,22 +1320,22 @@
                 </div>
             </div>
             <div class="py-10 md:py-16 md:pl-10 flex flex-col justify-center order-1 md:order-2 border-b md:border-b-0 md:border-l border-[#e5e5e5]">
-                <p class="text-[48px] md:text-[64px] font-heading font-semibold text-brand leading-none mb-5">02</p>
-                <h3 class="text-[20px] md:text-[24px] font-heading font-medium text-dark mb-3">Talk to any agent</h3>
-                <p class="text-[15px] text-gray-500 leading-relaxed max-w-sm">Describe what you need in plain English. The agent already knows best practices and your client's context.</p>
+                <p class="step-num text-[48px] md:text-[64px] font-heading font-semibold text-brand leading-none mb-5">02</p>
+                <h3 class="text-[20px] md:text-[24px] font-heading font-medium text-dark mb-3">Ask any agent — or let it tell you what to do</h3>
+                <p class="text-[15px] text-gray-500 leading-relaxed max-w-sm">Describe what you need in plain English — or just connect an ad account and let the agent analyze it. It already knows your client's context and comes loaded with proven frameworks for its discipline.</p>
             </div>
         </div>
 
         <!-- Step 3 -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-0 border-t border-b border-[#e5e5e5] -mx-6 px-6 fade-up">
             <div class="py-10 md:py-16 md:pr-10 flex flex-col justify-center border-b md:border-b-0 md:border-r border-[#e5e5e5]">
-                <p class="text-[48px] md:text-[64px] font-heading font-semibold text-brand leading-none mb-5">03</p>
+                <p class="step-num text-[48px] md:text-[64px] font-heading font-semibold text-brand leading-none mb-5">03</p>
                 <h3 class="text-[20px] md:text-[24px] font-heading font-medium text-dark mb-3">Get client-ready output</h3>
-                <p class="text-[15px] text-gray-500 leading-relaxed max-w-sm">Receive structured strategy, copy, and recommendations you can send directly to your client.</p>
+                <p class="text-[15px] text-gray-500 leading-relaxed max-w-sm">Receive structured strategy, copy, and recommendations you can send directly to your client. Reports that used to take hours, done in minutes.</p>
             </div>
             <div class="py-8 md:py-12 md:pl-10 flex items-center">
                 <!-- Mock: Structured output document -->
-                <div class="w-full rounded-xl border border-[#e5e5e5] overflow-hidden bg-white" style="box-shadow: 4px 6px 24px -4px rgba(0,0,0,0.08);">
+                <div class="card-lift w-full rounded-xl border border-[#e5e5e5] overflow-hidden bg-white" style="box-shadow: 4px 6px 24px -4px rgba(0,0,0,0.08);">
                     <div class="h-1.5 bg-brand"></div>
                     <div class="p-5 text-[13px]">
                         <div class="flex items-center justify-between mb-4">
@@ -1098,7 +1371,7 @@
     </section>
 
     <!-- ========== TESTIMONIALS ========== -->
-    <section class="py-20 md:py-28 px-6">
+    <section class="py-20 md:py-28 px-6 no-divider">
         <div class="mb-14 md:mb-20">
             <p class="text-[12px] font-heading font-medium text-brand uppercase tracking-wider mb-5 fade-up">Testimonials</p>
             <h2 class="font-heading text-[36px] md:text-[52px] lg:text-[64px] font-medium tracking-tight-3 fade-up">
@@ -1115,7 +1388,7 @@
                         "I manage 8 clients and was spending hours re-prompting ChatGPT for each one. Agenso remembers everything about each client — the output quality is night and day."
                     </p>
                     <div class="mt-6 flex items-center gap-3">
-                        <div class="w-10 h-10 rounded-full bg-surface-card"></div>
+                        <img src="https://i.pravatar.cc/80?img=5" alt="" class="w-10 h-10 rounded-full object-cover">
                         <div>
                             <p class="text-[14px] font-heading font-medium text-dark">Beta User</p>
                             <p class="text-[13px] text-gray-400">Freelance Marketer</p>
@@ -1142,7 +1415,7 @@
                         "Finally, AI marketing output I can actually trust. I used to triple-check everything from ChatGPT. With Agenso, the strategy and copy just... work."
                     </p>
                     <div class="mt-6 flex items-center gap-3">
-                        <div class="w-10 h-10 rounded-full bg-surface-card"></div>
+                        <img src="https://i.pravatar.cc/80?img=18" alt="" class="w-10 h-10 rounded-full object-cover">
                         <div>
                             <p class="text-[14px] font-heading font-medium text-dark">Beta User</p>
                             <p class="text-[13px] text-gray-400">Growth Consultant</p>
@@ -1169,7 +1442,7 @@
                         "We replaced 3 different AI tools with Agenso. One platform, six agents, and every output already knows our clients' brand voice. It's a no-brainer."
                     </p>
                     <div class="mt-6 flex items-center gap-3">
-                        <div class="w-10 h-10 rounded-full bg-surface-card"></div>
+                        <img src="https://i.pravatar.cc/80?img=60" alt="" class="w-10 h-10 rounded-full object-cover">
                         <div>
                             <p class="text-[14px] font-heading font-medium text-dark">Beta User</p>
                             <p class="text-[13px] text-gray-400">Agency Owner · 4 person team</p>
@@ -1210,6 +1483,36 @@
     </section>
 
 
+    <!-- ========== ROI SECTION ========== -->
+    <section class="pb-20 md:pb-28 px-6">
+        <div class="max-w-2xl mx-auto fade-up">
+            <div class="border border-[#e5e5e5] rounded-xl bg-white p-8 md:p-12 text-center">
+                <h2 class="font-heading text-[28px] md:text-[36px] font-medium tracking-tight-3 text-dark mb-8">
+                    It pays for itself in the first week
+                </h2>
+                <div class="flex items-center justify-center gap-3 md:gap-5 flex-wrap mb-8">
+                    <div>
+                        <p class="text-[40px] md:text-[52px] font-heading font-semibold text-brand leading-none">5hrs</p>
+                        <p class="text-[13px] text-gray-400 mt-1">saved per week</p>
+                    </div>
+                    <p class="text-[28px] md:text-[36px] font-heading text-dark">&times;</p>
+                    <div>
+                        <p class="text-[40px] md:text-[52px] font-heading font-semibold text-brand leading-none">$75</p>
+                        <p class="text-[13px] text-gray-400 mt-1">hourly rate</p>
+                    </div>
+                    <p class="text-[28px] md:text-[36px] font-heading text-dark">=</p>
+                    <div>
+                        <p class="text-[40px] md:text-[52px] font-heading font-semibold text-brand leading-none">$375</p>
+                        <p class="text-[13px] text-gray-400 mt-1">per week</p>
+                    </div>
+                </div>
+                <p class="text-[16px] text-gray-500 leading-relaxed max-w-md mx-auto">
+                    in reclaimed capacity for $49/month. Take on another client. Finish early on Friday. The ROI is immediate.
+                </p>
+            </div>
+        </div>
+    </section>
+
     <!-- ========== PRICING ========== -->
     <section id="pricing" class="py-20 md:py-28 px-6">
         <div class="max-w-3xl mx-auto text-center mb-14 md:mb-20">
@@ -1228,7 +1531,7 @@
                     <span class="text-[13px] text-gray-400">/month</span>
                 </div>
                 <p class="mt-2 text-[13px] text-gray-500">Explore the platform with limited access.</p>
-                <a href="#" class="mt-6 flex items-center justify-center px-5 py-2.5 border border-gray-200 text-dark text-[13px] font-heading font-medium rounded-full hover:border-brand hover:text-brand transition-all duration-150 btn-press">Start Free</a>
+                <a href="#" class="mt-6 flex items-center justify-center px-5 py-2.5 border border-gray-200 text-dark text-[13px] font-heading font-medium rounded-full hover:border-brand hover:text-brand transition-all duration-150 btn-press"><span class="btn-scroll"><span data-text="Try your first project free">Try your first project free</span></span></a>
                 <ul class="mt-6 space-y-2.5 text-[13px] text-gray-600">
                     <li>1 project</li>
                     <li>All 6 agents</li>
@@ -1242,8 +1545,8 @@
                     <span class="text-[36px] font-heading font-semibold tracking-tight-3">$49</span>
                     <span class="text-[13px] text-gray-400">/month</span>
                 </div>
-                <p class="mt-2 text-[13px] text-gray-500">Everything to manage multiple clients.</p>
-                <a href="#" class="mt-6 flex items-center justify-center px-5 py-2.5 gradient-bg text-white text-[13px] font-heading font-medium rounded-full hover:opacity-90 transition-opacity duration-150 btn-press">Start Free Trial</a>
+                <p class="mt-2 text-[13px] text-gray-500">Everything to manage multiple clients. Connect live ad accounts and save hours every week.</p>
+                <a href="#" class="mt-6 flex items-center justify-center px-5 py-2.5 gradient-bg text-white text-[13px] font-heading font-medium rounded-full hover:opacity-90 transition-opacity duration-150 btn-press"><span class="btn-scroll"><span data-text="Start your free Pro trial">Start your free Pro trial</span></span></a>
                 <ul class="mt-6 space-y-2.5 text-[13px] text-gray-600">
                     <li>Unlimited projects</li>
                     <li>All 6 agents</li>
@@ -1258,7 +1561,7 @@
                     <span class="text-[13px] text-gray-400">/month</span>
                 </div>
                 <p class="mt-2 text-[13px] text-gray-500">For agencies with shared workspaces.</p>
-                <a href="#" class="mt-6 flex items-center justify-center px-5 py-2.5 border border-gray-200 text-dark text-[13px] font-heading font-medium rounded-full hover:border-brand hover:text-brand transition-all duration-150 btn-press">Start Free Trial</a>
+                <a href="#" class="mt-6 flex items-center justify-center px-5 py-2.5 border border-gray-200 text-dark text-[13px] font-heading font-medium rounded-full hover:border-brand hover:text-brand transition-all duration-150 btn-press"><span class="btn-scroll"><span data-text="Start your free team trial">Start your free team trial</span></span></a>
                 <ul class="mt-6 space-y-2.5 text-[13px] text-gray-600">
                     <li>Everything in Pro</li>
                     <li>Up to 5 team members</li>
@@ -1276,21 +1579,21 @@
                         <span class="text-[15px] font-heading font-medium text-dark">How is this different from ChatGPT?</span>
                         <svg class="faq-chevron w-4 h-4 text-gray-400 flex-shrink-0" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M4 6l4 4 4-4"/></svg>
                     </button>
-                    <div class="faq-answer"><p class="pb-4 text-[14px] text-gray-500 leading-relaxed">ChatGPT is general-purpose. Agenso's agents are pre-trained on marketing with structured directives that prevent hallucinations, and they remember your client's context across every session.</p></div>
+                    <div class="faq-answer"><p class="pb-4 text-[14px] text-gray-500 leading-relaxed">ChatGPT is general-purpose. Agenso's agents are pre-trained with discipline-specific frameworks, re-ingest your project context before every response, and remember your client's full conversation history — so outputs stay grounded, not hallucinated.</p></div>
                 </div>
                 <div class="faq-item border-b border-[#e5e5e5]">
                     <button class="w-full flex items-center justify-between py-4 text-left" onclick="toggleFaq(this)">
                         <span class="text-[15px] font-heading font-medium text-dark">Will it work for my specific industry?</span>
                         <svg class="faq-chevron w-4 h-4 text-gray-400 flex-shrink-0" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M4 6l4 4 4-4"/></svg>
                     </button>
-                    <div class="faq-answer"><p class="pb-4 text-[14px] text-gray-500 leading-relaxed">Yes. You provide your client's industry, audience, tone, and goals when setting up a project. Every agent adapts its outputs to that specific context.</p></div>
+                    <div class="faq-answer"><p class="pb-4 text-[14px] text-gray-500 leading-relaxed">Yes. Paste your client's website URL and Agenso pulls their industry, positioning, and messaging automatically. Add tone, audience, and goals to complete the picture — every agent adapts its outputs to that specific context.</p></div>
                 </div>
                 <div class="faq-item border-b border-[#e5e5e5]">
                     <button class="w-full flex items-center justify-between py-4 text-left" onclick="toggleFaq(this)">
                         <span class="text-[15px] font-heading font-medium text-dark">Can I trust AI outputs for client work?</span>
                         <svg class="faq-chevron w-4 h-4 text-gray-400 flex-shrink-0" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M4 6l4 4 4-4"/></svg>
                     </button>
-                    <div class="faq-answer"><p class="pb-4 text-[14px] text-gray-500 leading-relaxed">That's exactly what Agenso solves. Agents follow structured directives and proven frameworks. The outputs are consistent, accurate, and ready to use.</p></div>
+                    <div class="faq-answer"><p class="pb-4 text-[14px] text-gray-500 leading-relaxed">That's exactly what Agenso solves. Before every response, agents re-ingest your project context and follow pre-built frameworks specific to their discipline. The outputs are grounded, consistent, and ready to send.</p></div>
                 </div>
                 <div class="faq-item border-b border-[#e5e5e5]">
                     <button class="w-full flex items-center justify-between py-4 text-left" onclick="toggleFaq(this)">
@@ -1308,22 +1611,22 @@
 
     <!-- ========== FINAL CTA ========== -->
     <section class="bg-dark py-20 md:py-28 relative overflow-hidden" style="z-index:2;">
-        <div class="absolute top-0 bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[1200px] border-l border-r border-[#2e2d31] pointer-events-none z-[1]"></div>
+        <div class="absolute top-0 bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[1200px] border-l border-r border-[#3a393d] pointer-events-none z-[1]"></div>
         <div class="max-w-[1200px] mx-auto px-6 text-center relative z-10 fade-up">
             <h2 class="font-heading text-[28px] md:text-[40px] lg:text-[48px] font-medium tracking-tight-3 text-white leading-[1.1] max-w-xl mx-auto">
-                Stop guessing.<br><span class="gradient-text">Start scaling.</span>
+                Stop prompting. Start delivering.<br><span class="gradient-text">Work with Agenso.</span>
             </h2>
             <p class="mt-4 text-[15px] md:text-[16px] text-gray-400 max-w-md mx-auto leading-relaxed">
-                Join 200+ marketers using Agenso to deliver better work, faster. Free to start, no credit card required.
+                Join 200+ marketers delivering better work in less time. Six expert agents, live data connections, and zero hallucinations. Free to start, no credit card required.
             </p>
             <a href="#" class="inline-flex items-center mt-8 px-6 py-3 bg-white text-dark text-[14px] font-heading font-medium rounded-full hover:bg-surface-card transition-colors duration-150 btn-press">
-                Get Started Now
+                <span class="btn-scroll"><span data-text="Deploy your first agent free">Deploy your first agent free</span></span>
             </a>
         </div>
     </section>
 
     <!-- ========== FOOTER ========== -->
-    <footer class="text-white border-t border-[#2e2d31]" style="background:#0a090c; position:relative; z-index:2;">
+    <footer class="text-white border-t border-[#3a393d]" style="background:#0a090c; position:relative; z-index:2;">
         <div class="max-w-[1200px] mx-auto px-6 py-16 md:py-20">
             <div class="grid grid-cols-2 md:grid-cols-5 gap-10 md:gap-8">
                 <div class="col-span-2">
@@ -1375,46 +1678,233 @@
 
     <!-- ========== SCRIPTS ========== -->
     <script>
+        // ===== Intersection Observer (general) =====
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
         }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
 
+        // ===== Hero choreographed entrance =====
+        const heroTimings = [
+            { delay: 100, dur: 900, rise: 24 },
+            { delay: 300, dur: 700, rise: 16 },
+            { delay: 500, dur: 600, rise: 12 },
+            { delay: 700, dur: 500, rise: 12 },
+            { delay: 600, dur: 800, rise: 40, scale: true },
+        ];
+
         document.fonts.ready.then(() => {
-            document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+            const heroSection = document.querySelector('.hero-dots-wrap');
+            let heroEls = [];
+            if (heroSection) {
+                heroEls = heroSection.querySelectorAll(':scope > .fade-up');
+                heroEls.forEach((el, i) => {
+                    if (heroTimings[i]) {
+                        const t = heroTimings[i];
+                        el.style.transitionDelay = t.delay + 'ms';
+                        el.style.transitionDuration = t.dur + 'ms';
+                        el.style.transform = t.scale
+                            ? 'translateY(' + t.rise + 'px) scale(0.97)'
+                            : 'translateY(' + t.rise + 'px)';
+                    }
+                });
+
+                // Hero-specific observer: clears inline transform so CSS .visible takes over
+                const heroObs = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('visible');
+                            // Set final inline transform (matches CSS .visible but includes scale for dashboard)
+                            const idx = Array.from(heroEls).indexOf(entry.target);
+                            entry.target.style.transform = (heroTimings[idx] && heroTimings[idx].scale)
+                                ? 'translateY(0) scale(1)'
+                                : 'translateY(0)';
+                            heroObs.unobserve(entry.target);
+                        }
+                    });
+                }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+                heroEls.forEach(el => heroObs.observe(el));
+            }
+
+            // Observe all non-hero fade-up elements with the general observer
+            document.querySelectorAll('.fade-up').forEach(el => {
+                if (!Array.from(heroEls).includes(el)) observer.observe(el);
+            });
+
+            // Observe step numbers
+            document.querySelectorAll('.step-num').forEach(el => observer.observe(el));
         });
 
+        // ===== Pencil underline draw-on =====
+        const pencilTarget = document.getElementById('pencil-target');
+        if (pencilTarget) {
+            const pencilObs = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const svg = entry.target.querySelector('.pencil-draw');
+                        if (svg) svg.classList.add('draw-visible');
+                        pencilObs.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.3 });
+            pencilObs.observe(pencilTarget);
+        }
+
+        // ===== Chat sequential entrance =====
+        const chatContainer = document.getElementById('chat-container');
+        if (chatContainer) {
+            const chatMsgs = chatContainer.querySelectorAll('.chat-msg');
+            const chatObs = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        chatMsgs.forEach((msg, i) => {
+                            setTimeout(() => msg.classList.add('msg-visible'), i * 150);
+                        });
+                        chatObs.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.2 });
+            chatObs.observe(chatContainer);
+        }
+
+        // ===== Comparison typewriter =====
+        const compGrid = document.getElementById('comparison-grid');
+        if (compGrid) {
+            const cards = compGrid.querySelectorAll('.card-lift');
+            const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+            function showEl(el) {
+                el.style.opacity = '1';
+                el.style.transform = 'translateY(0)';
+            }
+
+            function typewrite(el, speed, cb) {
+                const raw = el.dataset.full;
+                if (prefersReduced) {
+                    el.innerHTML = parseMarkup(raw);
+                    el.classList.add('done');
+                    if (cb) cb();
+                    return;
+                }
+                let i = 0;
+                el.innerHTML = '';
+                const tick = () => {
+                    if (i >= raw.length) {
+                        el.innerHTML = parseMarkup(raw);
+                        el.classList.add('done');
+                        if (cb) cb();
+                        return;
+                    }
+                    // Skip markup tags in one jump
+                    if (raw[i] === '{') {
+                        const close = raw.indexOf('}', i);
+                        if (close !== -1) { i = close + 1; }
+                    }
+                    // Handle pipe as line break
+                    if (raw[i] === '|') {
+                        i++;
+                        el.innerHTML = parseMarkup(raw.substring(0, i));
+                        setTimeout(tick, speed * 3);
+                        return;
+                    }
+                    i++;
+                    el.innerHTML = parseMarkup(raw.substring(0, i));
+                    setTimeout(tick, speed);
+                };
+                tick();
+            }
+
+            function parseMarkup(str) {
+                return str
+                    .replace(/\|/g, '<br>')
+                    .replace(/\{b\}([\s\S]*?)\{\/b\}/g, '<span class="font-medium text-dark">$1</span>')
+                    .replace(/\{brand\}([\s\S]*?)\{\/brand\}/g, '<span class="text-brand font-medium">$1</span>')
+                    .replace(/"([^"]*?)"/g, '\u201C$1\u201D');
+            }
+
+            const compObs = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (!entry.isIntersecting) return;
+                    compObs.unobserve(entry.target);
+
+                    cards.forEach((card, cardIdx) => {
+                        const prompt = card.querySelector('.comp-prompt');
+                        const response = card.querySelector('.comp-response');
+                        const typeEl = card.querySelector('.comp-typewriter');
+                        const verdict = card.querySelector('.comp-verdict');
+                        const baseDelay = cardIdx * 200;
+
+                        // 1. Show user prompt
+                        setTimeout(() => showEl(prompt), baseDelay + 300);
+                        // 2. Show response bubble (empty), then type
+                        setTimeout(() => {
+                            showEl(response);
+                            setTimeout(() => {
+                                typewrite(typeEl, cardIdx === 0 ? 18 : 12, () => {
+                                    // 3. Show verdict after typing finishes
+                                    setTimeout(() => showEl(verdict), 400);
+                                });
+                            }, 300);
+                        }, baseDelay + 900);
+                    });
+                });
+            }, { threshold: 0.2 });
+            compObs.observe(compGrid);
+        }
+
+        // ===== Nav scroll =====
         const nav = document.getElementById('nav');
         window.addEventListener('scroll', () => {
             nav.classList.toggle('nav-scrolled', window.scrollY > 20);
         }, { passive: true });
 
+        // ===== Mobile menu =====
         document.getElementById('menuToggle').addEventListener('click', () => {
             document.getElementById('mobileMenu').classList.toggle('hidden');
         });
 
-        // Vertical agent tabs
+        // ===== Agent tabs with crossfade =====
         document.querySelectorAll('.vtab').forEach(tab => {
             tab.addEventListener('click', () => {
                 const target = tab.dataset.vtab;
+                const currentPanel = document.querySelector('.agent-vpanel.active');
+                const nextPanel = document.querySelector(`[data-vpanel="${target}"]`);
+
+                if (currentPanel === nextPanel) return;
+
+                // Update tab states
                 document.querySelectorAll('.vtab').forEach(t => { t.classList.remove('active'); t.classList.add('text-gray-500'); });
                 tab.classList.add('active');
                 tab.classList.remove('text-gray-500');
-                document.querySelectorAll('.agent-vpanel').forEach(p => p.classList.remove('active'));
-                document.querySelector(`[data-vpanel="${target}"]`).classList.add('active');
+
+                // Fade out current panel, then switch
+                if (currentPanel) {
+                    currentPanel.animate([
+                        { opacity: 1 },
+                        { opacity: 0 }
+                    ], { duration: 150, easing: 'ease' }).onfinish = () => {
+                        currentPanel.classList.remove('active');
+                        nextPanel.classList.add('active');
+                    };
+                } else {
+                    nextPanel.classList.add('active');
+                }
             });
         });
 
+        // ===== FAQ =====
         function toggleFaq(button) {
             const item = button.parentElement;
             item.querySelector('.faq-answer').classList.toggle('open');
             item.querySelector('.faq-chevron').classList.toggle('open');
         }
 
+        // ===== Mobile menu close on nav =====
         document.querySelectorAll('#mobileMenu a[href^="#"]').forEach(link => {
             link.addEventListener('click', () => document.getElementById('mobileMenu').classList.add('hidden'));
         });
 
-        // Review carousel
+        // ===== Review carousel =====
         (function() {
             const cards = document.querySelectorAll('.review-card');
             const dots = document.querySelectorAll('.review-dot');
@@ -1443,11 +1933,9 @@
                 });
             });
 
-            // Arrow buttons
             document.getElementById('reviewPrev').addEventListener('click', () => { current = (current - 1 + total) % total; setPositions(); });
             document.getElementById('reviewNext').addEventListener('click', () => { current = (current + 1) % total; setPositions(); });
 
-            // Click prev/next cards to navigate
             cards.forEach(card => {
                 card.addEventListener('click', () => {
                     if (card.classList.contains('prev')) { current = (current - 1 + total) % total; setPositions(); }
