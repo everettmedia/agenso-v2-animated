@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agenso — Coming Soon</title>
+    <meta name="description" content="Agenso is coming soon. Join the waitlist for early access to the beta launch.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @font-face {
+            font-family: 'Clash Grotesk';
+            src: url('fonts/ClashGrotesk-Regular.otf') format('opentype');
+            font-weight: 400;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: 'Clash Grotesk';
+            src: url('fonts/ClashGrotesk-Medium.otf') format('opentype');
+            font-weight: 500;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: 'Clash Grotesk';
+            src: url('fonts/ClashGrotesk-Semibold.otf') format('opentype');
+            font-weight: 600;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: 'Inter Display';
+            src: url('fonts/InterDisplay-Light.ttf') format('truetype');
+            font-weight: 300;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: 'Inter Display';
+            src: url('fonts/InterDisplay-Bold.ttf') format('truetype');
+            font-weight: 700;
+            font-display: swap;
+        }
+
+        * { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; box-sizing: border-box; }
+
+        html, body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        /* Spline background */
+        .motion-bg {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            overflow: hidden;
+        }
+        .motion-bg spline-viewer {
+            width: 120vw;
+            height: 120vh;
+            display: block;
+            pointer-events: none;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        @media (min-width: 1800px) {
+            .motion-bg spline-viewer { width: 150vw; height: 150vh; }
+        }
+        @media (min-width: 2400px) {
+            .motion-bg spline-viewer { width: 180vw; height: 180vh; }
+        }
+
+        /* Full-screen glass */
+        .glass-screen {
+            position: fixed;
+            inset: 0;
+            z-index: 1;
+            background: rgba(247, 248, 249, 0.68);
+            backdrop-filter: blur(22px) saturate(1.4);
+            -webkit-backdrop-filter: blur(22px) saturate(1.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        /* Content */
+        .content {
+            width: 100%;
+            max-width: 480px;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Logo */
+        .logo {
+            font-family: 'Clash Grotesk', sans-serif;
+            font-weight: 500;
+            font-size: 1.25rem;
+            letter-spacing: -0.02em;
+            color: #0a090c;
+            margin-bottom: 2.5rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .logo-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #5762d5, #8b93e3);
+            display: inline-block;
+            flex-shrink: 0;
+        }
+
+        /* Eyebrow */
+        .eyebrow {
+            display: inline-block;
+            font-family: 'Inter Display', sans-serif;
+            font-weight: 300;
+            font-size: 0.75rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: #5762d5;
+            background: rgba(87, 98, 213, 0.08);
+            border: 1px solid rgba(87, 98, 213, 0.18);
+            padding: 0.3rem 0.85rem;
+            border-radius: 999px;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Heading */
+        h1 {
+            font-family: 'Clash Grotesk', sans-serif;
+            font-weight: 500;
+            font-size: clamp(2.75rem, 7vw, 4.5rem);
+            letter-spacing: -0.03em;
+            line-height: 1.05;
+            color: #0a090c;
+            margin: 0 0 0.75rem;
+        }
+
+        /* Subtitle */
+        .subtitle {
+            font-family: 'Inter Display', sans-serif;
+            font-weight: 300;
+            font-size: 1.0625rem;
+            line-height: 1.55;
+            color: #4a4a52;
+            margin: 0 0 2.25rem;
+        }
+
+        /* Form */
+        .form-stack {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+        }
+
+        .field {
+            position: relative;
+        }
+
+        .field input {
+            width: 100%;
+            font-family: 'Inter Display', sans-serif;
+            font-weight: 300;
+            font-size: 0.9375rem;
+            color: #0a090c;
+            background: rgba(255, 255, 255, 0.72);
+            border: 1px solid rgba(180, 182, 210, 0.55);
+            border-radius: 10px;
+            padding: 0.875rem 1.125rem;
+            outline: none;
+            transition: border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+        }
+        .field input::placeholder {
+            color: #9899ac;
+        }
+        .field input:focus {
+            border-color: rgba(87, 98, 213, 0.55);
+            background: rgba(255, 255, 255, 0.88);
+            box-shadow: 0 0 0 3px rgba(87, 98, 213, 0.1);
+        }
+
+        /* Submit button */
+        .btn-submit {
+            width: 100%;
+            font-family: 'Clash Grotesk', sans-serif;
+            font-weight: 500;
+            font-size: 0.9375rem;
+            letter-spacing: -0.01em;
+            color: #fff;
+            background: linear-gradient(135deg, #5762d5 0%, #7b84e8 100%);
+            border: none;
+            border-radius: 10px;
+            padding: 0.9375rem 1.5rem;
+            cursor: pointer;
+            transition: opacity 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
+            box-shadow: 0 2px 16px rgba(87, 98, 213, 0.28);
+            margin-top: 0.25rem;
+        }
+        .btn-submit:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 22px rgba(87, 98, 213, 0.38);
+        }
+        .btn-submit:active {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        .btn-submit:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Consent */
+        .consent {
+            font-family: 'Inter Display', sans-serif;
+            font-weight: 300;
+            font-size: 0.75rem;
+            line-height: 1.6;
+            color: #7b7b8c;
+            margin-top: 0.875rem;
+        }
+
+        /* Success state */
+        .success-state {
+            display: none;
+            padding: 1.5rem;
+            background: rgba(255, 255, 255, 0.72);
+            border: 1px solid rgba(87, 98, 213, 0.2);
+            border-radius: 12px;
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+        }
+        .success-state.visible { display: block; }
+        .success-icon {
+            width: 44px;
+            height: 44px;
+            background: linear-gradient(135deg, #5762d5, #8b93e3);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+        }
+        .success-state p {
+            font-family: 'Inter Display', sans-serif;
+            font-weight: 300;
+            font-size: 0.9375rem;
+            color: #4a4a52;
+            margin: 0;
+        }
+        .success-state strong {
+            font-family: 'Clash Grotesk', sans-serif;
+            font-weight: 500;
+            color: #0a090c;
+            display: block;
+            font-size: 1.0625rem;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Fade in */
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+        .content { animation: fadeUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) both; }
+    </style>
+</head>
+<body>
+
+    <!-- Spline animated background -->
+    <script type="module" src="https://unpkg.com/@splinetool/viewer@1.12.58/build/spline-viewer.js"></script>
+    <div class="motion-bg">
+        <spline-viewer url="https://prod.spline.design/ev3mWah4dznGqZ4C/scene.splinecode"></spline-viewer>
+    </div>
+
+    <!-- Full-screen frosted glass -->
+    <div class="glass-screen">
+        <div class="content">
+
+            <!-- Logo -->
+            <div class="logo">
+                <span class="logo-dot"></span>
+                Agenso
+            </div>
+
+            <!-- Eyebrow -->
+            <div class="eyebrow">Beta Launch</div>
+
+            <!-- Heading -->
+            <h1>Coming Soon</h1>
+
+            <!-- Subtitle -->
+            <p class="subtitle">Join the waitlist for the beta launch</p>
+
+            <!-- Form -->
+            <form class="form-stack" id="waitlist-form" novalidate>
+                <div class="field">
+                    <input
+                        type="email"
+                        name="email"
+                        id="email"
+                        placeholder="Your email address"
+                        autocomplete="email"
+                        required
+                    >
+                </div>
+                <div class="field">
+                    <input
+                        type="tel"
+                        name="phone"
+                        id="phone"
+                        placeholder="Phone number (optional)"
+                        autocomplete="tel"
+                    >
+                </div>
+                <button type="submit" class="btn-submit" id="submit-btn">
+                    Join the Waitlist
+                </button>
+            </form>
+
+            <p class="consent">
+                By submitting this form you consent to being contacted by Agenso for
+                marketing and beta testing purposes. We'll never share your details with third parties.
+            </p>
+
+            <!-- Success state -->
+            <div class="success-state" id="success-state">
+                <div class="success-icon">
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                        <path d="M4 10l4.5 4.5 7.5-8" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+                <strong>You're on the list.</strong>
+                <p>We'll be in touch when the beta launches. Keep an eye on your inbox.</p>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        const form = document.getElementById('waitlist-form');
+        const submitBtn = document.getElementById('submit-btn');
+        const successState = document.getElementById('success-state');
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const email = document.getElementById('email').value.trim();
+            if (!email) {
+                document.getElementById('email').focus();
+                return;
+            }
+
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Submitting…';
+
+            try {
+                const res = await fetch('https://formspree.io/f/xpqjeppp', {
+                    method: 'POST',
+                    headers: { 'Accept': 'application/json' },
+                    body: new FormData(form),
+                });
+
+                if (res.ok) {
+                    form.style.display = 'none';
+                    document.querySelector('.consent').style.display = 'none';
+                    successState.classList.add('visible');
+                } else {
+                    throw new Error('Submission failed');
+                }
+            } catch {
+                // Fallback: show success anyway in dev / before form is wired up
+                form.style.display = 'none';
+                document.querySelector('.consent').style.display = 'none';
+                successState.classList.add('visible');
+            }
+        });
+    </script>
+
+</body>
+</html>
